@@ -40,7 +40,9 @@ export default function Shop() {
 
   const loadSubCategories = async () => {
     try {
-      const response = await fetch("http://localhost:3000/cloudinary/folders");
+      const response = await fetch(
+        "https://acampa-back.vercel.app/cloudinary/folders"
+      );
       const indexlist = await response.json();
 
       if (indexlist.length > 0) {
