@@ -2,47 +2,14 @@ import React from "react";
 import styles from "../styles/Home.module.css";
 import { useState, useRef, useEffect, useLayoutEffect } from "react";
 import gsap from "gsap";
+import Pic from "./Pic";
+import Link from "next/link";
+
+import { isLoading } from "../reducers/loading";
+import { useSelector } from "react-redux";
 
 export default function Home() {
   //// Animation GSAP ///
-
-  //const [greensock, Setgreensock] = useState(false);
-  //const animate = () => Setgreensock(!greensock);
-
-  const [complete, setComplete] = useState(false);
-
-  const picRef = useRef(null);
-
-  const onePicRef = useRef(null);
-
-  gsap.registerEffect({
-    name: "firstGreen",
-    effect: (target, config) => {
-      return gsap.to(target, {
-        duration: config.duration,
-        opacity: 1,
-        ease: "expo",
-        stagger: 0.5,
-        y: 50,
-        onComplete: () => {
-          console.log("yes");
-          gsap.set(onePicRef.current, { opacity: 0 });
-        },
-      });
-    },
-  });
-
-  gsap.registerEffect({
-    name: "secondGreen",
-    effect: (target, config) => {
-      return gsap.from(target, {
-        opacity: 0,
-        duration: 3,
-      });
-    },
-  });
-
-  //////////
 
   const [menuState, setMenuState] = useState(null);
   const [logoState, setLogoState] = useState(null);
@@ -53,8 +20,32 @@ export default function Home() {
     defaults: { opacity: 1, duration: 1, ease: "power2" },
   });
 
+  //// Load Image Next ///
+
+  const hasLoaded = useSelector((state) => state.loading.value);
+
+  //// Load Cloudinary ////
+
+  const [fetchData, setFetchData] = useState([]);
+
+  const loadImage = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/cloudinary/homepage");
+      const resource = await response.json();
+
+      if (resource.length > 0) {
+        setFetchData(resource);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useLayoutEffect(() => {
-    if (!menuState) return;
+    if (!menuState || !bottomPicState || !topPicState || !logoState) return;
+
+    loadImage();
+    console.log("yes");
 
     timeline
       .to(logoState, { y: 20, delay: 1 })
@@ -66,6 +57,12 @@ export default function Home() {
       .to(topPicState.children, {}, 1);
   }, [menuState, bottomPicState, topPicState, logoState]);
 
+  /// Virer le style du link ///
+
+  const removeLinkStyle = {
+    textDecoration: "none",
+    color: "inherit",
+  };
   //////////
 
   return (
@@ -73,26 +70,60 @@ export default function Home() {
       <div className={styles.logoContainer} ref={setLogoState}>
         <img className={styles.logo} src={"/assets/Logo-fleur.png"}></img>
       </div>
-      <div>
-        <div className={styles.scrollContainerTop} ref={setTopPicState}>
-          <div className={styles.picContainerTop}>
-            <img className={styles.pic} src={"/photos/003.jpg"} />
-          </div>
-          <div className={styles.picContainerTop}>
-            <img className={styles.pic} src={"/photos/007.jpg"} />
-          </div>
-        </div>
-        <div className={styles.scrollContainerBottom} ref={setBottomPicState}>
-          <div className={styles.picContainerBottom}>
-            <img className={styles.pic} src={"/photos/005.jpg"} />
-          </div>
 
-          <div className={styles.picContainerBottom}>
-            <img className={styles.pic} src={"/photos/004.jpg"} />
-          </div>
-          <div className={styles.picContainerBottom}>
-            <img className={styles.pic} src={"/photos/002.jpg"} />
-          </div>
+      <div className={styles.scrollContainerTop} ref={setTopPicState}>
+        <div className={styles.picContainerTop}>
+          {fetchData.length > 0 && (
+            <Pic
+              src={fetchData[0].src}
+              width={fetchData[0].width}
+              height={fetchData[0].height}
+              alt={fetchData[0].collection}
+            />
+          )}
+        </div>
+        <div className={styles.picContainerTop}>
+          {fetchData.length > 0 && (
+            <Pic
+              src={fetchData[1].src}
+              width={fetchData[1].width}
+              height={fetchData[1].height}
+              alt={fetchData[1].collection}
+            />
+          )}
+        </div>
+      </div>
+      <div className={styles.scrollContainerBottom} ref={setBottomPicState}>
+        <div className={styles.picContainerBottom}>
+          {fetchData.length > 0 && (
+            <Pic
+              src={fetchData[2].src}
+              width={fetchData[2].width}
+              height={fetchData[2].height}
+              alt={fetchData[2].collection}
+            />
+          )}
+        </div>
+
+        <div className={styles.picContainerBottom}>
+          {fetchData.length > 0 && (
+            <Pic
+              src={fetchData[3].src}
+              width={fetchData[3].width}
+              height={fetchData[3].height}
+              alt={fetchData[3].collection}
+            />
+          )}
+        </div>
+        <div className={styles.picContainerBottom}>
+          {fetchData.length > 0 && (
+            <Pic
+              src={fetchData[4].src}
+              width={fetchData[4].width}
+              height={fetchData[4].height}
+              alt={fetchData[4].collection}
+            />
+          )}
         </div>
       </div>
 
@@ -107,7 +138,9 @@ export default function Home() {
           <div className={styles.title}>Prestations</div>
         </div>
         <div className={styles.titleContainer}>
-          <div className={styles.title}>Shop</div>
+          <Link href="/shop" style={removeLinkStyle} className={styles.title}>
+            Boutique
+          </Link>
         </div>
       </div>
     </div>

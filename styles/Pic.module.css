@@ -1,0 +1,16 @@
+.picLoaded {
+  opacity: 1;
+  max-height: 100%;
+  width: auto;
+  object-fit: cover;
+  opacity: 1;
+}
+
+.pic {
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.picOK {
+  opacity: 1;
+}
