@@ -15,7 +15,7 @@ export default function Prestations() {
   const loadSubCategories = async () => {
     try {
       const response = await fetch(
-        "http://localhost:3000/cloudinary/indexPresta"
+        "https://acampa-back.vercel.app/cloudinary/indexPresta"
       );
       const indexlist = await response.json();
 
@@ -30,7 +30,7 @@ export default function Prestations() {
   const loadContent = async () => {
     try {
       const response = await fetch(
-        "http://localhost:3000/cloudinary/prestations"
+        "https://acampa-back.vercel.app/cloudinary/prestations"
       );
       const content = await response.json();
 

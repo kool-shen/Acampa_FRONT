@@ -30,7 +30,9 @@ export default function Home() {
 
   const loadImage = async () => {
     try {
-      const response = await fetch("http://localhost:3000/cloudinary/homepage");
+      const response = await fetch(
+        "https://acampa-back.vercel.app/cloudinary/homepage"
+      );
       const resource = await response.json();
 
       if (resource.length > 0) {
