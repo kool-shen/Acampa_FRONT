@@ -1,0 +1,81 @@
+.messageContainer {
+  background-color: #ff49ca;
+  height: auto;
+  width: 49vw;
+
+  border: 2px solid black;
+
+  position: absolute;
+  z-index: 9;
+  display: flex;
+
+  flex-direction: column;
+}
+
+.messageTypeContainer {
+  display: flex;
+}
+
+.messageInput {
+  font-size: 25px;
+  font-family: "Authentic130";
+  background-color: #ff49ca;
+  border: 2px solid black;
+  margin: 1vmin;
+  width: 100%;
+  height: 20vh;
+  overflow: scroll;
+}
+
+.messageInput:nth-child(2) {
+  font-size: 25px;
+  font-family: "Authentic130";
+  background-color: #ff49ca;
+  border: 2px solid black;
+  margin: 1vmin;
+  width: 70%;
+  height: 75%;
+  overflow: scroll;
+}
+
+.messageInput::-webkit-scrollbar {
+  display: none;
+}
+
+.messageInput:focus {
+  border: 2px solid black;
+  outline: none;
+}
+
+.signatureInput {
+  font-size: 25px;
+  font-family: "Authentic130";
+  background-color: #ff49ca;
+  border: 2px solid black;
+  margin: 1vmin;
+  height: 4vh;
+  overflow: scroll;
+}
+
+.signatureInput::-webkit-scrollbar {
+  display: none;
+}
+
+.signatureInput:focus {
+  border: 2px solid black;
+  outline: none;
+}
+
+.textareaContainer {
+  width: 48vw;
+  display: flex;
+
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.text {
+  font-size: 25px;
+  font-family: "Authentic130";
+  padding: 1vh;
+}

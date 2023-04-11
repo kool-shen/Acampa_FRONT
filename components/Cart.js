@@ -1,14 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../styles/Cart.module.css";
 import Pic from "./Pic";
 import { useDispatch, useSelector } from "react-redux";
-import { gsap } from "gsap";
-import { useRef } from "react";
-import { removeFromBasket } from "../reducers/basket";
+import { clickMessage } from "@/reducers/message";
+import Message from "./Message";
+
+import { removeFromBasket, addToBasket } from "../reducers/basket";
 
 function Cart(props) {
   // Contenu du panier //
   const basketValue = useSelector((state) => state.basket.value);
+
+  // État clicked du message //
+  const messageIsClicked = useSelector((state) => state.message.value);
+
+  // changer l'état clicked du message //
+
+  const messageIsTrue = () => {
+    dispatch(clickMessage(true));
+  };
+
+  const messageIsFalse = () => {
+    dispatch(clickMessage(false));
+  };
+
+  const reverseMessage = () => {
+    dispatch(clickMessage(!messageIsClicked));
+  };
 
   // Mot produit //
   const word = basketValue.length === 1 ? "produit" : "produits";
@@ -21,15 +39,86 @@ function Cart(props) {
     dispatch(removeFromBasket(index));
   };
 
+  // Rediriger l'utilisateur vers la page de paiement Stripe
+
+  const checkout = async () => {
+    if (!basketValue) {
+      return;
+    }
+
+    const response = await fetch(
+      "http://localhost:3000/stripe/create-checkout-session",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(basketValue),
+      }
+    );
+
+    const session = await response.json();
+
+    const result = await stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result.error) {
+      console.log(result.error.message);
+    }
+  };
+
+  /// Usestate pour exporter l'index du produit pour le message ///
+
+  const [productIndex, setProductIndex] = useState();
+  const [productMessage, setProductMessage] = useState();
+  /* basketValue[productIndex].mot*/
+
+  /// Livraison / click & collect ///
+
+  const [collectChecked, setCollectChecked] = useState(true);
+  const [deliveryChecked, setDeliveryChecked] = useState(false);
+
+  const handleCollectCheck = () => {
+    if (!collectChecked) {
+      setCollectChecked(true);
+      setDeliveryChecked(false);
+    } else {
+      setCollectChecked(false);
+      setDeliveryChecked(true);
+    }
+  };
+
+  const handleDeliveryCheck = () => {
+    if (!deliveryChecked) {
+      setDeliveryChecked(true);
+      setCollectChecked(false);
+    } else {
+      setDeliveryChecked(false);
+      setCollectChecked(true);
+    }
+  };
+
+  const deliveryPrice = deliveryChecked ? 8 : 0;
+
+  const totalPrice =
+    basketValue.reduce((acc, item) => acc + item.prix, 0) + deliveryPrice;
+
   return (
-    <div className={styles.globalContainer} style={props.style} ref={props.ref}>
+    <div
+      className={styles.globalContainer}
+      style={props.style}
+      isClicked={props.isClicked}
+      ref={props.ref}
+    >
+      <Message productIndex={productIndex} productMessage={productMessage} />
       {basketValue.length === 0 ? (
         <div className={styles.sumUpContainer}>
           <div className={styles.text}>
             Il n'y a (encore) rien dans votre panier
           </div>
           <div className={styles.symbolContainer} onClick={props.onClick}>
-            <img className={styles.symbol} src={"assets/x-mark.png"} />
+            <img className={styles.cross} src={"assets/x-mark.png"} />
           </div>
         </div>
       ) : (
@@ -38,16 +127,51 @@ function Cart(props) {
             <div className={styles.text}>
               Votre panier - {`${basketValue.length}`} {word}
             </div>
+
             <div className={styles.symbolContainer} onClick={props.onClick}>
-              <img className={styles.symbol} src={"assets/x-mark.png"} />
+              <img className={styles.cross} src={"assets/x-mark.png"} />
             </div>
           </div>,
-          <div
-            className={styles.productContainer}
-            onClick={() => {
-              console.log(basketValue);
-            }}
-          >
+          <div className={styles.totalPayContainer}>
+            <div className={styles.deliveryContainer}>
+              <div className={styles.switchContainer}>
+                <div className={styles.tinyText} style={{ paddingLeft: "1vw" }}>
+                  Click & collect
+                </div>
+                <div className={styles.toggleContainer}>
+                  <label className={styles.switch}>
+                    <input
+                      type="checkbox"
+                      checked={collectChecked}
+                      onChange={handleCollectCheck}
+                    />
+
+                    <span className={styles.slider}></span>
+                  </label>
+                </div>
+              </div>
+              <div className={styles.switchContainer}>
+                <div className={styles.tinyText} style={{ paddingLeft: "1vw" }}>
+                  Livraison (+8€)
+                </div>
+                <div className={styles.toggleContainer}>
+                  <label className={styles.switch}>
+                    <input
+                      type="checkbox"
+                      checked={deliveryChecked}
+                      onChange={handleDeliveryCheck}
+                    />
+
+                    <span className={styles.slider}></span>
+                  </label>
+                </div>
+              </div>
+
+              <div className={styles.text}>{`TOTAL : ${totalPrice},00€`}</div>
+            </div>
+            <div className={styles.text}>Passer au paiement</div>
+          </div>,
+          <div className={styles.productContainer} onClick={() => {}}>
             {basketValue.map((data, i) => (
               <div className={styles.eachProductContainer}>
                 <div className={styles.picContainer}>
@@ -69,11 +193,57 @@ function Cart(props) {
                   <div className={styles.tinyText}>
                     {`Taille : ${basketValue[i].taille}`}
                   </div>
+                  {basketValue[i].mot === " " ? (
+                    <div
+                      className={styles.symbolContainer}
+                      style={{ height: "25px" }}
+                      onClick={() => {
+                        messageIsTrue();
+                        setProductMessage(basketValue[i].mot);
+                        setProductIndex(i);
+                      }}
+                    >
+                      <img
+                        className={styles.symbol}
+                        style={{ paddingLeft: "4px" }}
+                        src={"assets/message.png"}
+                      />
+                      <div
+                        className={styles.tinyText}
+                        style={{
+                          paddingLeft: "3px",
+                          fontFamily: "Authentic130",
+                        }}
+                      >
+                        Ajouter un petit mot
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div
+                        className={styles.tinyText}
+                        style={{ fontFamily: "Authentic130" }}
+                      >
+                        Votre petit mot a été ajouté !
+                      </div>
+                      <div
+                        className={styles.tinyText}
+                        style={{ color: "grey" }}
+                        onClick={() => {
+                          messageIsTrue();
+                          console.log(messageIsClicked);
+                          setProductIndex(i);
+                        }}
+                      >
+                        Modifier
+                      </div>
+                    </div>
+                  )}
+
                   <div
                     className={styles.symbolContainer}
                     onClick={() => {
                       removeBasket(i);
-                      console.log(basketValue);
                     }}
                   >
                     <img className={styles.symbol} src={"assets/delete.png"} />
@@ -85,10 +255,6 @@ function Cart(props) {
                 >{`${basketValue[i].prix},00€`}</div>
               </div>
             ))}
-            <div className={styles.text}>{`TOTAL : ${basketValue.reduce(
-              (acc, item) => acc + item.prix,
-              0
-            )},00€`}</div>
           </div>,
         ]
       )}

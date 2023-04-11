@@ -30,9 +30,7 @@ export default function Home() {
 
   const loadImage = async () => {
     try {
-      const response = await fetch(
-        "https://acampa-back.vercel.app/cloudinary/homepage"
-      );
+      const response = await fetch("http://localhost:3000/cloudinary/homepage");
       const resource = await response.json();
 
       if (resource.length > 0) {
@@ -137,7 +135,13 @@ export default function Home() {
           <div className={styles.title}>À propos</div>
         </div>
         <div className={styles.titleContainer}>
-          <div className={styles.title}>Prestations</div>
+          <Link
+            href="/prestations"
+            style={removeLinkStyle}
+            className={styles.title}
+          >
+            Prestations
+          </Link>
         </div>
         <div className={styles.titleContainer}>
           <Link href="/shop" style={removeLinkStyle} className={styles.title}>

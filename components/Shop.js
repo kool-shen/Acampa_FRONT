@@ -7,6 +7,7 @@ import Pic from "./Pic";
 import gsap from "gsap";
 import { useDispatch, useSelector } from "react-redux";
 import { addToBasket } from "../reducers/basket";
+import { clickMessage } from "@/reducers/message";
 
 export default function Shop() {
   //// FETCH / MOUNT ///
@@ -17,9 +18,7 @@ export default function Shop() {
 
   const loadImage = async () => {
     try {
-      const response = await fetch(
-        "https://acampa-back.vercel.app/cloudinary/shop"
-      );
+      const response = await fetch("http://localhost:3000/cloudinary/shop");
       const resource = await response.json();
 
       if (resource.length > 0) {
@@ -40,9 +39,7 @@ export default function Shop() {
 
   const loadSubCategories = async () => {
     try {
-      const response = await fetch(
-        "https://acampa-back.vercel.app/cloudinary/folders"
-      );
+      const response = await fetch("http://localhost:3000/cloudinary/folders");
       const indexlist = await response.json();
 
       if (indexlist.length > 0) {
@@ -66,6 +63,8 @@ export default function Shop() {
     variété: "",
     quantité: "",
     prix: "",
+    mot: "",
+    signature: "",
   });
 
   const basketValue = useSelector((state) => state.basket.value);
@@ -87,6 +86,8 @@ export default function Shop() {
       variété: shopClicked[selectedPhotoIndex].metadata.Varietes[varietesIndex],
       quantité: quantity,
       prix: price,
+      mot: " ",
+      signature: " ",
     };
     setPanier(newPanier);
   };
@@ -94,6 +95,7 @@ export default function Shop() {
   useEffect(() => {
     loadImage();
     loadSubCategories();
+
     if (panier.nom !== "" || panier.taille !== "") {
       dispatch(addToBasket(panier));
     }
@@ -212,36 +214,37 @@ export default function Shop() {
   /// Animation cart ///
 
   const [cartClicked, setCartClicked] = useState(false);
+  const [messageClicked, setMessageClicked] = useState(false);
 
   const displayCart = !cartClicked
     ? { transform: "translateX(0)", transition: "transform 1s" }
     : { transition: "transform 1s" };
 
+  /// Message ///
+
+  // changer l'état clicked du message //
+
+  const messageIsFalse = () => {
+    dispatch(clickMessage(false));
+  };
+
   return (
     <div className={styles.mainContainer}>
       <Cart
         style={displayCart}
+        isClicked={messageClicked}
         onClick={() => {
           setCartClicked(false);
+          setMessageClicked(false);
+          messageIsFalse();
         }}
       />
 
-      {isClicked && [
-        ,
-        <div
-          className={styles.retourText}
-          onClick={() => {
-            setIsClicked(false);
-            clearValues();
-          }}
-        >
-          &lt; RETOUR AU SHOP
-        </div>,
-      ]}
       <div
         className={styles.basketContainer}
         onClick={() => {
           setCartClicked(true);
+          console.log("olala");
         }}
       >
         <img className={styles.basket} src={"assets/basket_black.png"} />
@@ -252,7 +255,14 @@ export default function Shop() {
         </div>,
       ]}
 
-      <div className={styles.textContainer}>
+      <div
+        className={styles.textContainer}
+        onClick={() => {
+          setCartClicked(false);
+          setMessageClicked(false);
+          messageIsFalse();
+        }}
+      >
         <div className={styles.menu}>
           <div className={styles.titleContainer}>
             <Link href="/" style={removeLinkStyle} className={styles.title}>
@@ -263,37 +273,56 @@ export default function Shop() {
             <div className={styles.title}>À propos</div>
           </div>
           <div className={styles.titleContainer}>
-            <div className={styles.title}>Prestations</div>
+            <Link
+              href="/prestations"
+              style={removeLinkStyle}
+              className={styles.title}
+            >
+              Prestations
+            </Link>
           </div>
           <div className={styles.titleContainer}>
             <div className={styles.titleBold}>Boutique</div>
           </div>
+          <div className={styles.shopSubCategoryContainer}>
+            {indexCategories.map((data, i) => (
+              <div
+                className={styles.shopSubCategory}
+                style={
+                  clickedText === i
+                    ? { fontFamily: "Authentic130" }
+                    : { fontFamily: "Authentic90" }
+                }
+                onClick={() => {
+                  setIsClicked(false);
+                  clearValues();
+                  clickAlbum(i);
+                }}
+              >
+                {indexCategories[i].name}
+              </div>
+            ))}
+          </div>
         </div>
-        <div className={styles.shopSubCategoryContainer}>
-          {indexCategories.map((data, i) => (
-            <div
-              className={styles.shopSubCategory}
-              style={
-                clickedText === i
-                  ? { fontFamily: "Authentic130" }
-                  : { fontFamily: "Authentic90" }
-              }
-              onClick={() => {
-                setIsClicked(false);
-                clearValues();
-                clickAlbum(i);
-              }}
-            >
-              {indexCategories[i].name}
-            </div>
-          ))}
-        </div>
+
+        {isClicked && [
+          ,
+          <div
+            className={styles.retourText}
+            onClick={() => {
+              setIsClicked(false);
+              setCartClicked(false);
+              clearValues();
+              messageIsFalse();
+            }}
+          >
+            &lt; RETOUR AU SHOP
+          </div>,
+        ]}
       </div>
-      <div
-        className={styles.photoContainer}
-        style={isClicked ? { overflowY: "unset" } : { overflowY: "scroll" }}
-      >
-        {isClicked ? (
+
+      {isClicked ? (
+        <div className={styles.photoContainer}>
           <div className={styles.focusContainer}>
             <div className={styles.picContainer}>
               <Pic
@@ -368,14 +397,23 @@ export default function Shop() {
                   <div className={styles.choiceText}>PRIX</div>
                   <div className={styles.textPrice}>{`${price},00€`}</div>
                 </div>
-                <div className={styles.panierText} onClick={firstCart}>
-                  AJOUTER AU PANIER +
-                </div>
+              </div>
+              <div className={styles.panierText} onClick={firstCart}>
+                AJOUTER AU PANIER +
               </div>
             </div>
           </div>
-        ) : (
-          shopClicked.map((data, i) => (
+        </div>
+      ) : (
+        shopClicked.map((data, i) => (
+          <div
+            className={styles.galleryContainer}
+            onClick={() => {
+              setCartClicked(false);
+              setMessageClicked(false);
+              messageIsFalse();
+            }}
+          >
             <div
               key={i}
               className={styles.productContainer}
@@ -406,9 +444,9 @@ export default function Shop() {
                 </div>
               </div>
             </div>
-          ))
-        )}
-      </div>
+          </div>
+        ))
+      )}
     </div>
   );
 }

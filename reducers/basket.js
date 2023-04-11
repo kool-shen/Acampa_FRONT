@@ -18,8 +18,21 @@ export const basketSlice = createSlice({
         state.value.splice(index, 1);
       }
     },
+    updateProductMot: (state, action) => {
+      const { productIndex, mot } = action.payload;
+      state.value[productIndex].mot = mot;
+    },
+    updateProductSignature: (state, action) => {
+      const { productIndex, signature } = action.payload;
+      state.value[productIndex].signature = signature;
+    },
   },
 });
 
-export const { addToBasket, removeFromBasket } = basketSlice.actions;
+export const {
+  addToBasket,
+  removeFromBasket,
+  updateProductMot,
+  updateProductSignature,
+} = basketSlice.actions;
 export default basketSlice.reducer;

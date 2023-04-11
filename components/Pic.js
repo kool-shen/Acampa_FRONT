@@ -32,6 +32,7 @@ function Pic(props) {
       className={styles.picLoaded}
       onLoadingComplete={handleLoad}
       onClick={props.onClick}
+      style={props.style}
     />
   );
 }

@@ -1,18 +1,31 @@
 /*MAIN CONTAINERS */
 .mainContainer {
-  height: 100%;
-  width: 100%;
+  width: 100vw;
   display: flex;
+  height: 100vh;
   position: relative;
+  overflow: hidden;
 }
 
 .textContainer {
   height: 100vh;
-  width: 20%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .photoContainer {
-  width: 80%;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.galleryContainer {
+  padding-top: 10vh;
+  width: 100%;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
@@ -26,6 +39,8 @@
 
 .focusContainer {
   display: flex;
+  height: 100vh;
+  width: 70vw;
   gap: 2vmin;
 }
 
@@ -37,8 +52,7 @@
   display: flex;
   flex-direction: column;
   padding-left: 35px;
-  padding-top: 17px;
-  position: relative;
+  padding-top: 1vh;
 }
 
 .titleContainer {
@@ -117,8 +131,11 @@
 
 .productInfoContainer {
   display: flex;
+  width: 100%;
   flex-direction: column;
-  padding-bottom: 10%;
+  justify-content: space-between;
+  height: auto;
+  align-self: flex-end;
 }
 
 .productName {
@@ -134,13 +151,6 @@
 }
 
 /* Focus */
-
-.focusContainer > .productInfoContainer {
-  height: auto;
-  align-self: flex-end;
-  gap: 10vh;
-  justify-content: space-between;
-}
 
 .productDescription {
   font-size: 17px;
@@ -200,27 +210,26 @@
 }
 
 .panierText {
-  font-size: 25px;
+  font-size: 20px;
   font-family: "Authentic130";
-  left: 82%;
-  top: 95%;
-  position: absolute;
+  align-self: flex-end;
+  padding: 1vh;
 }
 
 .retourText {
-  font-size: 25px;
+  font-size: 20px;
   font-family: "Authentic130";
-  left: 1%;
-  top: 95%;
-  position: absolute;
+  padding-bottom: 1vh;
+  padding-left: 1vh;
 }
 
 /*PHOTOS */
 
 .picContainer {
-  height: 350px;
+  height: 300px;
   padding-top: 1%;
-  padding-bottom: 1%;
+
+  padding: 1%;
 }
 
 .focusContainer > .picContainer {
@@ -229,14 +238,17 @@
   padding-bottom: 0%;
 }
 
+.focusContainer > .productInfoContainer {
+  gap: 10vh;
+}
+
 /* Panier */
 
 .basketContainer {
   height: 40px;
-  position: absolute;
+  position: fixed;
   left: 94%;
   top: 1%;
-  z-index: 8;
 }
 
 .basket {
