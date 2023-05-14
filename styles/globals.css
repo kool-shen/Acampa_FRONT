@@ -8,9 +8,18 @@
   src: local("Authentic90"),
     url("../public/fonts/AUTHENTICSans-90.otf") format("truetype");
 }
+@font-face {
+  font-family: "Authentic60";
+  src: local("Authentic60"),
+    url("../public/fonts/AUTHENTICSans-60.otf") format("truetype");
+}
 
 body {
   height: 100vh;
   margin: 0;
   padding: 0;
+  -webkit-overflow-scrolling: touch;
+}
+html {
+  overflow: hidden;
 }

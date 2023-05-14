@@ -1,0 +1,147 @@
+.globalContainer {
+  height: auto;
+  width: 49vw;
+  background-color: black;
+  position: absolute;
+  top: 45vh;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid white;
+  padding: 1vh;
+}
+
+.text {
+  font-size: 25px;
+  font-family: "Authentic130";
+  color: white;
+}
+
+.descriptionText {
+  font-size: 15px;
+  font-family: "Authentic130";
+  color: white;
+}
+
+.districtContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.cityContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.validateContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.validateText {
+  font-size: 25px;
+  font-family: "Authentic130";
+
+  color: white;
+  cursor: pointer;
+}
+
+.validateText:hover {
+  color: #ffe93f;
+}
+
+/*/// CHECKS ///*/
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 45px;
+  height: 24px;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  transition: 0.4s;
+  border-radius: 3vh;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 3vh;
+  width: 3vh;
+  border: 1px solid white;
+
+  background-color: black;
+  transition: 0.4s;
+  border-radius: 4vw;
+}
+
+input:checked + .slider {
+  background-color: white;
+}
+
+input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+/*/// INPUTS ///*/
+
+.inputContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.signatureInput {
+  font-size: 25px;
+  font-family: "Authentic130";
+  background-color: white;
+  border: 2px solid black;
+  margin: 1vmin;
+  height: 4vh;
+  width: 20vw;
+  overflow: scroll;
+}
+
+.signatureInput::-webkit-scrollbar {
+  display: none;
+}
+
+.signatureInput:focus {
+  border: 2px solid black;
+  outline: none;
+}
+
+.addressInput {
+  font-size: 25px;
+  font-family: "Authentic130";
+  background-color: white;
+  border: 2px solid black;
+  margin: 1vmin;
+  height: 4vh;
+  width: 40vw;
+  overflow: scroll;
+}
+
+.addressInput::-webkit-scrollbar {
+  display: none;
+}
+
+.addressInput:focus {
+  border: 2px solid black;
+  outline: none;
+}

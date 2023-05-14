@@ -22,16 +22,15 @@ export default function Message(props) {
 
   const validateMessage = () => {
     dispatch(
-      updateProductMot({ productIndex: props.productIndex, mot: message })
+      updateProductMot({ productindex: props.productindex, mot: message })
     );
     dispatch(
       updateProductSignature({
-        productIndex: props.productIndex,
+        productindex: props.productindex,
         signature: signature,
       }),
       messageIsFalse()
     );
-    console.log(basketValue);
   };
 
   // contenu du produit //
@@ -41,14 +40,14 @@ export default function Message(props) {
   const messageIsClicked = useSelector((state) => state.message.value);
 
   /// gérer le contenu du message et de la signature ///
-  const [message, setMessage] = useState(props.productIndex);
+  const [message, setMessage] = useState(props.productindex);
   const [signature, setSignature] = useState("");
 
   /// animation du message ///
 
   const displayMessage = messageIsClicked
     ? { transform: "translateX(-50vw)", transition: "transform 1s" }
-    : { transform: "translate(-50vw, -50vh)", transition: "transform 1s" };
+    : { transform: "translateX(30vw)", transition: "transform 1s" };
 
   return (
     <div>
@@ -56,8 +55,8 @@ export default function Message(props) {
         <div
           className={styles.messageContainer}
           style={displayMessage}
-          productIndex={props.productIndex}
-          productMessage={props.productMessage}
+          productindex={props.productindex}
+          productmessage={props.productmessage}
         >
           <div className={styles.messageTypeContainer}>
             <div className={styles.text}>Tapez ici votre petit mot :</div>

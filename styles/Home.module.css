@@ -1,14 +1,38 @@
-.container {
+.mainContainer {
   height: 100vh;
-  width: 100%;
-  padding: 0;
+  display: flex;
+  overflow: hidden;
+}
+
+.firstContainer {
+  min-height: 100vh;
+  min-width: 100vw;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+}
+
+.presentationContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  height: 100vh;
+  width: 28vw;
+}
+
+.acampaContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 22px;
 }
 
 .logoContainer {
   position: absolute;
-  height: 110vh;
-  opacity: 0;
-  transform: translateX(-5px);
+  height: 100vh;
+  opacity: 1;
+  top: 7vh;
+  left: 3vw;
   z-index: -1;
 }
 
@@ -18,17 +42,23 @@
   object-fit: cover;
 }
 
-.menu {
-  z-index: 9;
-  display: flex;
-  flex-direction: column;
-  padding-left: 35px;
-  padding-top: 17px;
-}
-
 .titleContainer {
   width: auto;
-  opacity: 0;
+  opacity: 1;
+}
+
+.burgerContainer {
+  height: 4%;
+  position: fixed;
+  padding-top: 15px;
+  padding-left: 22px;
+}
+
+.menuContainer {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .titleBold {
@@ -36,7 +66,7 @@
   font-family: "Authentic130";
   display: inline-block;
   position: relative;
-  color: black;
+
   /*opacity: 0;*/
 }
 
@@ -80,7 +110,7 @@
   position: absolute;
   background: black;
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
-  width: 0;
+  width: 1;
 }
 
 .title:hover::after {
@@ -89,60 +119,79 @@
   bottom: 3px;
 }
 
-.picContainerTop:nth-child(1) {
-  height: 98%;
-  opacity: 0;
-}
+/*/// ///*/
 
-.picContainerTop:nth-child(2) {
-  align-self: flex-end;
-  height: 70%;
-  opacity: 0;
-}
-
-.pic {
-  max-height: 100%;
-  width: auto;
-  object-fit: cover;
+.friseContainer {
+  max-width: 60vw;
+  display: flex;
+  flex-direction: column;
 }
 
 .scrollContainerTop {
-  position: absolute;
-  width: 50%;
   height: 50%;
-  left: 50%;
   display: flex;
-  justify-content: space-between;
-  gap: 2vmin;
+  justify-content: flex-end;
+  gap: 8vmin;
 }
+
+.pic1Container {
+  height: 98%;
+  max-width: 100%;
+  opacity: 1;
+}
+
+.pic2Container {
+  align-self: flex-end;
+  padding-right: 6%;
+  height: 70%;
+  opacity: 1;
+}
+
+/*/// ///*/
 
 .scrollContainerBottom {
-  position: absolute;
-  width: 65%;
   height: 50%;
-  left: 35%;
-  top: 50%;
+  display: flex;
+  justify-content: space-around;
+  gap: 2vmin;
+  padding: 2%;
+}
+
+.leftPicContainer {
   display: flex;
   gap: 2vmin;
 }
 
-.picContainerBottom:nth-child(1),
-.picContainerBottom:nth-child(2) {
+.pic3Container {
   height: 70%;
-  opacity: 0;
+  opacity: 1;
+  object-fit: cover;
+}
+.pic4Container {
+  height: 70%;
+  opacity: 1;
   object-fit: cover;
 }
 
-.picContainerBottom:nth-child(3) {
-  height: 60%;
-  opacity: 0;
-  padding-left: 50px;
+.pic5Container {
+  height: 100%;
+  object-fit: cover;
+
+  transform: translateY(15%);
 }
 
-.picContainerBottom:nth-child(3) img {
-  max-height: 200%;
-  width: auto;
-  object-fit: cover;
-  position: relative;
-  top: 70%;
+.acampaBold {
+  font-size: 2.3vh;
+  font-family: "Authentic130";
+}
+
+.acampaRegular {
+  font-size: 2.3vh;
+  font-family: "Authentic60";
+  padding-bottom: 22px;
+}
+
+.acampaDescription {
+  font-size: 1.9vh;
+  font-family: "Authentic130";
 }

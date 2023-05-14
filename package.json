@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    
     "@reduxjs/toolkit": "^1.9.3",
     "cloudinary-react": "^1.8.1",
     "gsap": "^3.11.4",

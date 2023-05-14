@@ -2,10 +2,8 @@ import React from "react";
 import styles from "../styles/Pic.module.css";
 import Image from "next/image";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { isLoading } from "../reducers/loading";
 
-function Pic(props) {
+function Pic2(props) {
   /////
 
   const [stillLoading, setstillLoading] = useState(true);
@@ -13,17 +11,6 @@ function Pic(props) {
   const handleLoad = () => {
     setstillLoading(false);
   };
-
-  /////
-  /*
-
-  const hasLoaded = useSelector((state) => state.loading.value);
-
-  const dispatch = useDispatch();
-
-  const sendLoadingInfos = () => {
-    dispatch(isLoading(true));
-  };*/
 
   return (
     <div
@@ -35,7 +22,7 @@ function Pic(props) {
         src={props.src}
         width={props.width}
         height={props.height}
-        alt={"yo"}
+        alt={"Acampa"}
         className={styles.picLoaded}
         onLoad={handleLoad}
         onClick={props.onClick}
@@ -45,4 +32,4 @@ function Pic(props) {
   );
 }
 
-export default Pic;
+export default Pic2;

@@ -9,7 +9,7 @@
 
 .textContainer {
   height: 100vh;
-  width: 90%;
+  width: 20vw;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -20,15 +20,20 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .galleryContainer {
-  padding-top: 10vh;
-  width: 100%;
+  width: 80vw;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  overflow: scroll;
+  gap: 2vmin;
+}
+
+.galleryContainer::-webkit-scrollbar {
+  display: none;
 }
 
 .productContainer {
@@ -39,8 +44,9 @@
 
 .focusContainer {
   display: flex;
+  justify-content: space-between;
   height: 100vh;
-  width: 70vw;
+  width: 80vw;
   gap: 2vmin;
 }
 
@@ -48,160 +54,89 @@
 
 /* Menu */
 
-.menu {
-  display: flex;
-  flex-direction: column;
-  padding-left: 35px;
-  padding-top: 1vh;
-}
-
-.titleContainer {
-  width: auto;
-}
-
-.titleBold {
-  font-size: 25px;
-  font-family: "Authentic130";
-  display: inline-block;
-  position: relative;
-  color: black;
-}
-
-.titleBold:after {
-  background: none repeat scroll 0 0 transparent;
-  bottom: 0;
-  content: "";
-  display: block;
-  height: 3px;
-  border-radius: 4px;
-  left: 50%;
-  position: absolute;
-  background: black;
-  transition: width 0.3s ease 0s, left 0.3s ease 0s;
-  width: 0;
-}
-
-.titleBold:hover:after {
-  width: 100%;
-  left: 0;
-  bottom: 3px;
-}
-
-.title {
-  font-size: 25px;
-  font-family: "Authentic90";
-  display: inline-block;
-  position: relative;
-  color: black;
-}
-
-.title:after {
-  background: none repeat scroll 0 0 transparent;
-  bottom: 0;
-  content: "";
-  display: block;
-  height: 3px;
-  border-radius: 4px;
-  left: 50%;
-  position: absolute;
-  background: black;
-  transition: width 0.3s ease 0s, left 0.3s ease 0s;
-  width: 0;
-}
-
-.title:hover::after {
-  width: 100%;
-  left: 0;
-  bottom: 3px;
-}
-
-.shopSubCategoryContainer {
-  padding-left: 8%;
-  height: auto;
-}
-
-.shopSubCategory {
-  font-size: 20px;
-  font-family: "Authentic90";
-  color: black;
-  opacity: 1;
-}
-
 /* Shop  */
 
 .productInfoContainer {
   display: flex;
-  width: 100%;
+  max-width: 100%;
   flex-direction: column;
   justify-content: space-between;
   height: auto;
-  align-self: flex-end;
 }
 
 .productName {
-  font-size: 17px;
+  font-size: 1.9vh;
   font-family: "Authentic130";
   color: black;
 }
 
 .productPrice {
-  font-size: 17px;
+  font-size: 1.9vh;
   font-family: "Authentic90";
   color: black;
 }
 
 /* Focus */
 
+.productFocusContainer {
+  display: flex;
+  width: 40vw;
+  flex-direction: column;
+  justify-content: space-between;
+  height: auto;
+  align-self: flex-end;
+
+  /*border: 2px solid green;*/
+  padding: 2vmin;
+  gap: 5vmin;
+}
+
 .productDescription {
-  font-size: 17px;
+  font-size: 1.9vh;
   font-family: "Authentic130";
   color: black;
 }
 
-.productDescription:nth-child(1) {
-  padding-bottom: 5%;
-}
-
-.productDescription:nth-child(2) {
-  height: auto;
-}
-
 .textProductContainer {
   justify-self: center;
+
+  /*border : 2px solid red;*/
 }
 
 .numbersProductContainer {
   display: flex;
   justify-content: space-around;
+  align-items: flex-start;
   flex-direction: column;
-  padding: 10px;
-  padding-left: 20%;
-  height: 30%;
-  gap: 30px;
+  height: auto;
+  width: 80%;
+  align-self: flex-end;
+
+  gap: 2vmin;
 }
 
 .choiceContainer {
   display: flex;
-  width: 50%;
-
+  width: auto;
   align-items: center;
   justify-content: space-between;
+  /*border: 2px solid green;*/
+}
+
+.panierContainer {
 }
 
 .valueContainer {
-  min-width: 30%;
   display: flex;
   justify-content: center;
+  /*border: 2px solid green;*/
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
-.textPrice {
-  font-size: 17px;
-  font-family: "Authentic90";
-}
-
-.choiceText {
-  font-size: 17px;
-  font-family: "Authentic130";
+.quantityContainer {
+  display: flex;
+  align-self: flex-end;
 }
 
 .symbol {
@@ -209,26 +144,23 @@
   font-family: "Authentic90";
 }
 
-.panierText {
-  font-size: 20px;
-  font-family: "Authentic130";
+.panierContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 3vmin;
   align-self: flex-end;
-  padding: 1vh;
 }
 
-.retourText {
-  font-size: 20px;
+.panierText {
+  font-size: 1.9vh;
   font-family: "Authentic130";
-  padding-bottom: 1vh;
-  padding-left: 1vh;
 }
 
 /*PHOTOS */
 
 .picContainer {
-  height: 300px;
+  height: 40vh;
   padding-top: 1%;
-
   padding: 1%;
 }
 
@@ -259,18 +191,20 @@
 }
 
 .basketCircle {
-  font-family: "Authentic130";
+  font-family: "Authentic90";
+  font-size: 16px;
+  height: 16px;
 }
 
 .basketCircleContainer {
   position: absolute;
-  left: 96%;
+  left: 20px;
   background-color: #ffe93f;
-  width: 30px;
-  height: 30px;
+  border-radius: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 80px;
-  top: 1%;
+  width: 20px;
+  height: 20px;
+  border: solid 2px;
 }

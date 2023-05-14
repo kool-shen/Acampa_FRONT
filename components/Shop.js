@@ -2,12 +2,15 @@ import React, { use } from "react";
 import Cart from "./Cart";
 import { useEffect, useState, useRef } from "react";
 import styles from "@/styles/Shop.module.css";
+import menuStyles from "@/styles/subMenu.module.css";
 import Link from "next/link";
 import Pic from "./Pic";
 import gsap from "gsap";
 import { useDispatch, useSelector } from "react-redux";
 import { addToBasket } from "../reducers/basket";
 import { clickMessage } from "@/reducers/message";
+import Menu from "./Menu";
+import { getIndex } from "@/reducers/indexSubCat";
 
 export default function Shop() {
   //// FETCH / MOUNT ///
@@ -54,8 +57,6 @@ export default function Shop() {
     }
   };
 
-  const cartRef = useRef(null);
-
   /// Panier ///
 
   const [panier, setPanier] = useState({
@@ -65,6 +66,7 @@ export default function Shop() {
     height: "",
     taille: "",
     variété: "",
+    couleur: "",
     quantité: "",
     prix: "",
     mot: "",
@@ -82,16 +84,18 @@ export default function Shop() {
     const newPanier = {
       nom: shopClicked[
         selectedPhotoIndex
-      ].metadata.nom_du_produit.toUpperCase(),
+      ].metadata?.nom_du_produit.toUpperCase(),
       photo: shopClicked[selectedPhotoIndex].src,
       width: shopClicked[selectedPhotoIndex].width,
       height: shopClicked[selectedPhotoIndex].height,
-      taille: shopClicked[selectedPhotoIndex].metadata.tailles[sizeIndex],
-      variété: shopClicked[selectedPhotoIndex].metadata.Varietes[varietesIndex],
+      taille: shopClicked[selectedPhotoIndex]?.metadata?.tailles?.[sizeIndex],
+      variété:
+        shopClicked[selectedPhotoIndex]?.metadata?.Varietes?.[varietesIndex],
+      couleur:
+        shopClicked[selectedPhotoIndex]?.metadata?.couleur?.[couleurIndex],
       quantité: quantity,
       prix: price,
       mot: " ",
-      signature: " ",
     };
     setPanier(newPanier);
   };
@@ -120,14 +124,6 @@ export default function Shop() {
     setIsClicked(!isClicked);
   };
 
-  /// texte qui apparait progressivement
-
-  const timeline = gsap.timeline({
-    defaults: { opacity: 1, duration: 1, ease: "power2" },
-  });
-
-  const shopRef = useRef(null);
-
   /// text bold au click + filtre la collection
 
   const [clickedText, setClickedText] = useState();
@@ -142,8 +138,23 @@ export default function Shop() {
 
   // FOCUS //
 
-  /// Compteurs
+  /// Couleur
 
+  const [couleurIndex, setCouleurIndex] = useState(0);
+
+  const [couleurLength, setCouleurLength] = useState();
+
+  function nextCouleur() {
+    const isLastSlide = couleurIndex === couleurLength - 1;
+    const newIndex = isLastSlide ? 0 : couleurIndex + 1;
+    setCouleurIndex(newIndex);
+  }
+
+  function previousCouleur() {
+    const isFirstSlide = couleurIndex === 0;
+    const newIndex = isFirstSlide ? couleurLength - 1 : couleurIndex - 1;
+    setCouleurIndex(newIndex);
+  }
   /// Variété
 
   const [varietesIndex, setVarietesIndex] = useState(0);
@@ -199,6 +210,17 @@ export default function Shop() {
     setSizeIndex(0);
   };
 
+  //// Set de l'index des options ///
+
+  const sendProductInfo = (e) => {
+    const metadata = shopClicked[e].metadata;
+    setVarietesLength(metadata?.Varietes?.length ?? 0);
+    setCouleurLength(metadata?.couleur?.length ?? 0);
+    setSizeLength(metadata?.tailles?.length ?? 0);
+    setSelectedPhotoIndex(e);
+    handlePrice(metadata?.prix);
+  };
+
   /// Prix
 
   const [initialPrice, setInitialPrice] = useState();
@@ -208,16 +230,10 @@ export default function Shop() {
     setInitialPrice(amount);
   };
 
-  /// Virer le style du link ///
-
-  const removeLinkStyle = {
-    textDecoration: "none",
-    color: "inherit",
-  };
-
   /// Animation cart ///
 
   const [cartClicked, setCartClicked] = useState(false);
+
   const [messageClicked, setMessageClicked] = useState(false);
 
   const displayCart = !cartClicked
@@ -232,6 +248,22 @@ export default function Shop() {
     dispatch(clickMessage(false));
   };
 
+  /// donne l'index de la catégorie cliquée
+
+  // index de la subCategory //
+  const sendIndex = (i) => {
+    dispatch(getIndex(i));
+  };
+  const indexSubCat = useSelector((state) => state.indexSubCat.value);
+
+  const handleItemClick = (i) => {
+    setIsClicked(false);
+    clearValues();
+    clickAlbum(i);
+    sendIndex(i);
+    console.log(clickedText, indexSubCat);
+  };
+
   return (
     <div className={styles.mainContainer}>
       <Cart
@@ -244,213 +276,205 @@ export default function Shop() {
         }}
       />
 
-      <div
-        className={styles.basketContainer}
-        onClick={() => {
-          setCartClicked(true);
-          console.log("olala");
-        }}
-      >
-        <img className={styles.basket} src={"assets/basket_black.png"} />
+      <div className={styles.textContainer}>
+        <Menu
+          clickCart={() => {
+            setCartClicked(true);
+          }}
+          indexCategories={indexCategories}
+          onClick={handleItemClick}
+        />
       </div>
-      {basketValue.length > 0 && [
-        <div className={styles.basketCircleContainer}>
-          <div className={styles.basketCircle}>{basketValue.length}</div>
-        </div>,
-      ]}
-
-      <div
-        className={styles.textContainer}
-        onClick={() => {
-          setCartClicked(false);
-          setMessageClicked(false);
-          messageIsFalse();
-        }}
-      >
-        <div className={styles.menu}>
-          <div className={styles.titleContainer}>
-            <Link href="/" style={removeLinkStyle} className={styles.title}>
-              Acampa
-            </Link>
-          </div>
-          <div className={styles.titleContainer}>
-            <div className={styles.title}>À propos</div>
-          </div>
-          <div className={styles.titleContainer}>
-            <Link
-              href="/prestations"
-              style={removeLinkStyle}
-              className={styles.title}
-            >
-              Prestations
-            </Link>
-          </div>
-          <div className={styles.titleContainer}>
-            <div className={styles.titleBold}>Boutique</div>
-          </div>
-          <div className={styles.shopSubCategoryContainer}>
-            {indexCategories.map((data, i) => (
-              <div
-                className={styles.shopSubCategory}
-                style={
-                  clickedText === i
-                    ? { fontFamily: "Authentic130" }
-                    : { fontFamily: "Authentic90" }
-                }
-                onClick={() => {
-                  setIsClicked(false);
-                  clearValues();
-                  clickAlbum(i);
-                }}
-              >
-                {indexCategories[i].name}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {isClicked && [
-          ,
-          <div
-            className={styles.retourText}
-            onClick={() => {
-              setIsClicked(false);
-              setCartClicked(false);
-              clearValues();
-              messageIsFalse();
-            }}
-          >
-            &lt; RETOUR AU SHOP
-          </div>,
-        ]}
-      </div>
-
-      {isClicked ? (
-        <div className={styles.photoContainer}>
+      <div className={styles.galleryContainer}>
+        {isClicked ? (
           <div className={styles.focusContainer}>
             <div className={styles.picContainer}>
               <Pic
                 src={shopClicked[selectedPhotoIndex].src}
                 width={shopClicked[selectedPhotoIndex].width}
                 height={shopClicked[selectedPhotoIndex].height}
-                alt={shopClicked[selectedPhotoIndex].context.alt}
+                alt={shopClicked[selectedPhotoIndex].context?.alt}
               />
             </div>
-            <div className={styles.productInfoContainer}>
+            <div className={styles.productFocusContainer}>
               <div className={styles.textProductContainer}>
                 <div className={styles.productDescription}>
                   {shopClicked[
                     selectedPhotoIndex
-                  ].metadata.nom_du_produit.toUpperCase()}
+                  ].metadata?.nom_du_produit?.toUpperCase()}
                 </div>
                 <div className={styles.productDescription}>
-                  {shopClicked[selectedPhotoIndex].context.alt}
+                  {shopClicked[selectedPhotoIndex].context?.alt}
                 </div>
                 <div className={styles.productDescription}>_</div>
               </div>
               <div className={styles.numbersProductContainer}>
                 <div className={styles.choiceContainer}>
-                  <div className={styles.choiceText}>TAILLE</div>
-                  <div className={styles.symbol} onClick={previousSize}>
-                    &lt;
-                  </div>
-                  <div className={styles.valueContainer}>
-                    <div className={styles.textPrice}>
-                      {
-                        shopClicked[selectedPhotoIndex].metadata.tailles[
-                          sizeIndex
-                        ]
-                      }
+                  <div
+                    className={styles.productDescription}
+                  >{`${price},00€`}</div>
+                </div>
+                {shopClicked[selectedPhotoIndex].metadata?.tailles ? (
+                  <div className={styles.propriétésContainer}>
+                    <div className={styles.choiceContainer}>
+                      <div className={styles.productDescription}>TAILLE</div>
+                    </div>
+                    <div className={styles.choiceContainer}>
+                      <div
+                        className={styles.productDescription}
+                        onClick={previousSize}
+                      >
+                        &lt;
+                      </div>
+                      <div className={styles.valueContainer}>
+                        <div className={styles.productDescription}>
+                          {shopClicked[selectedPhotoIndex].metadata?.tailles[
+                            sizeIndex
+                          ].toUpperCase()}
+                        </div>
+                      </div>
+                      <div
+                        className={styles.productDescription}
+                        onClick={nextSize}
+                      >
+                        &gt;
+                      </div>
                     </div>
                   </div>
-                  <div className={styles.symbol} onClick={nextSize}>
-                    &gt;
-                  </div>
-                </div>
-                <div className={styles.choiceContainer}>
-                  <div className={styles.choiceText}>VARIÉTÉS</div>
-                  <div className={styles.symbol} onClick={previousVarietes}>
-                    &lt;
-                  </div>
-                  <div className={styles.valueContainer}>
-                    <div className={styles.textPrice}>
-                      {
-                        shopClicked[selectedPhotoIndex].metadata.Varietes[
-                          varietesIndex
-                        ]
-                      }
+                ) : (
+                  ""
+                )}
+                {shopClicked[selectedPhotoIndex].metadata?.couleur ? (
+                  <div className={styles.propriétésContainer}>
+                    <div className={styles.choiceContainer}>
+                      <div className={styles.productDescription}>COULEUR</div>
+                      <div
+                        className={styles.productDescription}
+                        onClick={previousCouleur}
+                      >
+                        &lt;
+                      </div>
+                      <div className={styles.valueContainer}>
+                        <div className={styles.productDescription}>
+                          {
+                            shopClicked[selectedPhotoIndex].metadata?.couleur[
+                              couleurIndex
+                            ]
+                          }
+                        </div>
+                      </div>
+                      <div
+                        className={styles.productDescription}
+                        onClick={nextCouleur}
+                      >
+                        &gt;
+                      </div>
                     </div>
                   </div>
-                  <div className={styles.symbol} onClick={nextVarietes}>
-                    &gt;
+                ) : (
+                  ""
+                )}
+                {shopClicked[selectedPhotoIndex].metadata?.Varietes ? (
+                  <div className={styles.propriétésContainer}>
+                    <div className={styles.choiceContainer}>
+                      <div className={styles.productDescription}>VARIÉTÉ</div>
+                    </div>
+                    <div className={styles.choiceContainer}>
+                      <div className={styles.symbol} onClick={previousVarietes}>
+                        &lt;
+                      </div>
+                      <div className={styles.valueContainer}>
+                        <div className={styles.productDescription}>
+                          {
+                            shopClicked[selectedPhotoIndex].metadata?.Varietes[
+                              varietesIndex
+                            ]
+                          }
+                        </div>
+                      </div>
+                      <div className={styles.symbol} onClick={nextVarietes}>
+                        &gt;
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className={styles.choiceContainer}>
-                  <div className={styles.choiceText}>QUANTITÉ</div>
-                  <div className={styles.symbol} onClick={removeQuantity}>
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className={styles.panierContainer}>
+                <div className={styles.quantityContainer}>
+                  <div
+                    className={styles.productDescription}
+                    onClick={removeQuantity}
+                  >
                     -
                   </div>
                   <div className={styles.valueContainer}>
-                    <div className={styles.textPrice}>{quantity}</div>
+                    <div className={styles.productDescription}>{quantity}</div>
                   </div>
-                  <div className={styles.symbol} onClick={addQuantity}>
+                  <div
+                    className={styles.productDescription}
+                    onClick={addQuantity}
+                  >
                     +
                   </div>
                 </div>
-                <div className={styles.choiceContainer}>
-                  <div className={styles.choiceText}>PRIX</div>
-                  <div className={styles.textPrice}>{`${price},00€`}</div>
+                <div
+                  className={styles.panierText}
+                  onClick={() => {
+                    firstCart();
+                  }}
+                >
+                  AJOUTER AU PANIER +
                 </div>
-              </div>
-              <div className={styles.panierText} onClick={firstCart}>
-                AJOUTER AU PANIER +
               </div>
             </div>
           </div>
-        </div>
-      ) : (
-        shopClicked.map((data, i) => (
-          <div
-            className={styles.galleryContainer}
-            onClick={() => {
-              setCartClicked(false);
-              setMessageClicked(false);
-              messageIsFalse();
-            }}
-          >
+        ) : (
+          shopClicked.map((data, i) => (
             <div
               key={i}
               className={styles.productContainer}
-              onClick={() => {
-                setSelectedPhotoIndex(i);
-                setVarietesLength(shopClicked[i].metadata.Varietes.length);
-                setSizeLength(shopClicked[i].metadata.tailles.length);
-                handlePrice(shopClicked[i].metadata.prix);
-              }}
+              onClick={() =>
+                shopClicked[i].metadata?.prix
+                  ? (setCartClicked(false),
+                    setMessageClicked(false),
+                    messageIsFalse(),
+                    sendProductInfo(i))
+                  : console.log(shopClicked[i].metadata?.prix)
+              }
             >
               <div className={styles.picContainer}>
                 <Pic
                   onClick={() => {
-                    handleIsClicked();
+                    shopClicked[i].metadata?.prix
+                      ? handleIsClicked()
+                      : console.log(shopClicked[i].metadata?.prix);
                   }}
                   src={shopClicked[i].src}
                   width={shopClicked[i].width}
                   height={shopClicked[i].height}
-                  alt={shopClicked[i].context.alt}
+                  alt={shopClicked[i].context?.alt}
                 />
               </div>
               <div className={styles.productInfoContainer}>
-                <div className={styles.productName}>
-                  {shopClicked[i].metadata.nom_du_produit.toUpperCase()}
-                </div>
-                <div className={styles.productPrice}>
-                  {`À partir de ${shopClicked[i].metadata.prix},00€`}
-                </div>
+                {shopClicked[i].metadata?.prix ? (
+                  <>
+                    <div className={styles.productName}>
+                      {shopClicked[i].metadata?.nom_du_produit?.toUpperCase()}
+                    </div>
+                    <div className={styles.productPrice}>
+                      À partir de {shopClicked[i].metadata?.prix},00€
+                    </div>
+                  </>
+                ) : (
+                  <div className={styles.productName}>BIENTÔT DISPO ;)</div>
+                )}
               </div>
             </div>
-          </div>
-        ))
-      )}
+          ))
+        )}
+      </div>
     </div>
   );
 }

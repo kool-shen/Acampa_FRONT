@@ -1,0 +1,58 @@
+.container {
+  min-height: 100vh;
+  min-width: 60vw;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollContainerTop2 {
+  height: 50%;
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 8vmin;
+}
+
+.scrollContainerBottom2 {
+  height: 50%;
+  display: flex;
+  justify-content: space-around;
+  gap: 2vmin;
+  padding: 2%;
+}
+
+.leftPicContainer2 {
+  display: flex;
+  gap: 2vmin;
+}
+
+.pic1Container {
+  height: 98%;
+  opacity: 1;
+}
+
+.pic2Container {
+  align-self: flex-end;
+  padding-right: 6%;
+  height: 70%;
+  opacity: 1;
+}
+
+.pic3Container {
+  height: 70%;
+  opacity: 1;
+  object-fit: cover;
+}
+.pic4Container {
+  height: 70%;
+  opacity: 1;
+  object-fit: cover;
+}
+
+.pic5Container {
+  height: 100%;
+  object-fit: cover;
+
+  transform: translateY(15%);
+}

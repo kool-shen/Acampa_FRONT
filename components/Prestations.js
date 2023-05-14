@@ -1,7 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Pic from "./Pic";
 import styles from "../styles/Prestations.module.css";
-import Link from "next/link";
+import Menu from "./Menu";
+import Cart from "./Cart";
+import { useDispatch } from "react-redux";
+import { clickMessage } from "@/reducers/message";
 
 export default function Prestations() {
   /// Contenu texte ///
@@ -40,6 +43,22 @@ export default function Prestations() {
     }
   };
 
+  /// CART ///
+
+  const [cartClicked, setCartClicked] = useState(false);
+
+  const [messageClicked, setMessageClicked] = useState(false);
+
+  const displayCart = !cartClicked
+    ? { transform: "translateX(0)", transition: "transform 1s" }
+    : { transition: "transform 1s" };
+
+  const dispatch = useDispatch();
+
+  const messageIsFalse = () => {
+    dispatch(clickMessage(false));
+  };
+
   /// Use<Effect au Mount
 
   useEffect(() => {
@@ -53,64 +72,25 @@ export default function Prestations() {
 
   const [clickedText, setClickedText] = useState(0);
 
-  /// Virer le style du link ///
-
-  const removeLinkStyle = {
-    textDecoration: "none",
-    color: "inherit",
-  };
-
   /// Envoi du mail ///
 
   return (
     <div className={styles.mainContainer}>
+      <Cart
+        style={displayCart}
+        isClicked={messageClicked}
+        onClick={() => {
+          setCartClicked(false);
+          setMessageClicked(false);
+          messageIsFalse();
+        }}
+      />
       <div className={styles.menuContainer}>
-        <div className={styles.menu}>
-          <div className={styles.titleContainer}>
-            <Link href="/" style={removeLinkStyle} className={styles.titleMenu}>
-              Acampa
-            </Link>
-          </div>
-          <div className={styles.titleContainer}>
-            <div className={styles.titleMenu}>À propos</div>
-          </div>
-          <div className={styles.titleContainer}>
-            <Link
-              href="/prestations"
-              style={removeLinkStyle}
-              className={styles.titleBold}
-            >
-              Prestations
-            </Link>
-          </div>
-          <div className={styles.shopSubCategoryContainer}>
-            {prestaSubCategories.map((data, i) => (
-              <div
-                className={styles.shopSubCategory}
-                style={
-                  clickedText === i
-                    ? { fontFamily: "Authentic130" }
-                    : { fontFamily: "Authentic90" }
-                }
-                onClick={() => {
-                  setClickedText(i);
-                  console.log(textContent[i].metadata.nom_du_produit);
-                }}
-              >
-                {prestaSubCategories[i]}
-              </div>
-            ))}
-          </div>
-          <div className={styles.titleContainer}>
-            <Link
-              className={styles.titleMenu}
-              href="/shop"
-              style={removeLinkStyle}
-            >
-              Boutique
-            </Link>
-          </div>
-        </div>
+        <Menu
+          clickCart={() => {
+            setCartClicked(true);
+          }}
+        />
       </div>
 
       {/* vérifie si les métadatas ont chargé */}

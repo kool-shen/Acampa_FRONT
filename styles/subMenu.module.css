@@ -1,0 +1,94 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+  padding-left: 35px;
+  padding-top: 1vh;
+  position: relative;
+}
+
+.titleContainer {
+  width: auto;
+}
+
+.title {
+  font-size: 16px;
+  font-family: "Authentic130";
+  display: inline-block;
+  position: relative;
+  color: black;
+}
+
+.title:after {
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 3px;
+  border-radius: 4px;
+  left: 50%;
+  position: absolute;
+  background: black;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+
+.title:hover:after {
+  width: 100%;
+  left: 0;
+  bottom: 3px;
+}
+
+.shopSubCategoryContainer {
+  padding-left: 15px;
+  height: auto;
+}
+
+.shopSubCategory {
+  font-size: 16px;
+  font-family: "Authentic90";
+  color: black;
+  opacity: 1;
+}
+
+.flowerContainer {
+  height: 127px;
+  padding-bottom: 2vh;
+}
+
+.cartContainer {
+  height: 20px;
+  position: absolute;
+  padding-bottom: 2vh;
+  top: 100%;
+  transform: translateY(53px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.tiret {
+  padding-bottom: 4px;
+  padding-left: 3px;
+  font-size: 16px;
+  font-family: "Authentic60";
+}
+
+.basketCircle {
+  font-family: "Authentic90";
+  font-size: 16px;
+  height: 16px;
+}
+
+.basketCircleContainer {
+  position: absolute;
+  left: 20px;
+  background-color: #ffe93f;
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border: solid 2px;
+}

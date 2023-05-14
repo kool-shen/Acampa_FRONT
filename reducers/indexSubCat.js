@@ -1,0 +1,19 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+  value: null,
+};
+
+export const indexSlice = createSlice({
+  name: "indexSubCat",
+
+  initialState,
+  reducers: {
+    getIndex: (state, action) => {
+      state.value = action.payload;
+    },
+  },
+});
+
+export const { getIndex } = indexSlice.actions;
+export default indexSlice.reducer;

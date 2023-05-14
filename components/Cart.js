@@ -4,8 +4,10 @@ import Pic from "./Pic";
 import { useDispatch, useSelector } from "react-redux";
 import { clickMessage } from "@/reducers/message";
 import Message from "./Message";
+import { clickDelivery } from "@/reducers/delivery";
 
 import { removeFromBasket, addToBasket } from "../reducers/basket";
+import Delivery from "./Delivery";
 
 function Cart(props) {
   // Contenu du panier //
@@ -13,6 +15,9 @@ function Cart(props) {
 
   // État clicked du message //
   const messageIsClicked = useSelector((state) => state.message.value);
+
+  // État clicked de la livraison //
+  const deliveryIsClicked = useSelector((state) => state.delivery.value);
 
   // changer l'état clicked du message //
 
@@ -77,29 +82,44 @@ function Cart(props) {
   /// Livraison / click & collect ///
 
   const [collectChecked, setCollectChecked] = useState(true);
-  const [deliveryChecked, setDeliveryChecked] = useState(false);
+
+  const deliveryTrue = () => {
+    dispatch(clickDelivery(true));
+  };
+
+  const unclickDelivery = () => {
+    dispatch(clickDelivery(false));
+  };
 
   const handleCollectCheck = () => {
     if (!collectChecked) {
       setCollectChecked(true);
-      setDeliveryChecked(false);
+      unclickDelivery();
     } else {
       setCollectChecked(false);
-      setDeliveryChecked(true);
+      deliveryTrue();
     }
   };
 
   const handleDeliveryCheck = () => {
-    if (!deliveryChecked) {
-      setDeliveryChecked(true);
+    if (!deliveryIsClicked) {
+      deliveryTrue();
       setCollectChecked(false);
     } else {
-      setDeliveryChecked(false);
+      unclickDelivery();
       setCollectChecked(true);
     }
   };
 
-  const deliveryPrice = deliveryChecked ? 8 : 0;
+  const deliveryPrice = deliveryIsClicked ? 8 : 0;
+
+  const displayDelivery = deliveryIsClicked
+    ? { transform: "translateX(-50vw)", transition: "transform 1s" }
+    : {
+        transform: "translateX(-50vw)",
+        transition: "transform 1s",
+        display: "none",
+      };
 
   const totalPrice =
     basketValue.reduce((acc, item) => acc + item.prix, 0) + deliveryPrice;
@@ -111,7 +131,9 @@ function Cart(props) {
       isClicked={props.isClicked}
       ref={props.ref}
     >
-      <Message productIndex={productIndex} productMessage={productMessage} />
+      <Delivery style={displayDelivery} />
+      <Message productindex={productIndex} productmessage={productMessage} />
+
       {basketValue.length === 0 ? (
         <div className={styles.sumUpContainer}>
           <div className={styles.text}>
@@ -158,7 +180,7 @@ function Cart(props) {
                   <label className={styles.switch}>
                     <input
                       type="checkbox"
-                      checked={deliveryChecked}
+                      checked={deliveryIsClicked}
                       onChange={handleDeliveryCheck}
                     />
 
