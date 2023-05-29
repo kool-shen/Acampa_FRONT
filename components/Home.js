@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Pic from "./Pic";
 import Link from "next/link";
 import menuStyles from "@/styles/subMenu.module.css";
+import { useRouter } from "next/router";
 
 export default function Home() {
   //// Load Cloudinary ////
@@ -26,13 +27,39 @@ export default function Home() {
     }
   };
 
+  const [subCategories, setSubcategories] = useState();
+
+  const loadSubCategories = async () => {
+    try {
+      const response = await fetch(
+        "https://acampa-back.vercel.app/cloudinary/shopSubcategories"
+      );
+      const indexlist = await response.json();
+
+      if (indexlist.length > 0) {
+        setSubcategories(indexlist);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     loadImage();
+    loadSubCategories();
 
     const mouseWheel = document.querySelector(".scrollContainer");
     console.log(mouseWheel);
     mouseWheel.addEventListener("wheel", handleScroll);
   }, []);
+
+  /// Générer page product depuis click menu ///
+
+  const router = useRouter();
+
+  const GenerateCollectionPage = (collectionName) => {
+    router.push(`/${collectionName}`);
+  };
 
   /// Scroll horizontal ///
 
@@ -183,13 +210,13 @@ export default function Home() {
           />
           <div className={menuStyles.menu}>
             <div className={menuStyles.titleContainer}>
-              <Link
-                href="/shop"
+              <div
+                onClick={() => GenerateCollectionPage(subCategories[0].name)}
                 style={removeLinkStyle}
                 className={menuStyles.title}
               >
                 Boutique
-              </Link>
+              </div>
             </div>
 
             <div className={menuStyles.titleContainer}>

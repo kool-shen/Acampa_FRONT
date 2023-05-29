@@ -1,0 +1,72 @@
+.mainContainer {
+  width: 100vw;
+  display: flex;
+  height: 100vh;
+  position: relative;
+}
+
+.leftContainer {
+  height: 100vh;
+  width: 20vw;
+
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.rightContainer {
+  height: 100vh;
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.infoContainer {
+  width: 33vw;
+  height: 50vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5vmin;
+}
+.newsContainer {
+  height: 50vh;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.text {
+  font-size: 1.9vh;
+  font-family: "Authentic130";
+  color: black;
+}
+.text2 {
+  padding-left: 10%;
+  font-size: 1.9vh;
+  font-family: "Authentic130";
+  color: black;
+}
+
+.productContainer {
+  display: flex;
+
+  flex-direction: column;
+  gap: 2vmin;
+}
+
+.productInfoContainer {
+  display: flex;
+  max-width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: auto;
+}
+
+.picContainer {
+  height: 40vh;
+  padding-top: 1%;
+
+  cursor: pointer;
+}

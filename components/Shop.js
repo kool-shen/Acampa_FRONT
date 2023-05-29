@@ -1,9 +1,8 @@
-import React, { use } from "react";
+import React from "react";
 import Cart from "./Cart";
 import { useEffect, useState, useRef } from "react";
 import styles from "@/styles/Shop.module.css";
-import menuStyles from "@/styles/subMenu.module.css";
-import Link from "next/link";
+
 import Pic from "./Pic";
 import gsap from "gsap";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +11,21 @@ import { clickMessage } from "@/reducers/message";
 import Menu from "./Menu";
 import { getIndex } from "@/reducers/indexSubCat";
 
+import { useRouter } from "next/router";
+
 export default function Shop() {
+  /// Générer page product ///
+
+  const router = useRouter();
+
+  /* const GenerateProductPage = (productName, collectionName) => {
+    router.push(`/${collectionName}/${productName}`);
+  };*/
+
+  const GenerateProductPage = (productName, collectionName) => {
+    router.push(`/${collectionName}/${productName}`);
+  };
+
   //// FETCH / MOUNT ///
   const [allShop, setAllShop] = useState([]);
   const [shopClicked, setShopClicked] = useState([]);
@@ -21,9 +34,7 @@ export default function Shop() {
 
   const loadImage = async () => {
     try {
-      const response = await fetch(
-        "https://acampa-back.vercel.app/cloudinary/shop"
-      );
+      const response = await fetch("http://localhost:5000/cloudinary/shop");
       const resource = await response.json();
 
       if (resource.length > 0) {
@@ -44,9 +55,7 @@ export default function Shop() {
 
   const loadSubCategories = async () => {
     try {
-      const response = await fetch(
-        "https://acampa-back.vercel.app/cloudinary/folders"
-      );
+      const response = await fetch("http://localhost:5000/cloudinary/folders");
       const indexlist = await response.json();
 
       if (indexlist.length > 0) {
@@ -102,7 +111,6 @@ export default function Shop() {
 
   useEffect(() => {
     loadImage();
-    loadSubCategories();
 
     if (panier.nom !== "" || panier.taille !== "") {
       dispatch(addToBasket(panier));
@@ -286,6 +294,7 @@ export default function Shop() {
         />
       </div>
       <div className={styles.galleryContainer}>
+        {/* */}
         {isClicked ? (
           <div className={styles.focusContainer}>
             <div className={styles.picContainer}>
@@ -447,9 +456,10 @@ export default function Shop() {
               <div className={styles.picContainer}>
                 <Pic
                   onClick={() => {
-                    shopClicked[i].metadata?.prix
-                      ? handleIsClicked()
-                      : console.log(shopClicked[i].metadata?.prix);
+                    GenerateProductPage(
+                      shopClicked[i].metadata.nom_du_produit,
+                      shopClicked[i].collection
+                    );
                   }}
                   src={shopClicked[i].src}
                   width={shopClicked[i].width}

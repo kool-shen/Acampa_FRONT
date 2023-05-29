@@ -1,6 +1,6 @@
 .container {
   min-height: 100vh;
-  min-width: 60vw;
+  min-width: 60%;
   position: relative;
   display: flex;
   flex-direction: column;

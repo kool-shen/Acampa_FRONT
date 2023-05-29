@@ -11,11 +11,12 @@
 }
 
 .title {
-  font-size: 16px;
+  font-size: 1.9vh;
   font-family: "Authentic130";
   display: inline-block;
   position: relative;
   color: black;
+  cursor: pointer;
 }
 
 .title:after {
@@ -41,13 +42,16 @@
 .shopSubCategoryContainer {
   padding-left: 15px;
   height: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .shopSubCategory {
-  font-size: 16px;
-  font-family: "Authentic90";
+  font-size: 1.9vh;
+  font-family: "Authentic60";
+  width: auto;
   color: black;
-  opacity: 1;
+  cursor: pointer;
 }
 
 .flowerContainer {
@@ -70,14 +74,14 @@
 .tiret {
   padding-bottom: 4px;
   padding-left: 3px;
-  font-size: 16px;
+  font-size: 1.9vh;
   font-family: "Authentic60";
 }
 
 .basketCircle {
   font-family: "Authentic90";
-  font-size: 16px;
-  height: 16px;
+  font-size: 1.9vh;
+  height: 1.9vh;
 }
 
 .basketCircleContainer {

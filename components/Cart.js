@@ -140,7 +140,7 @@ function Cart(props) {
             Il n'y a (encore) rien dans votre panier
           </div>
           <div className={styles.symbolContainer} onClick={props.onClick}>
-            <img className={styles.cross} src={"assets/x-mark.png"} />
+            <img className={styles.cross} src={"/assets/x-mark.png"} />
           </div>
         </div>
       ) : (
@@ -151,7 +151,7 @@ function Cart(props) {
             </div>
 
             <div className={styles.symbolContainer} onClick={props.onClick}>
-              <img className={styles.cross} src={"assets/x-mark.png"} />
+              <img className={styles.cross} src={"/assets/x-mark.png"} />
             </div>
           </div>,
           <div className={styles.totalPayContainer}>
@@ -228,7 +228,7 @@ function Cart(props) {
                       <img
                         className={styles.symbol}
                         style={{ paddingLeft: "4px" }}
-                        src={"assets/message.png"}
+                        src={"/assets/message.png"}
                       />
                       <div
                         className={styles.tinyText}
@@ -268,7 +268,7 @@ function Cart(props) {
                       removeBasket(i);
                     }}
                   >
-                    <img className={styles.symbol} src={"assets/delete.png"} />
+                    <img className={styles.symbol} src={"/assets/delete.png"} />
                     <div className={styles.tinyText}>Supprimer l'article</div>
                   </div>
                 </div>

@@ -4,44 +4,26 @@
   display: flex;
   height: 100vh;
   position: relative;
-  overflow: hidden;
 }
 
 .textContainer {
   height: 100vh;
-  max-width: 20vw;
+  width: 20vw;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .galleryContainer {
-  width: 98vw;
+  width: 80vw;
   display: flex;
-  justify-content: center;
-}
-
-.photoContainer {
-  height: 100%;
-  padding-top: 4vmin;
-  display: flex;
+  justify-content: space-around;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  overflow: scroll;
   gap: 2vmin;
-  padding-left: 2vmin;
-  width: 90%;
-
-  overflow-y: scroll;
 }
 
-/*@media screen and (max-width: 668px) {
-  .photoContainer {
-    min-width: calc(100%-2vmin * 3) / 4;
-    max-width: calc(100%-2vmin * 3) / 4;
-  }
-}*/
-
-.photoContainer::-webkit-scrollbar {
+.galleryContainer::-webkit-scrollbar {
   display: none;
 }
 
@@ -106,6 +88,13 @@
   color: black;
 }
 
+.productTitle {
+  font-size: 1.9vh;
+  font-family: "Authentic130";
+  color: black;
+  padding-bottom: 3vh;
+}
+
 .textProductContainer {
   justify-self: center;
 
@@ -119,7 +108,7 @@
   flex-direction: column;
   height: auto;
   width: 80%;
-  align-self: flex-end;
+  align-self: center;
 
   gap: 2vmin;
 }
@@ -129,16 +118,11 @@
   width: auto;
   align-items: center;
   justify-content: space-between;
-  /*border: 2px solid green;*/
-}
-
-.panierContainer {
 }
 
 .valueContainer {
   display: flex;
   justify-content: center;
-  /*border: 2px solid green;*/
   padding-right: 10px;
   padding-left: 10px;
 }
@@ -168,9 +152,9 @@
 /*PHOTOS */
 
 .picContainer {
-  height: 38vh;
-
-  cursor: pointer;
+  height: 40vh;
+  padding-top: 1%;
+  padding: 1%;
 }
 
 .focusContainer > .picContainer {
@@ -216,4 +200,29 @@
   width: 20px;
   height: 20px;
   border: solid 2px;
+}
+
+.inputContainer {
+  display: flex;
+  width: 15vw;
+  align-items: center;
+  gap: 1vmin;
+}
+
+.dateInput {
+  font-size: 1.9vh;
+  font-family: "Authentic130";
+  background-color: white;
+  border: 2px solid black;
+  width: 4vw;
+  height: 1.9vh;
+}
+
+.dateInput::-webkit-scrollbar {
+  display: none;
+}
+
+.dateInput:focus {
+  border: 2px solid black;
+  outline: none;
 }

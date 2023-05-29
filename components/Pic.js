@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "../styles/Pic.module.css";
 import Image from "next/image";
+import BlurredImage from "../public/assets/Logo-fleur.png";
+
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { isLoading } from "../reducers/loading";
@@ -32,6 +34,7 @@ function Pic(props) {
       }`}
     >
       <Image
+        blurDataURL={"/assets/Logo-fleur.png"}
         src={props.src}
         width={props.width}
         height={props.height}

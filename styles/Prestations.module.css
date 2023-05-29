@@ -14,149 +14,63 @@
   flex-direction: column;
 }
 
-.menu {
-  display: flex;
-  flex-direction: column;
-  padding-left: 35px;
-  padding-top: 1vh;
-}
-
-.titleContainer {
-  width: auto;
-}
-
-.titleBold {
-  font-size: 25px;
-  font-family: "Authentic130";
-  display: inline-block;
-  position: relative;
-  color: black;
-}
-
-.titleBold:after {
-  background: none repeat scroll 0 0 transparent;
-  bottom: 0;
-  content: "";
-  display: block;
-  height: 3px;
-  border-radius: 4px;
-  left: 50%;
-  position: absolute;
-  background: black;
-  transition: width 0.3s ease 0s, left 0.3s ease 0s;
-  width: 0;
-}
-
-.titleBold:hover:after {
-  width: 100%;
-  left: 0;
-  bottom: 3px;
-}
-
-.titleMenu {
-  font-size: 25px;
-  font-family: "Authentic90";
-  display: inline-block;
-  position: relative;
-  color: black;
-}
-
-.titleMenu:after {
-  background: none repeat scroll 0 0 transparent;
-  bottom: 0;
-  content: "";
-  display: block;
-  height: 3px;
-  border-radius: 4px;
-  left: 50%;
-  position: absolute;
-  background: black;
-  transition: width 0.3s ease 0s, left 0.3s ease 0s;
-  width: 0;
-}
-
-.titleMenu:hover:after {
-  width: 100%;
-  left: 0;
-  bottom: 3px;
-}
-
-.title:after {
-  background: none repeat scroll 0 0 transparent;
-  bottom: 0;
-  content: "";
-  display: block;
-  height: 3px;
-  border-radius: 4px;
-  left: 50%;
-  position: absolute;
-  background: black;
-  transition: width 0.3s ease 0s, left 0.3s ease 0s;
-  width: 0;
-}
-
-.title:hover::after {
-  width: 100%;
-  left: 0;
-  bottom: 3px;
-}
-
-.shopSubCategoryContainer {
-  padding-left: 8%;
-  height: auto;
-}
-
-.shopSubCategory {
-  font-size: 20px;
-  font-family: "Authentic90";
-  color: black;
-  opacity: 1;
-}
-
 .middleContainer {
   max-height: 100vh;
-  width: 35vw;
-  display: flex;
-  flex-direction: column;
-  padding: 1vh;
-}
-
-.descriptionContainer {
-  height: 40vh;
+  width: 25vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 1vh;
 }
 
-.text {
-  font-size: 15px;
-  font-family: "Authentic90";
+.photoAreaContainer {
+  display: flex;
+  justify-content: flex-end;
+  width: 50vw;
 }
 
-.title {
-  font-size: 17px;
+.descriptionContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4vmin;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+
+  padding: 1vh;
+  border: 2px solid green;
+}
+
+.text {
+  font-size: 1.9vh;
+  font-family: "Authentic130";
+  color: black;
+}
+
+.text2 {
+  padding-left: 10%;
+  font-size: 1.9vh;
   font-family: "Authentic130";
   color: black;
 }
 
 .picContainer {
   max-height: 100vh;
-  padding-top: 0%;
-  padding-bottom: 0%;
-  padding-right: 35px;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  height: 65vh;
+  gap: 3vmin;
 }
 
 .normalInput {
-  font-size: 17px;
-  font-family: "Authentic130";
+  font-size: 1.9vh;
+  color: black;
+  font-family: "Authentic90";
   min-width: 10vw;
   width: 50%;
   background-color: white;
@@ -169,7 +83,7 @@
 }
 
 .messageInput {
-  font-size: 17px;
+  font-size: 1.9vh;
   font-family: "Authentic130";
   border: none;
   border-bottom: 2px dashed black;
@@ -187,18 +101,12 @@
   outline: none;
 }
 
-.sendText {
-  font-size: 25px;
-  font-family: "Authentic130";
-  align-self: flex-end;
-}
-
 .sendButton {
   background-color: white;
   border: none;
-
+  align-self: center;
   cursor: pointer;
-  font-size: 25px;
+  font-size: 1.9vh;
   font-family: "Authentic130";
 
   text-decoration: none;

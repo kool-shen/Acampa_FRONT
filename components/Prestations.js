@@ -43,6 +43,18 @@ export default function Prestations() {
     }
   };
 
+  // text bold au click + filtre la collection
+
+  const [clickedText, setClickedText] = useState(0);
+
+  let phrase =
+    textContent[clickedText] &&
+    textContent[clickedText].metadata.nom_du_produit.toUpperCase();
+
+  const milieu = phrase?.lastIndexOf(" ", Math.floor(phrase.length / 2));
+  const premierePartie = phrase?.substr(0, milieu);
+  const secondePartie = phrase?.substr(milieu + 1);
+
   /// CART ///
 
   const [cartClicked, setCartClicked] = useState(false);
@@ -68,10 +80,6 @@ export default function Prestations() {
     loadContent();
   }, []);
 
-  /// text bold au click + filtre la collection
-
-  const [clickedText, setClickedText] = useState(0);
-
   /// Envoi du mail ///
 
   return (
@@ -90,6 +98,8 @@ export default function Prestations() {
           clickCart={() => {
             setCartClicked(true);
           }}
+          aboutSubCatStyle={{ display: "none" }}
+          shopSubCatStyle={{ display: "none" }}
         />
       </div>
 
@@ -97,68 +107,67 @@ export default function Prestations() {
       {textContent[clickedText] && (
         <div className={styles.middleContainer}>
           <div className={styles.descriptionContainer}>
-            <div className={styles.title}>
-              {textContent[clickedText].metadata.nom_du_produit.toUpperCase()}
+            <div className={styles.titleContainer}>
+              <div className={styles.text}>{premierePartie}</div>
+              <div className={styles.text2}>{secondePartie}</div>
             </div>
-            <p className={styles.text}>
+            <div className={styles.text} style={{ whiteSpace: "pre-line" }}>
               {textContent[clickedText].context.alt}
-            </p>
+            </div>
           </div>
-          <div className={styles.inputContainer}>
-            <form className={styles.form}>
-              <h3 className={styles.title}>
-                Pour me faire part de vos envies !
-              </h3>
-              <input
-                type="text"
-                className={styles.normalInput}
-                placeholder="PRÉNOM"
-                name="user_firstName"
-              />
-              <input
-                type="text"
-                className={styles.normalInput}
-                placeholder="NOM"
-                name="user_lastName"
-              />
-              <input
-                type="text"
-                className={styles.normalInput}
-                placeholder="MAIL"
-                name="user_email"
-              />
-              <input
-                type="text"
-                className={styles.normalInput}
-                placeholder="TÉLÉPHONE"
-                name="user_phone"
-              />
 
-              <textarea
-                className={styles.messageInput}
-                placeholder="VOTRE MESSAGE"
-                name="message"
-              />
-              <div>
-                <input
-                  type="submit"
-                  value="Envoyer"
-                  className={styles.sendButton}
-                />
-              </div>
-            </form>
-          </div>
+          <form className={styles.form}>
+            <h3 className={styles.text}>Pour me faire part de vos envies !</h3>
+            <input
+              type="text"
+              className={styles.normalInput}
+              placeholder="PRÉNOM"
+              name="user_firstName"
+            />
+            <input
+              type="text"
+              className={styles.normalInput}
+              placeholder="NOM"
+              name="user_lastName"
+            />
+            <input
+              type="text"
+              className={styles.normalInput}
+              placeholder="MAIL"
+              name="user_email"
+            />
+            <input
+              type="text"
+              className={styles.normalInput}
+              placeholder="TÉLÉPHONE"
+              name="user_phone"
+            />
+
+            <textarea
+              className={styles.messageInput}
+              placeholder="VOTRE MESSAGE"
+              name="message"
+            />
+
+            <input
+              type="submit"
+              value="ENVOYER"
+              className={styles.sendButton}
+            />
+          </form>
         </div>
       )}
       {/* vérifie si les métadatas ont chargé */}
       {textContent[clickedText] && (
-        <div className={styles.picContainer}>
-          <Pic
-            src={textContent[clickedText].src}
-            width={textContent[clickedText].width}
-            height={textContent[clickedText].height}
-            alt={textContent[clickedText].collection}
-          />
+        <div className={styles.photoAreaContainer}>
+          <div className={styles.picContainer}>
+            <Pic
+              src={textContent[clickedText].src}
+              width={textContent[clickedText].width}
+              height={textContent[clickedText].height}
+              alt={textContent[clickedText].collection}
+            />
+          </div>
         </div>
       )}
     </div>
