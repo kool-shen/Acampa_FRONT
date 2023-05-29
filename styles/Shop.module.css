@@ -9,6 +9,8 @@
 
 .textContainer {
   height: 100vh;
+
+  min-width: 14vw;
   max-width: 20vw;
   display: flex;
   flex-direction: column;
