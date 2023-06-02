@@ -35,3 +35,10 @@
   font-family: "Authentic130";
   color: black;
 }
+
+.photoContainer {
+  width: 50vw;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+}

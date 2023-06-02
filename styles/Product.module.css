@@ -152,15 +152,7 @@
 /*PHOTOS */
 
 .picContainer {
-  height: 40vh;
-  padding-top: 1%;
-  padding: 1%;
-}
-
-.focusContainer > .picContainer {
   height: 100vh;
-  padding-top: 0%;
-  padding-bottom: 0%;
 }
 
 .focusContainer > .productInfoContainer {

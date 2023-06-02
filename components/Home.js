@@ -80,12 +80,12 @@ export default function Home() {
   const [menuClicked, setMenuClicked] = useState(false);
 
   const displayMenu = !menuClicked
-    ? { opacity: 0, transition: "transform 2s" }
+    ? { display: "none" }
     : { transition: "transform 2s" };
 
   const burgerStyle = !menuClicked
     ? { zIndex: 1, transition: "transform 1s" }
-    : { zIndex: -1, opacity: 0, transition: "transform 1s" };
+    : { display: "none" };
 
   /// Virer le style du link ///
 
@@ -197,7 +197,7 @@ export default function Home() {
           />
         </div>
         <div className={styles.menuContainer} style={displayMenu}>
-          <Pic
+          <img
             width={45}
             height={45}
             src={"/assets/cross.png"}
@@ -206,30 +206,38 @@ export default function Home() {
               setMenuClicked(false);
               console.log(menuClicked);
             }}
-            style={{ paddingTop: 15, paddingLeft: 30 }}
           />
-          <div className={menuStyles.menu}>
-            <div className={menuStyles.titleContainer}>
-              <div
-                onClick={() => GenerateCollectionPage(subCategories[0].name)}
-                style={removeLinkStyle}
-                className={menuStyles.title}
-              >
-                Boutique
-              </div>
-            </div>
 
-            <div className={menuStyles.titleContainer}>
-              <Link
-                href="/prestations"
-                style={removeLinkStyle}
-                className={menuStyles.title}
-              >
-                Prestations
-              </Link>
-            </div>
-            <div className={menuStyles.titleContainer}>
-              <div className={menuStyles.title}>À propos</div>
+          <div className={styles.menu}>
+            <div className={styles.categoryContainer}>
+              <div className={styles.titleContainer}>
+                <div
+                  onClick={() => GenerateCollectionPage(subCategories[0].name)}
+                  style={removeLinkStyle}
+                  className={styles.title}
+                >
+                  Boutique
+                </div>
+              </div>
+
+              <div className={styles.titleContainer}>
+                <Link
+                  href="/prestations"
+                  style={removeLinkStyle}
+                  className={styles.title}
+                >
+                  Prestations
+                </Link>
+              </div>
+              <div className={styles.titleContainer}>
+                <Link
+                  className={styles.title}
+                  style={removeLinkStyle}
+                  href={"/acampa"}
+                >
+                  À propos
+                </Link>
+              </div>
             </div>
           </div>
         </div>

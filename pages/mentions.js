@@ -1,7 +1,10 @@
 import React from "react";
+import Image from "next/image";
 import styles from "@/styles/Mentions.module.css";
 import Cart from "@/components/Cart";
 import Menu from "@/components/Menu";
+import Pic2 from "@/components/Pic";
+import Pic from "@/components/Pic";
 import { useDispatch } from "react-redux";
 import { clickMessage } from "@/reducers/message";
 import { useState, useEffect } from "react";
@@ -71,6 +74,16 @@ export default function mentions() {
             <div className={styles.text}>{content[0].ligne1}</div>
             <div className={styles.text} style={{ whiteSpace: "pre-line" }}>
               {content[0].context.alt}
+            </div>
+          </div>
+          <div className={styles.photoContainer}>
+            <div className={styles.picContainer}>
+              <Pic
+                src={"/photos/001.jpg"}
+                width={450}
+                height={100}
+                alt={"votre panier"}
+              />
             </div>
           </div>
         </>

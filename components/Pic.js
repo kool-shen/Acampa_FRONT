@@ -28,16 +28,12 @@ function Pic(props) {
   };*/
 
   return (
-    <div
-      className={`${styles.container} ${
-        !stillLoading && styles.containerLoaded
-      }`}
-    >
+    <div className={styles.picContainer}>
       <Image
         blurDataURL={"/assets/Logo-fleur.png"}
         src={props.src}
         width={props.width}
-        height={props.height}
+        height={100}
         alt={"yo"}
         className={styles.picLoaded}
         onLoad={handleLoad}

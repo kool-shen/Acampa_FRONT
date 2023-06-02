@@ -47,11 +47,14 @@
   opacity: 1;
 }
 
+/* MENU */
+
 .burgerContainer {
   height: 4%;
   position: fixed;
   padding-top: 15px;
-  padding-left: 22px;
+  padding-left: 2%;
+  z-index: 3;
 }
 
 .menuContainer {
@@ -59,45 +62,38 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  padding-left: 2%;
+  padding-top: 15px;
+
+  z-index: 3;
 }
 
-.titleBold {
-  font-size: 25px;
-  font-family: "Authentic130";
-  display: inline-block;
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1vh;
   position: relative;
-
-  /*opacity: 0;*/
+  min-width: 100%;
 }
 
-.titleBold:after {
-  background: none repeat scroll 0 0 transparent;
-  bottom: 0;
-  content: "";
-  display: block;
-  height: 3px;
-  border-radius: 4px;
-  left: 50%;
-  position: absolute;
-  background: black;
-  transition: width 0.3s ease 0s, left 0.3s ease 0s;
-  width: 0;
+.flowerContainer {
+  height: 127px;
+  padding-bottom: 2vh;
 }
 
-.titleBold:hover:after {
-  width: 100%;
-  left: 0;
-  bottom: 3px;
+.categoryContainer {
+  display: flex;
+  flex-direction: column;
 }
 
 .title {
-  font-size: 25px;
-  font-family: "Authentic90";
+  font-size: 1.9vmin;
+  font-family: "Authentic130";
   display: inline-block;
   position: relative;
   color: black;
   cursor: pointer;
-  /*opacity: 0;*/
 }
 
 .title:after {
@@ -111,7 +107,7 @@
   position: absolute;
   background: black;
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
-  width: 1;
+  width: 0;
   cursor: pointer;
 }
 

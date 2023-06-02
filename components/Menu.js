@@ -69,61 +69,62 @@ export default function Menu(props) {
           alt={"logo fleur"}
         />
       </Link>
-
-      <div className={menuStyles.titleContainer}>
-        <div
-          onClick={() => GenerateCollectionPage(shopSubCategories[0].name)}
-          style={removeLinkStyle}
-          className={menuStyles.title}
-        >
-          Boutique
+      <div className={menuStyles.categoryContainer}>
+        <div className={menuStyles.titleContainer}>
+          <div
+            onClick={() => GenerateCollectionPage(shopSubCategories[0].name)}
+            style={removeLinkStyle}
+            className={menuStyles.title}
+          >
+            Boutique
+          </div>
         </div>
-      </div>
 
-      {shopSubCategories ? (
-        <div
-          className={menuStyles.shopSubCategoryContainer}
-          style={props.shopSubCatStyle}
-        >
-          {shopSubCategories.map((data, i) => (
-            <div
-              className={menuStyles.shopSubCategory}
-              /*onClick={() => props.onClick(i)}*/
-              onClick={() => {
-                GenerateCollectionPage(shopSubCategories[i].name);
-              }}
-              key={i}
-              style={
-                router.query.collection === shopSubCategories[i].name
-                  ? { fontFamily: "Authentic90" }
-                  : { fontFamily: "Authentic60" }
-              }
-            >
-              {shopSubCategories[i].name}
-            </div>
-          ))}
+        {shopSubCategories ? (
+          <div
+            className={menuStyles.shopSubCategoryContainer}
+            style={props.shopSubCatStyle}
+          >
+            {shopSubCategories.map((data, i) => (
+              <div
+                className={menuStyles.shopSubCategory}
+                /*onClick={() => props.onClick(i)}*/
+                onClick={() => {
+                  GenerateCollectionPage(shopSubCategories[i].name);
+                }}
+                key={i}
+                style={
+                  router.query.collection === shopSubCategories[i].name
+                    ? { fontFamily: "Authentic90" }
+                    : { fontFamily: "Authentic60" }
+                }
+              >
+                {shopSubCategories[i].name}
+              </div>
+            ))}
+          </div>
+        ) : (
+          ""
+        )}
+
+        <div className={menuStyles.titleContainer}>
+          <Link
+            href="/prestations"
+            style={removeLinkStyle}
+            className={menuStyles.title}
+          >
+            Prestations
+          </Link>
         </div>
-      ) : (
-        ""
-      )}
-
-      <div className={menuStyles.titleContainer}>
-        <Link
-          href="/prestations"
-          style={removeLinkStyle}
-          className={menuStyles.title}
-        >
-          Prestations
-        </Link>
-      </div>
-      <div className={menuStyles.titleContainer}>
-        <Link
-          className={menuStyles.title}
-          style={removeLinkStyle}
-          href={"/acampa"}
-        >
-          À propos
-        </Link>
+        <div className={menuStyles.titleContainer}>
+          <Link
+            className={menuStyles.title}
+            style={removeLinkStyle}
+            href={"/acampa"}
+          >
+            À propos
+          </Link>
+        </div>
       </div>
       <div
         className={menuStyles.shopSubCategoryContainer}
