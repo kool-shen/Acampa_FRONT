@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Pic from "./Pic";
+import Pic2 from "./Pic2";
 import styles from "../styles/Prestations.module.css";
 import Menu from "./Menu";
 import Cart from "./Cart";
@@ -98,8 +99,7 @@ export default function Prestations() {
           clickCart={() => {
             setCartClicked(true);
           }}
-          aboutSubCatStyle={{ display: "none" }}
-          shopSubCatStyle={{ display: "none" }}
+          display={"none"}
         />
       </div>
 
@@ -144,7 +144,7 @@ export default function Prestations() {
             />
 
             <textarea
-              className={styles.messageInput}
+              className={styles.normalInput}
               placeholder="VOTRE MESSAGE"
               name="message"
             />
@@ -161,7 +161,7 @@ export default function Prestations() {
       {textContent[clickedText] && (
         <div className={styles.photoAreaContainer}>
           <div className={styles.picContainer}>
-            <Pic
+            <Pic2
               src={textContent[clickedText].src}
               width={textContent[clickedText].width}
               height={textContent[clickedText].height}

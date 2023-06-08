@@ -59,7 +59,7 @@
   width: 50vw;
   height: 50vh;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 /*TEXTES / INFOS */
@@ -77,14 +77,14 @@
 }
 
 .productName {
-  font-size: 1.9vmin;
+  font-size: 1.7vmin;
 
   font-family: "Authentic130";
   color: black;
 }
 
 .productPrice {
-  font-size: 1.9vmin;
+  font-size: 1.7vmin;
   font-family: "Authentic90";
   color: black;
 }

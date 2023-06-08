@@ -180,9 +180,13 @@ export default function Delivery(props) {
       )}
 
       {outChecked && (
-        <div className={styles.text}>
-          Si vous voulez faire livrer hors de Marseille, veuillez me contacter
-          directement :)
+        <>
+          <div className={styles.textContainer}>
+            <div className={styles.text}>
+              Si vous voulez faire livrer hors de Marseille, veuillez me
+              contacter directement :)
+            </div>
+          </div>
           <div className={styles.validateContainer}>
             <div
               className={styles.validateText}
@@ -193,7 +197,7 @@ export default function Delivery(props) {
               OK
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );

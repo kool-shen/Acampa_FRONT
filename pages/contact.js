@@ -62,7 +62,8 @@ export default function contact() {
           clickCart={() => {
             setCartClicked(true);
           }}
-          shopSubCatStyle={{ display: "none" }}
+          display={"none"}
+          about={true}
         />
       </div>
       {content && (

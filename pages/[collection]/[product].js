@@ -5,6 +5,7 @@ import Head from "next/head";
 import { useDispatch } from "react-redux";
 import { clickMessage } from "@/reducers/message";
 import Pic from "@/components/Pic";
+import Pic2 from "@/components/Pic2";
 import Cart from "@/components/Cart";
 import Menu from "@/components/Menu";
 import { addToBasket } from "../../reducers/basket";
@@ -143,7 +144,7 @@ function productPage() {
   const [price, setPrice] = useState();
 
   function calculatePrice(index, montantIndex) {
-    const multiplier = index + 1;
+    const sizePrice = index * 15;
     const selectedMontant =
       montantIndex !== undefined
         ? data[0].metadata?.montant_carte_cadeau.map((str) => parseInt(str))[
@@ -152,14 +153,13 @@ function productPage() {
         : undefined;
 
     if (selectedMontant !== undefined) {
-      return selectedMontant * quantity * multiplier;
+      return selectedMontant * quantity + sizePrice;
     } else {
       const livraison = 40 * (dureeIndex + 1);
       return data[0].metadata
         ?.duree /* affiche le prix de la formule la moins chère dans l'album si c'est un abonnement */
-        ? initialPrice * quantity * multiplier * (dureeIndex + 1) * 6 +
-            livraison
-        : initialPrice * quantity * multiplier;
+        ? initialPrice * quantity + sizePrice * (dureeIndex + 1) * 6 + livraison
+        : initialPrice * quantity + sizePrice;
     }
   }
 
@@ -309,7 +309,7 @@ function productPage() {
           <div className={styles.galleryContainer}>
             <div className={styles.focusContainer}>
               <div className={styles.picContainer}>
-                <Pic
+                <Pic2
                   src={data[0].src}
                   width={data[0].width}
                   height={data[0].height}
@@ -418,7 +418,9 @@ function productPage() {
                         </div>
                         <div className={styles.valueContainer}>
                           <div className={styles.productDescription}>
-                            {data[0].metadata?.Varietes[varietesIndex]}
+                            {data[0].metadata?.Varietes[
+                              varietesIndex
+                            ].toUpperCase()}
                           </div>
                         </div>
                         <div className={styles.symbol} onClick={nextVarietes}>
@@ -476,9 +478,7 @@ function productPage() {
                       </div>
                       <div className={styles.propriétésContainer}>
                         <div className={styles.choiceContainer}>
-                          <div className={styles.productDescription}>
-                            À PARTIR DU
-                          </div>
+                          <div className={styles.productDescription}>DATE</div>
                         </div>
                         <div className={styles.choiceContainer}>
                           <div className={styles.inputContainer}>
@@ -529,23 +529,29 @@ function productPage() {
                 </div>
                 <div className={styles.panierContainer}>
                   <div className={styles.quantityContainer}>
-                    <div
-                      className={styles.productDescription}
+                    <img
+                      width={12}
+                      height={12}
+                      src={"/assets/MOINS.png"}
+                      alt={"MOINS"}
                       onClick={removeQuantity}
-                    >
-                      -
-                    </div>
+                    />
                     <div className={styles.valueContainer}>
-                      <div className={styles.productDescription}>
+                      <div
+                        className={styles.productDescription}
+                        style={{ paddingTop: "2px" }}
+                      >
                         {quantity}
                       </div>
                     </div>
-                    <div
-                      className={styles.productDescription}
+
+                    <img
+                      width={12}
+                      height={12}
+                      src={"/assets/PLUS.png"}
+                      alt={"PLUS"}
                       onClick={addQuantity}
-                    >
-                      +
-                    </div>
+                    />
                   </div>
                   <div
                     className={styles.panierText}
@@ -553,7 +559,14 @@ function productPage() {
                       addProduct();
                     }}
                   >
-                    AJOUTER AU PANIER +
+                    AJOUTER AU PANIER <span></span>
+                    <img
+                      width={12}
+                      height={12}
+                      src={"/assets/PLUS.png"}
+                      alt={"PLUS"}
+                      onClick={addQuantity}
+                    />
                   </div>
                 </div>
               </div>

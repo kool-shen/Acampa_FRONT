@@ -64,7 +64,8 @@ export default function acampa() {
           clickCart={() => {
             setCartClicked(true);
           }}
-          shopSubCatStyle={{ display: "none" }}
+          display={"none"}
+          about={true}
         />
       </div>
       {content && (

@@ -95,7 +95,8 @@ export default function actu() {
           clickCart={() => {
             setCartClicked(true);
           }}
-          shopSubCatStyle={{ display: "none" }}
+          display={"none"}
+          about={true}
         />
       </div>
       <div className={styles.rightContainer}>

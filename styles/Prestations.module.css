@@ -45,7 +45,7 @@
 }
 
 .text {
-  font-size: 1.9vh;
+  font-size: 1.7vmin;
   font-family: "Authentic130";
   color: black;
 }
@@ -58,7 +58,7 @@
 }
 
 .picContainer {
-  max-height: 100vh;
+  min-height: 100vh;
 }
 
 .form {
@@ -68,7 +68,7 @@
 }
 
 .normalInput {
-  font-size: 1.9vh;
+  font-size: 1.7vmin;
   color: black;
   font-family: "Authentic90";
   min-width: 10vw;
@@ -76,29 +76,15 @@
   background-color: white;
   border: none;
   border-bottom: 2px dashed black;
+  resize: none;
 }
 
 .normalInput:focus {
   outline: none;
 }
 
-.messageInput {
-  font-size: 1.9vh;
-  font-family: "Authentic130";
-  border: none;
-  border-bottom: 2px dashed black;
-  padding: 1vh;
-  overflow: scroll;
-  width: 80%;
-  position: relative;
-}
-
-.messageInput::-webkit-scrollbar {
+.normalInput::-webkit-scrollbar {
   display: none;
-}
-
-.messageInput:focus {
-  outline: none;
 }
 
 .sendButton {
@@ -106,7 +92,7 @@
   border: none;
   align-self: center;
   cursor: pointer;
-  font-size: 1.9vh;
+  font-size: 1.7vmin;
   font-family: "Authentic130";
 
   text-decoration: none;

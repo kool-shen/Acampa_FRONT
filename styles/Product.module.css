@@ -19,7 +19,7 @@
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  overflow: scroll;
+  overflow: hidden;
   gap: 2vmin;
 }
 
@@ -83,13 +83,13 @@
 }
 
 .productDescription {
-  font-size: 1.9vh;
+  font-size: 1.7vmin;
   font-family: "Authentic130";
   color: black;
 }
 
 .productTitle {
-  font-size: 1.9vh;
+  font-size: 1.7vmin;
   font-family: "Authentic130";
   color: black;
   padding-bottom: 3vh;
@@ -130,11 +130,7 @@
 .quantityContainer {
   display: flex;
   align-self: flex-end;
-}
-
-.symbol {
-  font-size: 25px;
-  font-family: "Authentic90";
+  align-items: center;
 }
 
 .panierContainer {
@@ -142,10 +138,11 @@
   flex-direction: column;
   gap: 3vmin;
   align-self: flex-end;
+  cursor: pointer;
 }
 
 .panierText {
-  font-size: 1.9vh;
+  font-size: 1.7vmin;
   font-family: "Authentic130";
 }
 
@@ -202,12 +199,12 @@
 }
 
 .dateInput {
-  font-size: 1.9vh;
+  font-size: 1.7vmin;
   font-family: "Authentic130";
   background-color: white;
   border: 2px solid black;
   width: 4vw;
-  height: 1.9vh;
+  height: 1.7vmin;
 }
 
 .dateInput::-webkit-scrollbar {

@@ -1,6 +1,6 @@
-.container {
+.photoContainer {
   min-height: 100vh;
-  min-width: 60%;
+  min-width: 60vw;
   position: relative;
   display: flex;
   flex-direction: column;

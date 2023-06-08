@@ -1,13 +1,61 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import menuStyles from "@/styles/subMenu.module.css";
 import { useSelector } from "react-redux";
 import Pic from "./Pic";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import { gsap } from "gsap";
 
 export default function Menu(props) {
+  ///Animation subcategories ///
+
+  const subCatTimeline = gsap.timeline({
+    defaults: { duration: 0.07, ease: "power3" },
+  });
+
+  const shopCategoryRef = useRef(null);
+  const aboutCategoryRef = useRef(null);
+
+  const [shopState, setShopState] = useState(false);
+  const [aboutState, setAboutState] = useState(props.about);
+
+  const displayShopCat = () => {
+    setShopState(!shopState);
+  };
+
+  const displaySubCat = () => {
+    setAboutState(!aboutState);
+    console.log(aboutState);
+  };
+
+  const shopAnimation = () => {
+    shopSubCategories &&
+      (shopState
+        ? Array.from(shopCategoryRef.current?.children).forEach((child) => {
+            subCatTimeline.to(child, {
+              display: "block",
+              visibility: "visible",
+            });
+          })
+        : Array.from(shopCategoryRef?.current?.children).forEach((child) =>
+            subCatTimeline.to(child, {
+              visibility: "hidden",
+              display: "none",
+            })
+          ));
+  };
+
+  const aboutAnimation = () => {
+    aboutState
+      ? Array.from(aboutCategoryRef.current?.children).forEach((child) =>
+          subCatTimeline.to(child, { visibility: "visible", display: "block" })
+        )
+      : Array.from(aboutCategoryRef.current?.children).forEach((child) =>
+          subCatTimeline.to(child, { visibility: "hidden", display: "none" })
+        );
+  };
+
   /// Générer page product ///
 
   const router = useRouter();
@@ -40,7 +88,9 @@ export default function Menu(props) {
 
   useEffect(() => {
     loadShopSubCategories();
-  }, []);
+    aboutAnimation();
+    shopAnimation();
+  }, [aboutState, shopState]);
 
   /// Virer le style du link ///
 
@@ -48,8 +98,6 @@ export default function Menu(props) {
     textDecoration: "none",
     color: "inherit",
   };
-
-  /*const shopSubCategory = props.indexCategories;*/
 
   //// Texte sélectionné en bold ///
 
@@ -72,9 +120,12 @@ export default function Menu(props) {
       <div className={menuStyles.categoryContainer}>
         <div className={menuStyles.titleContainer}>
           <div
-            onClick={() => GenerateCollectionPage(shopSubCategories[0].name)}
+            /*  onClick={() => GenerateCollectionPage(shopSubCategories[0].name)} */
             style={removeLinkStyle}
             className={menuStyles.title}
+            onClick={() => {
+              displayShopCat();
+            }}
           >
             Boutique
           </div>
@@ -84,6 +135,7 @@ export default function Menu(props) {
           <div
             className={menuStyles.shopSubCategoryContainer}
             style={props.shopSubCatStyle}
+            ref={shopCategoryRef}
           >
             {shopSubCategories.map((data, i) => (
               <div
@@ -93,11 +145,13 @@ export default function Menu(props) {
                   GenerateCollectionPage(shopSubCategories[i].name);
                 }}
                 key={i}
-                style={
-                  router.query.collection === shopSubCategories[i].name
-                    ? { fontFamily: "Authentic90" }
-                    : { fontFamily: "Authentic60" }
-                }
+                style={{
+                  fontFamily:
+                    router.query.collection === shopSubCategories[i].name
+                      ? "Authentic90"
+                      : "Authentic60",
+                  display: props.display,
+                }}
               >
                 {shopSubCategories[i].name}
               </div>
@@ -117,26 +171,31 @@ export default function Menu(props) {
           </Link>
         </div>
         <div className={menuStyles.titleContainer}>
-          <Link
+          <div
             className={menuStyles.title}
             style={removeLinkStyle}
-            href={"/acampa"}
+            /* href={"/acampa"}*/
+            onClick={() => {
+              displaySubCat();
+            }}
           >
             À propos
-          </Link>
+          </div>
         </div>
       </div>
       <div
         className={menuStyles.shopSubCategoryContainer}
-        style={props.aboutSubCatStyle}
+        ref={aboutCategoryRef}
+
+        /* style={props.aboutSubCatStyle}*/
       >
         <Link
           href="/acampa"
-          style={
-            router.asPath === "/acampa"
-              ? { ...removeLinkStyle, fontFamily: "Authentic90" }
-              : { ...removeLinkStyle, fontFamily: "Authentic60" }
-          }
+          style={{
+            ...removeLinkStyle,
+            fontFamily:
+              router.asPath === "/acampa" ? "Authentic90" : "Authentic60",
+          }}
           className={menuStyles.shopSubCategory}
         >
           Acampà
@@ -145,11 +204,11 @@ export default function Menu(props) {
         <Link
           href="/actu"
           className={menuStyles.shopSubCategory}
-          style={
-            router.asPath === "/actu"
-              ? { ...removeLinkStyle, fontFamily: "Authentic90" }
-              : { ...removeLinkStyle, fontFamily: "Authentic60" }
-          }
+          style={{
+            ...removeLinkStyle,
+            fontFamily:
+              router.asPath === "/actu" ? "Authentic90" : "Authentic60",
+          }}
         >
           Actu
         </Link>
