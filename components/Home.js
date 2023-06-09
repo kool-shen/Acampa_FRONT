@@ -137,6 +137,12 @@ export default function Home() {
     }
   };
 
+  ///
+
+  const [isClicked, setIsClicked] = useState(false);
+
+  ///
+
   useEffect(() => {
     loadImage();
     loadSubCategories();
@@ -145,10 +151,6 @@ export default function Home() {
     aboutAnimation();
 
     /// scroll horizontal ///
-
-    const mouseWheel = document.querySelector(".scrollContainer");
-
-    mouseWheel.addEventListener("wheel", handleScroll);
 
     //// animation GSAP ////
     toggle
@@ -160,7 +162,7 @@ export default function Home() {
           opacity: 1,
           duration: 0.8,
         });
-  }, [toggle, menuState, subCat, aboutState]);
+  }, [toggle, menuState, subCat, aboutState, isClicked]);
 
   /// Générer page product depuis click menu ///
 
@@ -172,16 +174,21 @@ export default function Home() {
 
   /// Scroll horizontal ///
 
+  const scrollContainerRef = useRef(null);
+
   function handleScroll(e) {
-    e.preventDefault();
+    !isClicked && e.preventDefault();
 
     const race = 35; // How many pixels to scroll
+    const container = scrollContainerRef.current;
 
-    if (e.deltaY > 0)
+    if (e.deltaY > 0) {
       // Scroll right
-      document.querySelector(".scrollContainer").scrollLeft += race;
-    // Scroll left
-    else document.querySelector(".scrollContainer").scrollLeft -= race;
+      container.scrollLeft += race;
+    } else {
+      // Scroll left
+      container.scrollLeft -= race;
+    }
   }
 
   /// Virer le style du link ///
@@ -202,8 +209,6 @@ export default function Home() {
     nom: "",
     description: "",
   });
-
-  const [isClicked, setIsClicked] = useState(false);
 
   const clickPhoto = (data) => {
     setHoveredInfos({
@@ -234,15 +239,21 @@ export default function Home() {
   const fadeOut = {
     opacity: "0",
     transition: "opacity 0.4s",
+    visibility: "hidden",
   };
 
   const fadeIn = {
     opacity: "1",
     transition: "opacity 0.4s",
+    visibility: "visible",
   };
 
   return (
-    <div className={`${styles.mainContainer} scrollContainer`}>
+    <div
+      className={styles.mainContainer}
+      ref={scrollContainerRef}
+      onWheel={handleScroll}
+    >
       <div className={styles.presentationContainer}>
         <div
           className={styles.hoveredDescriptionContainer}

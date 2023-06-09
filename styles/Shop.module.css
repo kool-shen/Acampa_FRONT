@@ -9,50 +9,54 @@
 
 .textContainer {
   height: 100vh;
-
-  min-width: 14vw;
-  max-width: 20vw;
+  width: 20vw;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.galleryContainer {
-  width: 98vw;
-  display: flex;
-  justify-content: flex-end;
-}
-
 .photoContainer {
   padding-top: 4vmin;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+  padding-right: 4vmin;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 2vmin;
-  padding-left: 2vmin;
-  width: 95%;
-
-  overflow-y: scroll;
+  width: 80vw;
 }
 
-/*@media screen and (max-width: 668px) {
+/* Laptop L*/
+@media screen and (min-width: 1440px) {
   .photoContainer {
-    min-width: calc(100%-2vmin * 3) / 4;
-    max-width: calc(100%-2vmin * 3) / 4;
+    grid-template-columns: repeat(5, 1fr);
   }
-}*/
+}
+/* Tablette */
+@media screen and (max-width: 766px) {
+  .photoContainer {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Mobile L*/
+@media screen and (max-width: 425px) {
+  .photoContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .picContainer {
+    height: 50vmin !important;
+  }
+}
 
 .photoContainer::-webkit-scrollbar {
   display: none;
 }
 
 .productContainer {
+  width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   gap: 2vmin;
-
-  width: 28vmin;
-  height: 46vmin;
 }
 
 .secondContainer {
@@ -63,10 +67,6 @@
 }
 
 /*TEXTES / INFOS */
-
-/* Menu */
-
-/* Shop  */
 
 .productInfoContainer {
   display: flex;

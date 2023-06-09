@@ -6,6 +6,7 @@ import { clickMessage } from "@/reducers/message";
 import Cart from "@/components/Cart";
 import Menu from "@/components/Menu";
 import Pic from "@/components/Pic";
+import Pic2 from "@/components/Pic2";
 import styles from "@/styles/Shop.module.css";
 import Head from "next/head";
 
@@ -106,55 +107,51 @@ export default function index() {
               aboutSubCatStyle={{ display: "none" }}
             />
           </div>
-          <div className={styles.galleryContainer}>
-            <div className={styles.photoContainer}>
-              {data &&
-                data.length > 0 &&
-                data.map((item) => (
-                  <div
-                    key={item.key}
-                    className={styles.productContainer}
-                    onClick={() => {
-                      if (item.price) {
-                        setCartClicked(false);
-                        setMessageClicked(false);
-                        messageIsFalse();
-                      } else {
-                        console.log(item.metadata?.prix);
-                      }
-                    }}
-                  >
-                    <div className={styles.picContainer}>
-                      <Pic
-                        onClick={() => {
-                          GenerateProductPage(item.name);
-                        }}
-                        src={item.src}
-                        width={item.width}
-                        height={item.height}
-                        alt={item.name}
-                      />
-                    </div>
-                    <div className={styles.productInfoContainer}>
-                      {item.price ? (
-                        <>
-                          <div className={styles.productName}>
-                            {item.name.toUpperCase()}
-                          </div>
-                          <div className={styles.productPrice}>
-                            À partir de{" "}
-                            {item.duree ? item.price * 6 + 40 : item.price},00€
-                          </div>
-                        </>
-                      ) : (
-                        <div className={styles.productName}>
-                          BIENTÔT DISPO ;)
-                        </div>
-                      )}
-                    </div>
+          <div className={styles.photoContainer}>
+            {data &&
+              data.length > 0 &&
+              data.map((item) => (
+                <div
+                  key={item.key}
+                  className={styles.productContainer}
+                  onClick={() => {
+                    if (item.price) {
+                      setCartClicked(false);
+                      setMessageClicked(false);
+                      messageIsFalse();
+                    } else {
+                      console.log(item.metadata?.prix);
+                    }
+                  }}
+                >
+                  <div className={styles.picContainer}>
+                    <Pic2
+                      onClick={() => {
+                        GenerateProductPage(item.name);
+                      }}
+                      src={item.src}
+                      width={item.width}
+                      height={item.height}
+                      alt={item.name}
+                    />
                   </div>
-                ))}
-            </div>
+                  <div className={styles.productInfoContainer}>
+                    {item.price ? (
+                      <>
+                        <div className={styles.productName}>
+                          {item.name.toUpperCase()}
+                        </div>
+                        <div className={styles.productPrice}>
+                          À partir de{" "}
+                          {item.duree ? item.price * 6 + 40 : item.price},00€
+                        </div>
+                      </>
+                    ) : (
+                      <div className={styles.productName}>BIENTÔT DISPO ;)</div>
+                    )}
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
       )}{" "}
