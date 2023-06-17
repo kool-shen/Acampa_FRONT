@@ -1,22 +1,24 @@
 import React from "react";
 import styles from "../styles/Delivery.module.css";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { sendClientData } from "@/reducers/clientData";
-import { clickDelivery } from "@/reducers/delivery";
+import { gsap } from "gsap";
 
 export default function Delivery(props) {
-  const clientInfo = useSelector((state) => state.clientData.value);
-  // État clicked de la livraison //
-  const deliveryIsClicked = useSelector((state) => state.delivery.value);
+  // Reducer adresse client //
+  const clientAddress = useSelector((state) => state.clientData.value);
+
   const dispatch = useDispatch();
 
-  /// Coches ///
+  /// Choix Sud / Nord / Autres ///
+
   const [sudChecked, setSudChecked] = useState(false);
   const [nordChecked, setNordChecked] = useState(false);
   const [outChecked, setOutChecked] = useState(false);
 
   const handleSudCheck = () => {
+    setArea("Sud");
     if (!sudChecked) {
       setSudChecked(true);
       if (nordChecked) setNordChecked(false);
@@ -25,6 +27,7 @@ export default function Delivery(props) {
   };
 
   const handleNorthCheck = () => {
+    setArea("Nord");
     if (!nordChecked) {
       setNordChecked(true);
       if (sudChecked) setSudChecked(false);
@@ -33,6 +36,7 @@ export default function Delivery(props) {
   };
 
   const handleOutCheck = () => {
+    setArea("Autre");
     if (!outChecked) {
       setOutChecked(true);
       if (sudChecked) setSudChecked(false);
@@ -42,6 +46,7 @@ export default function Delivery(props) {
 
   /// Bouton OK (récupérer les infos input et fermer la fenêtre) ///
 
+  const [area, setArea] = useState("");
   const [prenom, setPrenom] = useState("");
   const [nom, setNom] = useState("");
   const [address, setAddress] = useState("");
@@ -53,32 +58,80 @@ export default function Delivery(props) {
       nom,
       address,
       ZIPCode,
+      area,
     };
     dispatch(sendClientData(clientData));
-    dispatch(clickDelivery(false));
-    console.log(deliveryIsClicked);
+    handleConfirmationChange();
   };
+
+  const missingValue =
+    prenom === "" || nom === "" || address === "" || ZIPCode === "";
+
+  const [toggle, setToggle] = useState(false);
+
+  const okRef = useRef(null);
+  const missingRef = useRef(null);
+
+  const animation = () => {
+    const timeline = gsap.timeline({
+      defaults: { duration: 0.7, ease: "power3" },
+    });
+
+    timeline
+      .to(okRef.current, { opacity: 0 })
+      .to(missingRef.current, { opacity: 1, visibility: "visible" })
+
+      .to(missingRef.current, { opacity: 0 })
+      .to(okRef.current, { opacity: 1 })
+      .to(missingRef.current, { visibility: "hidden" });
+  };
+
+  const handleAnimation = () => {
+    setToggle(!toggle);
+    animation();
+  };
+
+  /*useEffect(() => {
+    animation();
+  }, [toggle]);*/
 
   /// style Focus ///
 
   const colorFill = {
-    color: "#ffe93f",
+    color: "black",
     transition: "1s",
   };
 
+  ///
+
+  const handleConfirmationChange = () => {
+    props.onConfirmationChange(!props.isConfirmed);
+    console.log(props.isConfirmed);
+  };
+
   return (
-    <div className={styles.globalContainer} style={props.style}>
-      <div className={styles.text}>Vous habitez :</div>
+    <div
+      className={styles.globalContainer}
+      style={props.isConfirmed ? { display: "none" } : props.style}
+    >
+      <div
+        className={styles.descriptionText}
+        onClick={() => {
+          console.log(missingRef.current);
+        }}
+      >
+        Vous habitez :
+      </div>
       <div className={styles.districtContainer}>
         <div className={styles.cityContainer}>
           <div className={styles.text} style={sudChecked ? colorFill : {}}>
-            Marseille Sud
+            Marseille Sud (+10€)
           </div>
-          <div
-            className={styles.descriptionText}
-            style={sudChecked ? colorFill : {}}
-          >
-            (1er/4e/5e/6e/7e/8e/9e/10e/11e/12e)
+          <div className={styles.text} style={sudChecked ? colorFill : {}}>
+            (1er/4e/5e/6e/7e/8e
+          </div>
+          <div className={styles.text} style={sudChecked ? colorFill : {}}>
+            9e/10e/11e/12e)
           </div>
           <div className={styles.toggleContainer}>
             <label className={styles.switch}>
@@ -94,13 +147,13 @@ export default function Delivery(props) {
         </div>
         <div className={styles.cityContainer}>
           <div className={styles.text} style={nordChecked ? colorFill : {}}>
-            Marseille Nord
+            Marseille Nord (+15€)
           </div>
-          <div
-            className={styles.descriptionText}
-            style={nordChecked ? colorFill : {}}
-          >
-            (2e/3e/12e/13e/14e/15e/16e)
+          <div className={styles.text} style={nordChecked ? colorFill : {}}>
+            (2e/3e/12e/13e
+          </div>
+          <div className={styles.text} style={nordChecked ? colorFill : {}}>
+            /14e/15e/16e)
           </div>
           <div className={styles.toggleContainer}>
             <label className={styles.switch}>
@@ -141,28 +194,36 @@ export default function Delivery(props) {
             <textarea
               className={styles.signatureInput}
               placeholder={"Prénom"}
-              onChange={(e) => setPrenom(e.target.value)}
+              onChange={(e) => {
+                setPrenom(e.target.value);
+              }}
             />
 
             <div className={styles.inputContainer}>
               <textarea
                 className={styles.signatureInput}
                 placeholder={"Nom"}
-                onChange={(e) => setNom(e.target.value)}
+                onChange={(e) => {
+                  setNom(e.target.value);
+                }}
               />
             </div>
             <div className={styles.inputContainer}>
               <textarea
                 className={styles.addressInput}
                 placeholder={"Adresse"}
-                onChange={(e) => setAddress(e.target.value)}
+                onChange={(e) => {
+                  setAddress(e.target.value);
+                }}
               />
             </div>
             <div className={styles.inputContainer}>
               <textarea
                 className={styles.signatureInput}
                 placeholder={"Code postal"}
-                onChange={(e) => setZIPCode(e.target.value)}
+                onChange={(e) => {
+                  setZIPCode(e.target.value);
+                }}
               />
             </div>
           </div>
@@ -170,10 +231,24 @@ export default function Delivery(props) {
             <div
               className={styles.validateText}
               onClick={() => {
-                getClientData();
+                !missingValue ? getClientData() : handleAnimation();
+                console.log(missingRef);
               }}
+              style={{ position: "relative" }}
+              ref={okRef}
             >
               OK
+            </div>
+            <div
+              className={styles.validateText}
+              ref={missingRef}
+              style={{
+                opacity: "0",
+                visibility: "hidden",
+                position: "absolute",
+              }}
+            >
+              Veillez à remplir tous les champs ;)
             </div>
           </div>
         </>
@@ -182,7 +257,7 @@ export default function Delivery(props) {
       {outChecked && (
         <>
           <div className={styles.textContainer}>
-            <div className={styles.text}>
+            <div className={styles.descriptionText}>
               Si vous voulez faire livrer hors de Marseille, veuillez me
               contacter directement :)
             </div>
@@ -191,7 +266,7 @@ export default function Delivery(props) {
             <div
               className={styles.validateText}
               onClick={() => {
-                dispatch(clickDelivery(false));
+                handleConfirmationChange();
               }}
             >
               OK

@@ -3,9 +3,11 @@ import { useState, useEffect, useRef } from "react";
 import menuStyles from "@/styles/subMenu.module.css";
 import { useSelector } from "react-redux";
 import Pic from "./Pic";
+import Pic2 from "./Pic2";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { gsap } from "gsap";
+import Image from "next/image";
 
 export default function Menu(props) {
   ///Animation subcategories ///
@@ -99,10 +101,6 @@ export default function Menu(props) {
     color: "inherit",
   };
 
-  //// Texte sélectionné en bold ///
-
-  const indexSubCat = useSelector((state) => state.indexSubCat.value);
-
   return (
     <div className={menuStyles.menu}>
       <Link
@@ -110,11 +108,12 @@ export default function Menu(props) {
         style={removeLinkStyle}
         className={menuStyles.flowerContainer}
       >
-        <Pic
+        <Image
           src={"/assets/Logo-fleur.png"}
-          width={72}
-          height={127}
+          width={50}
+          height={100}
           alt={"logo fleur"}
+          className={menuStyles.flower}
         />
       </Link>
       <div className={menuStyles.categoryContainer}>
@@ -139,21 +138,25 @@ export default function Menu(props) {
           >
             {shopSubCategories.map((data, i) => (
               <div
-                className={menuStyles.shopSubCategory}
-                /*onClick={() => props.onClick(i)}*/
-                onClick={() => {
-                  GenerateCollectionPage(shopSubCategories[i].name);
-                }}
-                key={i}
-                style={{
-                  fontFamily:
-                    router.query.collection === shopSubCategories[i].name
-                      ? "Authentic90"
-                      : "Authentic60",
-                  display: props.display,
-                }}
+                className={menuStyles.subcatContainer}
+                style={{ display: props.display }}
               >
-                {shopSubCategories[i].name}
+                <div
+                  className={menuStyles.shopSubCategory}
+                  /*onClick={() => props.onClick(i)}*/
+                  onClick={() => {
+                    GenerateCollectionPage(shopSubCategories[i].name);
+                  }}
+                  key={i}
+                  style={{
+                    fontFamily:
+                      router.query.collection === shopSubCategories[i].name
+                        ? "Authentic90"
+                        : "Authentic60",
+                  }}
+                >
+                  {shopSubCategories[i].name}
+                </div>
               </div>
             ))}
           </div>
@@ -189,64 +192,70 @@ export default function Menu(props) {
 
         /* style={props.aboutSubCatStyle}*/
       >
-        <Link
-          href="/acampa"
-          style={{
-            ...removeLinkStyle,
-            fontFamily:
-              router.asPath === "/acampa" ? "Authentic90" : "Authentic60",
-          }}
-          className={menuStyles.shopSubCategory}
-        >
-          Acampà
-        </Link>
-
-        <Link
-          href="/actu"
-          className={menuStyles.shopSubCategory}
-          style={{
-            ...removeLinkStyle,
-            fontFamily:
-              router.asPath === "/actu" ? "Authentic90" : "Authentic60",
-          }}
-        >
-          Actu
-        </Link>
-
-        <Link
-          href="/mentions"
-          className={menuStyles.shopSubCategory}
-          style={
-            router.asPath === "/mentions"
-              ? { ...removeLinkStyle, fontFamily: "Authentic90" }
-              : { ...removeLinkStyle, fontFamily: "Authentic60" }
-          }
-        >
-          Mentions légales
-        </Link>
-
-        <Link
-          href="/contact"
-          style={
-            router.asPath === "/contact"
-              ? { ...removeLinkStyle, fontFamily: "Authentic90" }
-              : { ...removeLinkStyle, fontFamily: "Authentic60" }
-          }
-          className={menuStyles.shopSubCategory}
-        >
-          Contact
-        </Link>
+        <div className={menuStyles.subcatContainer}>
+          <Link
+            href="/acampa"
+            style={{
+              ...removeLinkStyle,
+              fontFamily:
+                router.asPath === "/acampa" ? "Authentic90" : "Authentic60",
+            }}
+            className={menuStyles.shopSubCategory}
+          >
+            Acampà
+          </Link>
+        </div>
+        <div className={menuStyles.subcatContainer}>
+          <Link
+            href="/actu"
+            className={menuStyles.shopSubCategory}
+            style={{
+              ...removeLinkStyle,
+              fontFamily:
+                router.asPath === "/actu" ? "Authentic90" : "Authentic60",
+            }}
+          >
+            Actu
+          </Link>
+        </div>
+        <div className={menuStyles.subcatContainer}>
+          <Link
+            href="/mentions"
+            className={menuStyles.shopSubCategory}
+            style={
+              router.asPath === "/mentions"
+                ? { ...removeLinkStyle, fontFamily: "Authentic90" }
+                : { ...removeLinkStyle, fontFamily: "Authentic60" }
+            }
+          >
+            Mentions légales
+          </Link>
+        </div>
+        <div className={menuStyles.subcatContainer}>
+          <Link
+            href="/contact"
+            style={
+              router.asPath === "/contact"
+                ? { ...removeLinkStyle, fontFamily: "Authentic90" }
+                : { ...removeLinkStyle, fontFamily: "Authentic60" }
+            }
+            className={menuStyles.shopSubCategory}
+          >
+            Contact
+          </Link>
+        </div>
       </div>
       <div className={menuStyles.cartContainer} onClick={props.clickCart}>
         <div className={menuStyles.tiret}>_</div>
-
-        <Pic
-          src={"/assets/panier.png"}
-          width={20}
-          height={20}
-          alt={"votre panier"}
-          style={{ cursor: "pointer" }}
-        />
+        <div className={menuStyles.panierContainer}>
+          <Pic2
+            src={"/assets/panier.png"}
+            width={50}
+            height={50}
+            alt={"votre panier"}
+            style={{ cursor: "pointer" }}
+          />
+        </div>
         {basketValue.length > 0 && [
           <div className={menuStyles.basketCircleContainer}>
             <div className={menuStyles.basketCircle}>{basketValue.length}</div>

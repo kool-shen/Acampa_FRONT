@@ -1,10 +1,8 @@
 import React from "react";
 import styles from "../styles/Pic.module.css";
 import Image from "next/image";
-
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { isLoading } from "../reducers/loading";
+import "lazysizes";
 
 function Pic(props) {
   /////
@@ -16,14 +14,18 @@ function Pic(props) {
   };
 
   return (
-    <div className={styles.picContainer}>
+    <div
+      className={`${styles.picContainer} ${
+        !stillLoading && styles.picContainerLoaded
+      }`}
+    >
       <Image
         blurDataURL={"/assets/Logo-fleur.png"}
         src={props.src}
         width={props.width}
         height={100}
         alt={"yo"}
-        className={styles.picLoaded}
+        className={`${styles.picLoaded} lazyload`}
         onLoad={handleLoad}
         onClick={props.onClick}
         style={props.style}

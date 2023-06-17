@@ -20,7 +20,7 @@ function Pic2(props) {
       width={props.width}
       height={100}
       alt={"yo"}
-      className={styles.picLoaded}
+      className={`${styles.pic} ${!stillLoading && styles.picLoaded}`}
       onLoad={handleLoad}
       onClick={props.onClick}
       style={props.style}

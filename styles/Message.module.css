@@ -1,7 +1,7 @@
 .messageContainer {
   background-color: white;
   height: auto;
-  width: 49vw;
+  width: 48vw;
 
   border: 2px solid black;
 
@@ -16,7 +16,7 @@
 }
 
 .messageInput {
-  font-size: 25px;
+  font-size: 2.5vmin;
   font-family: "Authentic130";
   background-color: white;
   border: 2px solid black;
@@ -27,7 +27,7 @@
 }
 
 .messageInput:nth-child(2) {
-  font-size: 25px;
+  font-size: 2.5vmin;
   font-family: "Authentic130";
   background-color: white;
   border: 2px solid black;
@@ -47,7 +47,7 @@
 }
 
 .signatureInput {
-  font-size: 25px;
+  font-size: 2.5vmin;
   font-family: "Authentic130";
   background-color: white;
   border: 2px solid black;
@@ -74,7 +74,7 @@
 }
 
 .text {
-  font-size: 25px;
+  font-size: 2.5vmin;
   font-family: "Authentic130";
-  padding: 1vh;
+  padding: 1vmin;
 }

@@ -24,14 +24,22 @@
   width: 80vw;
 }
 
-/* Laptop L*/
-@media screen and (min-width: 1440px) {
+/* Laptop XL */
+@media screen and (min-width: 1601px) {
+  .photoContainer {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* Laptop L */
+@media screen and (min-width: 1280px) and (max-width: 1600px) {
   .photoContainer {
     grid-template-columns: repeat(5, 1fr);
   }
 }
+
 /* Tablette */
-@media screen and (max-width: 766px) {
+@media screen and (max-width: 950px) {
   .photoContainer {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -39,11 +47,25 @@
 
 /* Mobile L*/
 @media screen and (max-width: 425px) {
+  .mainContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+  .textContainer {
+    width: 50vw;
+    align-self: flex-start;
+
+    height: auto;
+  }
+
   .photoContainer {
     grid-template-columns: repeat(2, 1fr);
+    width: 90vw;
+    padding: 5vmin;
+    overflow: scroll;
   }
   .picContainer {
-    height: 50vmin !important;
+    height: 70vmin !important;
   }
 }
 

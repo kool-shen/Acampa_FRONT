@@ -17,28 +17,29 @@
 .galleryContainer {
   width: 80vw;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-end;
   flex-wrap: wrap;
   overflow: hidden;
-  gap: 2vmin;
 }
 
 .galleryContainer::-webkit-scrollbar {
   display: none;
 }
 
-.productContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 2vmin;
-}
-
 .focusContainer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   height: 100vh;
   width: 80vw;
-  gap: 2vmin;
+}
+
+.propriétésContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.logoContainer {
+  height: 2.5vmin;
 }
 
 /*TEXTES / INFOS */
@@ -71,7 +72,7 @@
 
 .productFocusContainer {
   display: flex;
-  width: 40vw;
+  width: 27vw;
   flex-direction: column;
   justify-content: space-between;
   height: auto;
@@ -194,7 +195,7 @@
 .inputContainer {
   display: flex;
   width: 15vw;
-  align-items: center;
+  align-items: flex-end;
   gap: 1vmin;
 }
 
@@ -202,7 +203,9 @@
   font-size: 1.7vmin;
   font-family: "Authentic130";
   background-color: white;
-  border: 2px solid black;
+  border: none;
+
+  border-bottom: 2px dashed black;
   width: 4vw;
   height: 1.7vmin;
 }
@@ -214,4 +217,11 @@
 .dateInput:focus {
   border: 2px solid black;
   outline: none;
+  border: none;
+  border-bottom: 2px dashed black;
+}
+
+.slash {
+  font-size: 1.9vmin;
+  font-family: "Authentic130";
 }

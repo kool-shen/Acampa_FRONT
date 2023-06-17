@@ -17,7 +17,7 @@ export default function Home() {
   const aboutCategoryRef = useRef(null);
 
   const menuTimeline = gsap.timeline({
-    defaults: { duration: 0.1, ease: "power2" },
+    defaults: { duration: 0.05, ease: "power2" },
   });
 
   // Anim sous catégories///
@@ -27,11 +27,19 @@ export default function Home() {
   const [aboutState, setAboutState] = useState(false);
 
   const displaySubCat = () => {
-    setSubCat(!subCat);
+    setSubCat(true);
+  };
+
+  const hideSubCat = () => {
+    setSubCat(false);
   };
 
   const displayAbout = () => {
-    setAboutState(!aboutState);
+    setAboutState(true);
+  };
+
+  const hideAbout = () => {
+    setAboutState(false);
   };
 
   const aboutAnimation = () => {
@@ -109,6 +117,7 @@ export default function Home() {
     try {
       const response = await fetch(
         "https://acampa-back.vercel.app/cloudinary/homepage"
+        // "http://localhost:3000/cloudinary/homepage"
       );
       const resource = await response.json();
 
@@ -126,6 +135,7 @@ export default function Home() {
     try {
       const response = await fetch(
         "https://acampa-back.vercel.app/cloudinary/shopSubcategories"
+        // "http://localhost:3000/cloudinary/shopSubcategories"
       );
       const indexlist = await response.json();
 
@@ -177,7 +187,7 @@ export default function Home() {
   const scrollContainerRef = useRef(null);
 
   function handleScroll(e) {
-    !isClicked && e.preventDefault();
+    e.preventDefault();
 
     const race = 35; // How many pixels to scroll
     const container = scrollContainerRef.current;
@@ -233,18 +243,15 @@ export default function Home() {
     display();
   };
 
-  /*const isClicked = hoveredInfos.src !== "";*/
-  /*const shopExists = isClicked && */
-
   const fadeOut = {
     opacity: "0",
-    transition: "opacity 0.4s",
+    transition: "opacity 0.4s, transform 0.4s",
     visibility: "hidden",
   };
 
   const fadeIn = {
     opacity: "1",
-    transition: "opacity 0.4s",
+    transition: "opacity 0.4s, transform 0.4s",
     visibility: "visible",
   };
 
@@ -253,6 +260,9 @@ export default function Home() {
       className={styles.mainContainer}
       ref={scrollContainerRef}
       onWheel={handleScroll}
+      onClick={() => {
+        isClicked && crossClick();
+      }}
     >
       <div className={styles.presentationContainer}>
         <div
@@ -278,13 +288,15 @@ export default function Home() {
             {hoveredInfos.description ? hoveredInfos.description : ""}
           </div>
           {hoveredInfos.refShop && (
-            <Link
-              className={styles.linkShop}
-              //style={removeLinkStyle}
-              href={`${hoveredInfos.refShop}`}
-            >
-              VOIR DANS LA BOUTIQUE
-            </Link>
+            <div className={styles.linkShop}>
+              <Link
+                className={styles.linkShop}
+                //style={removeLinkStyle}
+                href={`${hoveredInfos.refShop}`}
+              >
+                VOIR DANS LA BOUTIQUE
+              </Link>
+            </div>
           )}
         </div>
         <div
@@ -329,8 +341,8 @@ export default function Home() {
             /*style={burgerStyle}*/
           >
             <img
-              width={37}
-              height={37}
+              width={35}
+              height={33}
               src={"/assets/burgerMenu.png"}
               alt={"burger menu logo"}
             />
@@ -348,8 +360,11 @@ export default function Home() {
           <div className={styles.categoryContainer} ref={menuRef}>
             <div className={styles.titleContainer}>
               <div
-                onClick={() => {
+                onMouseEnter={() => {
                   displaySubCat();
+                }}
+                onMouseLeave={() => {
+                  hideSubCat();
                 }}
                 style={removeLinkStyle}
                 className={styles.title}
@@ -358,17 +373,30 @@ export default function Home() {
               </div>
             </div>
             {subCategories ? (
-              <div className={styles.shopSubCategoryContainer} ref={subCatRef}>
+              <div
+                className={styles.shopSubCategoryContainer}
+                ref={subCatRef}
+                onMouseEnter={() => {
+                  displaySubCat();
+                }}
+                onMouseLeave={() => {
+                  hideSubCat();
+                }}
+              >
                 {subCategories.map((data, i) => (
                   <div
-                    className={styles.shopSubCategory}
+                    className={styles.subcatContainer}
                     style={{ display: "none" }}
-                    onClick={() => {
-                      GenerateCollectionPage(subCategories[i].name);
-                    }}
-                    key={i}
                   >
-                    {subCategories[i].name}
+                    <div
+                      className={styles.shopSubCategory}
+                      onClick={() => {
+                        GenerateCollectionPage(subCategories[i].name);
+                      }}
+                      key={i}
+                    >
+                      {subCategories[i].name}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -387,66 +415,84 @@ export default function Home() {
             <div className={styles.titleContainer}>
               <div
                 className={styles.title}
-                onClick={() => {
+                onMouseEnter={() => {
                   displayAbout();
+                }}
+                onMouseLeave={() => {
+                  hideAbout();
                 }}
               >
                 À propos
               </div>
             </div>
+
             <div
               className={styles.shopSubCategoryContainer}
               ref={aboutCategoryRef}
+              onMouseEnter={() => {
+                displayAbout();
+              }}
+              onMouseLeave={() => {
+                hideAbout();
+              }}
 
               /* style={props.aboutSubCatStyle}*/
             >
-              <Link
-                href="/acampa"
-                style={{
-                  ...removeLinkStyle,
-                  fontFamily:
-                    router.asPath === "/acampa" ? "Authentic90" : "Authentic60",
-                }}
-                className={styles.shopSubCategory}
-              >
-                Acampà
-              </Link>
+              <div className={styles.subcatContainer}>
+                <Link
+                  href="/acampa"
+                  style={{
+                    ...removeLinkStyle,
+                    fontFamily:
+                      router.asPath === "/acampa"
+                        ? "Authentic90"
+                        : "Authentic60",
+                  }}
+                  className={styles.shopSubCategory}
+                >
+                  Acampà
+                </Link>
+              </div>
+              <div className={styles.subcatContainer}>
+                <Link
+                  href="/actu"
+                  className={styles.shopSubCategory}
+                  style={{
+                    ...removeLinkStyle,
+                    fontFamily:
+                      router.asPath === "/actu" ? "Authentic90" : "Authentic60",
+                  }}
+                >
+                  Actu
+                </Link>
+              </div>
 
-              <Link
-                href="/actu"
-                className={styles.shopSubCategory}
-                style={{
-                  ...removeLinkStyle,
-                  fontFamily:
-                    router.asPath === "/actu" ? "Authentic90" : "Authentic60",
-                }}
-              >
-                Actu
-              </Link>
-
-              <Link
-                href="/mentions"
-                className={styles.shopSubCategory}
-                style={
-                  router.asPath === "/mentions"
-                    ? { ...removeLinkStyle, fontFamily: "Authentic90" }
-                    : { ...removeLinkStyle, fontFamily: "Authentic60" }
-                }
-              >
-                Mentions légales
-              </Link>
-
-              <Link
-                href="/contact"
-                style={
-                  router.asPath === "/contact"
-                    ? { ...removeLinkStyle, fontFamily: "Authentic90" }
-                    : { ...removeLinkStyle, fontFamily: "Authentic60" }
-                }
-                className={styles.shopSubCategory}
-              >
-                Contact
-              </Link>
+              <div className={styles.subcatContainer}>
+                <Link
+                  href="/mentions"
+                  className={styles.shopSubCategory}
+                  style={
+                    router.asPath === "/mentions"
+                      ? { ...removeLinkStyle, fontFamily: "Authentic90" }
+                      : { ...removeLinkStyle, fontFamily: "Authentic60" }
+                  }
+                >
+                  Mentions légales
+                </Link>
+              </div>
+              <div className={styles.subcatContainer}>
+                <Link
+                  href="/contact"
+                  style={
+                    router.asPath === "/contact"
+                      ? { ...removeLinkStyle, fontFamily: "Authentic90" }
+                      : { ...removeLinkStyle, fontFamily: "Authentic60" }
+                  }
+                  className={styles.shopSubCategory}
+                >
+                  Contact
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -461,25 +507,27 @@ export default function Home() {
               {fetchData
                 .slice(startIndex, startIndex + 2)
                 .map((data, dataIndex) => (
-                  <div
-                    className={styles[`pic${dataIndex + 1}Container`]}
-                    key={dataIndex}
-                  >
-                    {fetchData.length > 0 && (
-                      <Pic
-                        src={data.src}
-                        width={data.width}
-                        height={data.height}
-                        alt={data.collection}
-                        onClick={() => clickPhoto(data)}
-                        style={
-                          data.src === hoveredInfos.src ||
-                          hoveredInfos.src === ""
-                            ? fadeIn
-                            : fadeOut
-                        }
-                      />
-                    )}
+                  <div className={styles.cadre}>
+                    <div
+                      className={styles[`pic${dataIndex + 1}Container`]}
+                      key={dataIndex}
+                    >
+                      {fetchData.length > 0 && (
+                        <Pic
+                          src={data.src}
+                          width={data.width}
+                          height={data.height}
+                          alt={data.collection}
+                          onClick={() => clickPhoto(data)}
+                          style={
+                            data.src === hoveredInfos.src ||
+                            hoveredInfos.src === ""
+                              ? fadeIn
+                              : fadeOut
+                          }
+                        />
+                      )}
+                    </div>
                   </div>
                 ))}
             </div>
@@ -490,6 +538,7 @@ export default function Home() {
                   .map((data, dataIndex) => (
                     <div
                       className={styles[`pic${dataIndex + 3}Container`]}
+                      // style={{ border: "1px solid green" }}
                       key={dataIndex}
                     >
                       {fetchData.length > 0 && (

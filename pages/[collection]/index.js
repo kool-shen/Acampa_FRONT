@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clickMessage } from "@/reducers/message";
 import Cart from "@/components/Cart";
 import Menu from "@/components/Menu";
-import Pic from "@/components/Pic";
+
 import Pic2 from "@/components/Pic2";
 import styles from "@/styles/Shop.module.css";
 import Head from "next/head";
@@ -25,9 +25,7 @@ export default function index() {
 
   const loadSubCategories = async () => {
     try {
-      const response = await fetch(
-        "https://acampa-back.vercel.app/cloudinary/folders"
-      );
+      const response = await fetch("http://localhost:3000/cloudinary/folders");
       const indexlist = await response.json();
 
       if (indexlist.length > 0) {
@@ -45,13 +43,17 @@ export default function index() {
       try {
         if (collection) {
           const response = await fetch(
+            // `http://localhost:3000/cloudinary/collection?collection=${collection}`
             `https://acampa-back.vercel.app/cloudinary/collection?collection=${collection}`
           );
           const jsonData = await response.json();
 
-          jsonData && setData(jsonData);
-
-          data && console.log(data);
+          if (jsonData && jsonData.length > 0) {
+            const srcArray = jsonData.map(({ src }) => src);
+            setData(jsonData);
+            setPhoto(srcArray);
+            console.log(jsonData);
+          }
         }
       } catch (error) {
         console.error(error);
@@ -76,6 +78,24 @@ export default function index() {
 
   const messageIsFalse = () => {
     dispatch(clickMessage(false));
+  };
+
+  /// Twin photo ///
+
+  const [photo, setPhoto] = useState([]);
+  const [twinPhoto, setTwinPhoto] = useState([]);
+  const [indexPhoto, setIndexPhoto] = useState();
+
+  const handleMouseOver = (index) => {
+    setIndexPhoto(index);
+    const twinArray = data.map(({ twin }) => twin);
+    setTwinPhoto(twinArray[index]);
+  };
+
+  const handleMouseLeave = () => {
+    setIndexPhoto("");
+
+    setTwinPhoto("");
   };
 
   return (
@@ -110,7 +130,7 @@ export default function index() {
           <div className={styles.photoContainer}>
             {data &&
               data.length > 0 &&
-              data.map((item) => (
+              data.map((item, index) => (
                 <div
                   key={item.key}
                   className={styles.productContainer}
@@ -120,7 +140,7 @@ export default function index() {
                       setMessageClicked(false);
                       messageIsFalse();
                     } else {
-                      console.log(item.metadata?.prix);
+                      null;
                     }
                   }}
                 >
@@ -129,10 +149,18 @@ export default function index() {
                       onClick={() => {
                         GenerateProductPage(item.name);
                       }}
-                      src={item.src}
+                      src={
+                        indexPhoto === index && twinPhoto
+                          ? twinPhoto
+                          : photo[index]
+                      }
                       width={item.width}
                       height={item.height}
                       alt={item.name}
+                      onMouseEnter={() => {
+                        handleMouseOver(index);
+                      }}
+                      onMouseLeave={handleMouseLeave}
                     />
                   </div>
                   <div className={styles.productInfoContainer}>
@@ -143,7 +171,12 @@ export default function index() {
                         </div>
                         <div className={styles.productPrice}>
                           À partir de{" "}
-                          {item.duree ? item.price * 6 + 40 : item.price},00€
+                          {item.duree
+                            ? item.price * 6 + 40
+                            : item.vin
+                            ? item.price + 15
+                            : item.price}
+                          ,00€
                         </div>
                       </>
                     ) : (

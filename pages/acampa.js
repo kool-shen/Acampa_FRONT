@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { clickMessage } from "@/reducers/message";
 import { useState, useEffect } from "react";
 import Pic from "@/components/Pic";
+import Pic2 from "@/components/Pic2";
 
 export default function acampa() {
   // FETCH //
@@ -77,7 +78,7 @@ export default function acampa() {
             </div>
           </div>
           <div className={styles.photoAreaContainer}>
-            <Pic
+            <Pic2
               src={content[0].src}
               width={content[0].width}
               height={content[0].height}

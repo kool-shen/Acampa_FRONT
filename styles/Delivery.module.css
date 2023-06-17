@@ -20,7 +20,7 @@
 .text {
   font-size: 1.9vmin;
   font-family: "Authentic130";
-  color: black;
+  color: grey;
 }
 
 .descriptionText {
@@ -44,6 +44,7 @@
 .validateContainer {
   display: flex;
   justify-content: flex-end;
+  gap: 1vmin;
 }
 
 .validateText {
@@ -54,17 +55,13 @@
   cursor: pointer;
 }
 
-.validateText:hover {
-  color: #ffe93f;
-}
-
 /*/// CHECKS ///*/
 
 .switch {
   position: relative;
   display: inline-block;
-  width: 45px;
-  height: 24px;
+  width: 5vmin;
+  height: 2.7vmin;
 }
 
 .slider {
@@ -74,8 +71,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: black;
-  border: 1px solid white;
+  background-color: white;
+  border: 1px solid black;
   display: flex;
   align-items: center;
   transition: 0.4s;
@@ -103,7 +100,7 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-  transform: translateX(22px);
+  transform: translateX(60%);
 }
 
 /*/// INPUTS ///*/
@@ -111,6 +108,7 @@ input:checked + .slider:before {
 .inputContainer {
   display: flex;
   flex-wrap: wrap;
+  gap: 1vmin;
 }
 
 .signatureInput {
@@ -119,8 +117,8 @@ input:checked + .slider:before {
 
   background-color: white;
   border: 2px solid black;
-  margin: 1vmin;
-  height: 4vh;
+
+  height: 1.9vmin;
   width: 20vw;
   overflow: scroll;
 }
@@ -130,7 +128,6 @@ input:checked + .slider:before {
 }
 
 .signatureInput:focus {
-  border: 2px solid white;
   outline: none;
 }
 
@@ -139,8 +136,8 @@ input:checked + .slider:before {
   font-family: "Authentic130";
   background-color: white;
   border: 2px solid black;
-  margin: 1vmin;
-  height: 4vh;
+
+  height: auto;
   width: 40vw;
   overflow: scroll;
 }
@@ -150,6 +147,5 @@ input:checked + .slider:before {
 }
 
 .addressInput:focus {
-  border: 2px solid white;
   outline: none;
 }

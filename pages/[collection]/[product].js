@@ -2,9 +2,8 @@ import { useRouter } from "next/router";
 import styles from "@/styles/Product.module.css";
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clickMessage } from "@/reducers/message";
-import Pic from "@/components/Pic";
 import Pic2 from "@/components/Pic2";
 import Cart from "@/components/Cart";
 import Menu from "@/components/Menu";
@@ -15,26 +14,25 @@ function productPage() {
   const router = useRouter();
   const { collection, product } = router.query;
 
-  /// Panier ///
+  /// OPTIONS ET INDEX ///
 
-  const [panier, setPanier] = useState({
-    nom: "",
-    photo: "",
-    width: "",
-    height: "",
-    taille: "",
-    variété: "",
-    couleur: "",
-    quantité: "",
-    prix: "",
-    mot: "",
-    signature: "",
-    montant_cadeau: "",
-    durée: "",
-    date: "",
-  });
+  /// Vin ///
 
-  /// options et index ///
+  const [vinIndex, setVinIndex] = useState(0);
+
+  const [vinLength, setVinLength] = useState();
+
+  function nextVin() {
+    const isLastSlide = vinIndex === vinLength - 1;
+    const newIndex = isLastSlide ? 0 : vinIndex + 1;
+    setVinIndex(newIndex);
+  }
+
+  function previousVin() {
+    const isFirstSlide = vinIndex === 0;
+    const newIndex = isFirstSlide ? vinLength - 1 : vinIndex - 1;
+    setVinIndex(newIndex);
+  }
 
   /// abonnement ///
 
@@ -72,7 +70,7 @@ function productPage() {
     setCadeauIndex(newIndex);
   }
 
-  /// Couleur
+  /// Couleur ///
 
   const [couleurIndex, setCouleurIndex] = useState(0);
 
@@ -89,7 +87,7 @@ function productPage() {
     const newIndex = isFirstSlide ? couleurLength - 1 : couleurIndex - 1;
     setCouleurIndex(newIndex);
   }
-  /// Variété
+  /// Variété ///
 
   const [varietesIndex, setVarietesIndex] = useState(0);
 
@@ -107,7 +105,7 @@ function productPage() {
     setVarietesIndex(newIndex);
   }
 
-  /// Taille
+  /// Taille ///
 
   const [sizeIndex, setSizeIndex] = useState(0);
 
@@ -125,7 +123,7 @@ function productPage() {
     setSizeIndex(newIndex);
   }
 
-  /// Quantité
+  /// Quantité ///
 
   const [quantity, setQuantity] = useState(1);
 
@@ -138,13 +136,23 @@ function productPage() {
     setQuantity(quantity + 1);
   };
 
-  /// Prix
+  /// PRIX
 
   const [initialPrice, setInitialPrice] = useState();
   const [price, setPrice] = useState();
 
   function calculatePrice(index, montantIndex) {
     const sizePrice = index * 15;
+    let vinPrice = 0;
+
+    if (data[0].metadata?.vin && (vinIndex === 0 || vinIndex === 1)) {
+      vinPrice = 15;
+    } else if (vinIndex === 2) {
+      vinPrice = 20;
+    } else if (!vinIndex) {
+      vinPrice = 0;
+    }
+    ///calcul du prix si carte cadeau ///
     const selectedMontant =
       montantIndex !== undefined
         ? data[0].metadata?.montant_carte_cadeau.map((str) => parseInt(str))[
@@ -156,16 +164,14 @@ function productPage() {
       return selectedMontant * quantity + sizePrice;
     } else {
       const livraison = 40 * (dureeIndex + 1);
-      return data[0].metadata
-        ?.duree /* affiche le prix de la formule la moins chère dans l'album si c'est un abonnement */
-        ? initialPrice * quantity + sizePrice * (dureeIndex + 1) * 6 + livraison
-        : initialPrice * quantity + sizePrice;
+      return data[0].metadata?.duree
+        ? ////calcul du prix si abonnement ////
+          (initialPrice + sizePrice) * 6 * quantity * (dureeIndex + 1) +
+            livraison
+        : /// calcul du prix du reste ////
+          initialPrice * quantity + sizePrice + vinPrice;
     }
   }
-
-  const handlePrice = (amount) => {
-    setInitialPrice(amount);
-  };
 
   /// Config Panier ///
 
@@ -190,6 +196,7 @@ function productPage() {
   const loadSubCategories = async () => {
     try {
       const response = await fetch(
+        // "http://localhost:3000/cloudinary/folders"
         "https://acampa-back.vercel.app/cloudinary/folders"
       );
       const indexlist = await response.json();
@@ -209,6 +216,7 @@ function productPage() {
       try {
         if (collection && product) {
           const response = await fetch(
+            // `http://localhost:3000/cloudinary/product?product=${product}`
             `https://acampa-back.vercel.app/cloudinary/product?product=${product}`
           );
           const jsonData = await response.json();
@@ -222,6 +230,7 @@ function productPage() {
               jsonData[0].metadata.montant_carte_cadeau?.length ?? 0
             );
             setDureeLength(jsonData[0].metadata.duree?.length ?? 0);
+            setVinLength(jsonData[0].metadata.vin?.length ?? 0);
             setInitialPrice(jsonData[0].metadata.prix);
             if (data[0].metadata?.montant_carte_cadeau) {
               const newPrice = calculatePrice(
@@ -250,6 +259,7 @@ function productPage() {
     quantity,
     cadeauIndex,
     dureeIndex,
+    vinIndex,
   ]);
 
   //// ahouter au panier ///
@@ -274,6 +284,7 @@ function productPage() {
         ? data[0]?.metadata?.duree[dureeIndex]
         : "",
       dateDébut: data[0]?.metadata?.duree ? `${jour}/${mois}/${année}` : "",
+      vin: data[0]?.metadata?.vin ? data[0]?.metadata?.vin[vinIndex] : "",
     };
     dispatch(addToBasket(newPanier));
   };
@@ -315,15 +326,12 @@ function productPage() {
                   height={data[0].height}
                   alt={data[0].context?.alt}
                   onClick={() => {
-                    console.log(jour, mois, année);
+                    console.log(initialPrice, quantity, dureeIndex);
                   }}
                 />
               </div>
               <div className={styles.productFocusContainer}>
                 <div className={styles.textProductContainer}>
-                  <div className={styles.productTitle}>
-                    {data[0].metadata?.nom_du_produit?.toUpperCase()}
-                  </div>
                   <div
                     className={styles.productDescription}
                     style={{ whiteSpace: "pre-line" }}
@@ -356,22 +364,34 @@ function productPage() {
                         <div className={styles.productDescription}>TAILLE</div>
                       </div>
                       <div className={styles.choiceContainer}>
-                        <div
+                        {/* <div
                           className={styles.productDescription}
                           onClick={previousSize}
                         >
                           &lt;
+                        </div> */}
+                        <div className={styles.logoContainer}>
+                          <Pic2
+                            src={"/assets/left.png"}
+                            width={100}
+                            height={100}
+                            alt={"choix précédent"}
+                            onClick={previousSize}
+                          />
                         </div>
                         <div className={styles.valueContainer}>
                           <div className={styles.productDescription}>
                             {data[0].metadata?.tailles[sizeIndex].toUpperCase()}
                           </div>
                         </div>
-                        <div
-                          className={styles.productDescription}
-                          onClick={nextSize}
-                        >
-                          &gt;
+                        <div className={styles.logoContainer}>
+                          <Pic2
+                            src={"/assets/right.png"}
+                            width={100}
+                            height={100}
+                            alt={"choix suivant"}
+                            onClick={nextSize}
+                          />
                         </div>
                       </div>
                     </div>
@@ -382,22 +402,32 @@ function productPage() {
                     <div className={styles.propriétésContainer}>
                       <div className={styles.choiceContainer}>
                         <div className={styles.productDescription}>COULEUR</div>
-                        <div
-                          className={styles.productDescription}
-                          onClick={previousCouleur}
-                        >
-                          &lt;
+                      </div>
+                      <div className={styles.choiceContainer}>
+                        <div className={styles.logoContainer}>
+                          <Pic2
+                            src={"/assets/left.png"}
+                            width={100}
+                            height={100}
+                            alt={"choix précédent"}
+                            onClick={previousCouleur}
+                          />
                         </div>
                         <div className={styles.valueContainer}>
                           <div className={styles.productDescription}>
-                            {data[0].metadata?.couleur[couleurIndex]}
+                            {data[0].metadata?.couleur[couleurIndex]
+                              .replace(/_/g, " ")
+                              .toUpperCase()}
                           </div>
                         </div>
-                        <div
-                          className={styles.productDescription}
-                          onClick={nextCouleur}
-                        >
-                          &gt;
+                        <div className={styles.logoContainer}>
+                          <Pic2
+                            src={"/assets/right.png"}
+                            width={100}
+                            height={100}
+                            alt={"choix suivant"}
+                            onClick={nextCouleur}
+                          />
                         </div>
                       </div>
                     </div>
@@ -410,21 +440,68 @@ function productPage() {
                         <div className={styles.productDescription}>VARIÉTÉ</div>
                       </div>
                       <div className={styles.choiceContainer}>
-                        <div
-                          className={styles.symbol}
-                          onClick={previousVarietes}
-                        >
-                          &lt;
+                        <div className={styles.logoContainer}>
+                          <Pic2
+                            src={"/assets/left.png"}
+                            width={100}
+                            height={100}
+                            alt={"choix précédent"}
+                            onClick={previousVarietes}
+                          />
                         </div>
                         <div className={styles.valueContainer}>
                           <div className={styles.productDescription}>
-                            {data[0].metadata?.Varietes[
-                              varietesIndex
-                            ].toUpperCase()}
+                            {data[0].metadata?.Varietes[varietesIndex]
+                              .replace(/_/g, " ")
+                              .toUpperCase()}
                           </div>
                         </div>
-                        <div className={styles.symbol} onClick={nextVarietes}>
-                          &gt;
+                        <div className={styles.logoContainer}>
+                          <Pic2
+                            src={"/assets/right.png"}
+                            width={100}
+                            height={100}
+                            alt={"choix suivant"}
+                            onClick={nextVarietes}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  {data[0].metadata?.vin ? (
+                    <div className={styles.propriétésContainer}>
+                      <div className={styles.choiceContainer}>
+                        <div className={styles.productDescription}>VIN</div>
+                      </div>
+                      <div className={styles.choiceContainer}>
+                        <div className={styles.logoContainer}>
+                          <Pic2
+                            src={"/assets/left.png"}
+                            width={100}
+                            height={100}
+                            alt={"choix précédent"}
+                            onClick={previousVin}
+                          />
+                        </div>
+                        <div className={styles.valueContainer}>
+                          <div className={styles.productDescription}>
+                            {data[0].metadata?.vin[vinIndex]
+                              .replace(/_/g, " ")
+                              .toUpperCase()}
+                          </div>
+                        </div>
+                        <div className={styles.logoContainer}>
+                          <Pic2
+                            src={"/assets/right.png"}
+                            width={100}
+                            height={100}
+                            alt={"choix suivant"}
+                            onClick={() => {
+                              nextVin();
+                            }}
+                          />
                         </div>
                       </div>
                     </div>
@@ -437,16 +514,28 @@ function productPage() {
                         <div className={styles.productDescription}>MONTANT</div>
                       </div>
                       <div className={styles.choiceContainer}>
-                        <div className={styles.symbol} onClick={previousCadeau}>
-                          &lt;
+                        <div className={styles.logoContainer}>
+                          <Pic2
+                            src={"/assets/left.png"}
+                            width={100}
+                            height={100}
+                            alt={"choix précédent"}
+                            onClick={previousCadeau}
+                          />
                         </div>
                         <div className={styles.valueContainer}>
                           <div className={styles.productDescription}>
                             {`${data[0].metadata?.montant_carte_cadeau[cadeauIndex]},00€`}
                           </div>
                         </div>
-                        <div className={styles.symbol} onClick={nextCadeau}>
-                          &gt;
+                        <div className={styles.logoContainer}>
+                          <Pic2
+                            src={"/assets/right.png"}
+                            width={100}
+                            height={100}
+                            alt={"choix suivant"}
+                            onClick={nextCadeau}
+                          />
                         </div>
                       </div>
                     </div>
@@ -460,19 +549,28 @@ function productPage() {
                           <div className={styles.productDescription}>DURÉE</div>
                         </div>
                         <div className={styles.choiceContainer}>
-                          <div
-                            className={styles.symbol}
-                            onClick={previousDuree}
-                          >
-                            &lt;
+                          <div className={styles.logoContainer}>
+                            <Pic2
+                              src={"/assets/left.png"}
+                              width={100}
+                              height={100}
+                              alt={"choix précédent"}
+                              onClick={previousDuree}
+                            />
                           </div>
                           <div className={styles.valueContainer}>
                             <div className={styles.productDescription}>
                               {`${data[0].metadata?.duree[dureeIndex]} mois`}
                             </div>
                           </div>
-                          <div className={styles.symbol} onClick={nextDuree}>
-                            &gt;
+                          <div className={styles.logoContainer}>
+                            <Pic2
+                              src={"/assets/right.png"}
+                              width={100}
+                              height={100}
+                              alt={"choix suivant"}
+                              onClick={nextDuree}
+                            />
                           </div>
                         </div>
                       </div>
@@ -494,7 +592,7 @@ function productPage() {
                               className={styles.dateInput}
                               style={{ width: "2vw" }}
                             />
-
+                            <div className={styles.slash}>/</div>
                             <textarea
                               value={mois}
                               onChange={(e) => {
@@ -507,6 +605,8 @@ function productPage() {
                               className={styles.dateInput}
                               style={{ width: "2vw" }}
                             />
+
+                            <div className={styles.slash}>/</div>
 
                             <textarea
                               value={année}

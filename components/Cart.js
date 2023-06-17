@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { clickMessage } from "@/reducers/message";
 import Message from "./Message";
 import { clickDelivery } from "@/reducers/delivery";
-
 import { removeFromBasket, addToBasket } from "../reducers/basket";
 import Delivery from "./Delivery";
+import clientData from "@/reducers/clientData";
 
 function Cart(props) {
   // Contenu du panier //
@@ -18,6 +18,8 @@ function Cart(props) {
 
   // État clicked de la livraison //
   const deliveryIsClicked = useSelector((state) => state.delivery.value);
+
+  const clientAddress = useSelector((state) => state.clientData.value);
 
   // changer l'état clicked du message //
 
@@ -111,18 +113,29 @@ function Cart(props) {
     }
   };
 
-  const deliveryPrice = deliveryIsClicked ? 8 : 0;
-
   const displayDelivery = deliveryIsClicked
     ? { transform: "translateX(-50vw)", transition: "transform 1s" }
     : {
-        transform: "translateX(-50vw)",
-        transition: "transform 1s",
         display: "none",
       };
 
+  ///Calcul du prix final
+
+  const deliveryPrice =
+    clientAddress.area === "Sud" ? 10 : clientAddress.area === "Nord" ? 15 : 0;
+
   const totalPrice =
     basketValue.reduce((acc, item) => acc + item.prix, 0) + deliveryPrice;
+
+  /// confirmation de l'adresse
+
+  const [isConfirmed, setIsConfirmed] = useState(false);
+
+  const handleConfirmationChange = (value) => {
+    setIsConfirmed(value);
+  };
+
+  const missingValue = Object.values(clientAddress).includes(undefined);
 
   return (
     <div
@@ -131,7 +144,11 @@ function Cart(props) {
       isClicked={props.isClicked}
       ref={props.ref}
     >
-      <Delivery style={displayDelivery} />
+      <Delivery
+        style={displayDelivery}
+        onConfirmationChange={handleConfirmationChange}
+        isConfirmed={isConfirmed}
+      />
       <Message productindex={productIndex} productmessage={productMessage} />
 
       {basketValue.length === 0 ? (
@@ -140,7 +157,9 @@ function Cart(props) {
             Il n'y a (encore) rien dans votre panier
           </div>
           <div className={styles.symbolContainer} onClick={props.onClick}>
-            <img className={styles.cross} src={"/assets/x-mark.png"} />
+            <div className={styles.crossContainer}>
+              <img className={styles.cross} src={"/assets/x-mark.png"} />
+            </div>
           </div>
         </div>
       ) : (
@@ -150,8 +169,16 @@ function Cart(props) {
               Votre panier - {`${basketValue.length}`} {word}
             </div>
 
-            <div className={styles.symbolContainer} onClick={props.onClick}>
-              <img className={styles.cross} src={"/assets/x-mark.png"} />
+            <div
+              className={styles.symbolContainer}
+              onClick={() => {
+                props.onClick();
+                handleCollectCheck();
+              }}
+            >
+              <div className={styles.crossContainer}>
+                <img className={styles.cross} src={"/assets/x-mark.png"} />
+              </div>
             </div>
           </div>,
           <div className={styles.totalPayContainer}>
@@ -174,7 +201,7 @@ function Cart(props) {
               </div>
               <div className={styles.switchContainer}>
                 <div className={styles.tinyText} style={{ paddingLeft: "1vw" }}>
-                  Livraison (+8€)
+                  Livraison
                 </div>
                 <div className={styles.toggleContainer}>
                   <label className={styles.switch}>
@@ -191,13 +218,44 @@ function Cart(props) {
 
               <div className={styles.text}>{`TOTAL : ${totalPrice},00€`}</div>
             </div>
-            <div className={styles.text}>Passer au paiement</div>
+            <div className={styles.bottomRightContainer}>
+              <div
+                className={styles.confirmationContainer}
+                style={{
+                  visibility: !isConfirmed && "hidden",
+                }}
+              >
+                <div className={styles.confirmText} style={{ color: "black" }}>
+                  Adresse ajoutée !
+                </div>
+
+                <div
+                  className={styles.confirmText}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setIsConfirmed(false);
+                  }}
+                >
+                  Modifier
+                </div>
+              </div>
+              <div
+                className={styles.text}
+                onClick={() => {
+                  setIsConfirmed(false);
+                  console.log(clientAddress.area);
+                }}
+              >
+                Passer au paiement
+              </div>
+            </div>
           </div>,
           <div className={styles.productContainer} onClick={() => {}}>
             {basketValue.map((data, i) => (
               <div className={styles.eachProductContainer}>
                 <div className={styles.picContainer}>
                   <Pic
+                    style={{ cursor: "auto" }}
                     src={basketValue[i].photo}
                     width={basketValue[i].width}
                     height={basketValue[i].height}
@@ -205,35 +263,61 @@ function Cart(props) {
                   />
                 </div>
                 <div className={styles.productInfo}>
-                  <div className={styles.middleText}> {basketValue[i].nom}</div>
+                  <div className={styles.tinyText}> {basketValue[i].nom}</div>
                   <div className={styles.tinyText}>
                     {`Quantité : ${basketValue[i].quantité}`}
                   </div>
-                  <div className={styles.tinyText}>
-                    {`Variété : ${basketValue[i].variété}`}
-                  </div>
-                  <div className={styles.tinyText}>
-                    {`Taille : ${basketValue[i].taille}`}
-                  </div>
+                  {basketValue[i].variété && (
+                    <div className={styles.tinyText}>
+                      {`Variété : ${basketValue[i].variété}`}
+                    </div>
+                  )}
+
+                  {basketValue[i].taille && (
+                    <div className={styles.tinyText}>
+                      {`Taille : ${basketValue[i].taille.toUpperCase()}`}
+                    </div>
+                  )}
+                  {basketValue[i].couleur && (
+                    <div className={styles.tinyText}>
+                      {`Couleur : ${basketValue[i].couleur.toUpperCase()}`}
+                    </div>
+                  )}
+                  {basketValue[i].vin && (
+                    <div className={styles.tinyText}>
+                      {`Vin choisi : ${basketValue[i].vin.toUpperCase()}`}
+                    </div>
+                  )}
+                  {basketValue[i].durée && (
+                    <div className={styles.tinyText}>
+                      {`Durée de l'abonnement : ${basketValue[i].durée} mois`}
+                    </div>
+                  )}
+                  {basketValue[0].dateDébut.includes(undefined) ? (
+                    <div className={styles.tinyText}>
+                      {`Date : ${basketValue[i].dateDébut}`}
+                    </div>
+                  ) : (
+                    ""
+                  )}
                   {basketValue[i].mot === " " ? (
                     <div
                       className={styles.symbolContainer}
-                      style={{ height: "25px" }}
                       onClick={() => {
                         messageIsTrue();
                         setProductMessage(basketValue[i].mot);
                         setProductIndex(i);
                       }}
                     >
-                      <img
-                        className={styles.symbol}
-                        style={{ paddingLeft: "4px" }}
-                        src={"/assets/message.png"}
-                      />
+                      <div className={styles.iconContainer}>
+                        <img
+                          className={styles.symbol}
+                          src={"/assets/message.png"}
+                        />
+                      </div>
                       <div
                         className={styles.tinyText}
                         style={{
-                          paddingLeft: "3px",
                           fontFamily: "Authentic130",
                         }}
                       >
@@ -249,8 +333,8 @@ function Cart(props) {
                         Votre petit mot a été ajouté !
                       </div>
                       <div
-                        className={styles.tinyText}
-                        style={{ color: "grey" }}
+                        className={styles.confirmText}
+                        style={{ color: "grey", cursor: "pointer" }}
                         onClick={() => {
                           messageIsTrue();
                           console.log(messageIsClicked);
@@ -268,8 +352,18 @@ function Cart(props) {
                       removeBasket(i);
                     }}
                   >
-                    <img className={styles.symbol} src={"/assets/delete.png"} />
-                    <div className={styles.tinyText}>Supprimer l'article</div>
+                    <div className={styles.iconContainer}>
+                      <img
+                        className={styles.symbol}
+                        src={"/assets/delete.png"}
+                      />
+                    </div>
+                    <div
+                      className={styles.tinyText}
+                      style={{ cursor: "pointer" }}
+                    >
+                      Supprimer l'article
+                    </div>
                   </div>
                 </div>
                 <div
