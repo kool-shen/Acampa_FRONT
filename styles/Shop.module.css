@@ -25,21 +25,21 @@
 }
 
 /* Laptop XL */
-@media screen and (min-width: 1601px) {
+@media screen and (max-width: 1200px) {
   .photoContainer {
     grid-template-columns: repeat(6, 1fr);
   }
 }
 
 /* Laptop L */
-@media screen and (min-width: 1280px) and (max-width: 1600px) {
+@media screen and (min-width: 1000px) and (max-width: 1600px) {
   .photoContainer {
     grid-template-columns: repeat(5, 1fr);
   }
 }
 
 /* Tablette */
-@media screen and (max-width: 950px) {
+@media screen and (max-width: 652px) {
   .photoContainer {
     grid-template-columns: repeat(3, 1fr);
   }
