@@ -173,7 +173,7 @@ function Cart(props) {
               className={styles.symbolContainer}
               onClick={() => {
                 props.onClick();
-                handleCollectCheck();
+                unclickDelivery();
               }}
             >
               <div className={styles.crossContainer}>
@@ -234,6 +234,7 @@ function Cart(props) {
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     setIsConfirmed(false);
+                    deliveryTrue();
                   }}
                 >
                   Modifier

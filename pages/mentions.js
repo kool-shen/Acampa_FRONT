@@ -23,6 +23,7 @@ export default function mentions() {
 
       if (data.length > 0) {
         setContent(data);
+        setDescriptionUp(data[0].ligne1);
       }
     } catch (error) {
       console.error(error);
@@ -72,19 +73,12 @@ export default function mentions() {
       {content && (
         <>
           <div className={styles.middleContainer}>
-            <div className={styles.text}>{content[0].ligne1}</div>
+            <div className={styles.titleContainer}>
+              <div className={styles.text}>{content[0].ligne1}</div>
+              <div className={styles.text2}>{content[0].ligne2}</div>
+            </div>
             <div className={styles.text} style={{ whiteSpace: "pre-line" }}>
               {content[0].context.alt}
-            </div>
-          </div>
-          <div className={styles.photoContainer}>
-            <div className={styles.picContainer}>
-              <Pic
-                src={"/photos/001.jpg"}
-                width={450}
-                height={100}
-                alt={"votre panier"}
-              />
             </div>
           </div>
         </>

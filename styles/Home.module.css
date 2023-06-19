@@ -150,7 +150,7 @@
 .title:hover::after {
   width: 100%;
   left: 0;
-  bottom: 3px;
+  bottom: 0.8%;
   cursor: pointer;
 }
 
@@ -172,7 +172,6 @@
   height: 50%;
   display: flex;
   justify-content: flex-end;
-
   gap: 8vmin;
 }
 
@@ -182,7 +181,7 @@
   justify-content: space-around;
   gap: 2vmin;
   max-width: 100%;
-  padding: 2vmin;
+  padding-left: 2vmin;
 }
 
 .leftPicContainer2 {
@@ -289,6 +288,6 @@
 .shopSubCategory:hover::after {
   width: 100%;
   left: 0;
-  bottom: 3px;
+  bottom: 0.8%;
   cursor: pointer;
 }

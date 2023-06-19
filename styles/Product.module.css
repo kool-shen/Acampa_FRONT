@@ -8,14 +8,14 @@
 
 .textContainer {
   height: 100vh;
-  width: 20vw;
+  min-width: 18vw;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .galleryContainer {
-  width: 80vw;
+  width: 82vw;
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;

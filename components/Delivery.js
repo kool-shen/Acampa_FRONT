@@ -232,7 +232,6 @@ export default function Delivery(props) {
               className={styles.validateText}
               onClick={() => {
                 !missingValue ? getClientData() : handleAnimation();
-                console.log(missingRef);
               }}
               style={{ position: "relative" }}
               ref={okRef}

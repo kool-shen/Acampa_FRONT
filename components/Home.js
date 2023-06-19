@@ -117,7 +117,7 @@ export default function Home() {
     try {
       const response = await fetch(
         "https://acampa-back.vercel.app/cloudinary/homepage"
-        // "http://localhost:3000/cloudinary/homepage"
+        //"http://localhost:3000/cloudinary/homepage"
       );
       const resource = await response.json();
 
@@ -227,6 +227,7 @@ export default function Home() {
       description: data.context?.alt,
       refShop: data.metadata?.ml4tdfywqkkgth7uun95,
     });
+    console.log(hoveredInfos);
     hideMenu();
     setIsClicked(true);
     hide();
@@ -288,7 +289,7 @@ export default function Home() {
             {hoveredInfos.description ? hoveredInfos.description : ""}
           </div>
           {hoveredInfos.refShop && (
-            <div className={styles.linkShop}>
+            <div className={styles.linkShopContainer}>
               <Link
                 className={styles.linkShop}
                 //style={removeLinkStyle}
@@ -499,7 +500,7 @@ export default function Home() {
       </div>
 
       {Array.from({ length: repeatCount }, (_, index) => {
-        const startIndex = index * sequenceLength; // Calculer l'index de départ
+        const startIndex = index * (sequenceLength + 1); // Calculer l'index de départ
 
         return (
           <div className={styles.photoContainer} key={index}>

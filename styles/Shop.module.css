@@ -9,7 +9,7 @@
 
 .textContainer {
   height: 100vh;
-  width: 20vw;
+  min-width: 18vw;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -21,7 +21,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2vmin;
-  width: 80vw;
+  width: 82vw;
 }
 
 /* Laptop XL */

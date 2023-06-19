@@ -7,6 +7,7 @@ import { clickMessage } from "@/reducers/message";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Pic from "@/components/Pic";
+import Pic2 from "@/components/Pic2";
 
 export default function actu() {
   /// Charger le content ///

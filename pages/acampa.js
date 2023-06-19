@@ -5,7 +5,6 @@ import Menu from "@/components/Menu";
 import { useDispatch } from "react-redux";
 import { clickMessage } from "@/reducers/message";
 import { useState, useEffect } from "react";
-import Pic from "@/components/Pic";
 import Pic2 from "@/components/Pic2";
 
 export default function acampa() {
@@ -77,13 +76,15 @@ export default function acampa() {
               {content[0].context.alt}
             </div>
           </div>
-          <div className={styles.photoAreaContainer}>
-            <Pic2
-              src={content[0].src}
-              width={content[0].width}
-              height={content[0].height}
-              alt={content[0].collection}
-            />
+          <div className={styles.rightContainer}>
+            <div className={styles.photoAreaContainer}>
+              <Pic2
+                src={content[0].src}
+                width={300}
+                height={500}
+                alt={content[0].collection}
+              />
+            </div>
           </div>
         </>
       )}

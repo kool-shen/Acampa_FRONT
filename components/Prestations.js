@@ -12,22 +12,44 @@ export default function Prestations() {
 
   const [textContent, setTextContent] = useState([]);
 
-  // Load sous catégories
+  //// Slider ////
 
-  const [prestaSubCategories, setPrestaSubCategories] = useState([]);
+  const [photoIndex, setPhotoIndex] = useState(0);
 
-  const loadSubCategories = async () => {
-    try {
-      const response = await fetch(
-        "https://acampa-back.vercel.app/cloudinary/indexPresta"
-      );
-      const indexlist = await response.json();
+  const [photoLength, setPhotoLength] = useState();
 
-      setPrestaSubCategories(indexlist);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  function nextPhoto() {
+    const isLastSlide = photoIndex === photoLength - 1;
+    const newIndex = isLastSlide ? 0 : photoIndex + 1;
+    setPhotoIndex(newIndex);
+  }
+
+  function previousPhoto() {
+    const isFirstSlide = photoIndex === 0;
+    const newIndex = isFirstSlide ? photoLength - 1 : photoIndex - 1;
+    setPhotoIndex(newIndex);
+  }
+
+  /// sablier ///
+
+  const [timerProgress, setTimerProgress] = useState(0);
+
+  function startTimer() {
+    const interval = 10; // Intervalle de temps entre chaque itération (en millisecondes)
+    const totalTime = 9000; // Durée totale du sablier (en millisecondes)
+    const numIterations = totalTime / interval; // Nombre total d'itérations
+
+    let progress = 0; // Progression initiale
+
+    const timer = setInterval(() => {
+      progress += 100 / numIterations; // Augmentation de la progression à chaque itération
+      setTimerProgress(progress);
+
+      if (progress >= 100) {
+        clearInterval(timer); // Arrête le timer lorsque la progression atteint 100%
+      }
+    }, interval);
+  }
 
   /// Charger le content ///
 
@@ -35,22 +57,18 @@ export default function Prestations() {
     try {
       const response = await fetch(
         "https://acampa-back.vercel.app/cloudinary/prestations"
+        //"http://localhost:3000/cloudinary/prestations"
       );
       const content = await response.json();
-
       setTextContent(content);
+      setPhotoLength(content.length);
     } catch (error) {
       console.error(error);
     }
   };
 
-  // text bold au click + filtre la collection
-
-  const [clickedText, setClickedText] = useState(0);
-
   let phrase =
-    textContent[clickedText] &&
-    textContent[clickedText].metadata.nom_du_produit.toUpperCase();
+    textContent[0] && textContent[0].metadata.nom_du_produit.toUpperCase();
 
   const milieu = phrase?.lastIndexOf(" ", Math.floor(phrase.length / 2));
   const premierePartie = phrase?.substr(0, milieu);
@@ -75,11 +93,16 @@ export default function Prestations() {
   /// Use<Effect au Mount
 
   useEffect(() => {
-    loadSubCategories();
-    setClickedText(0);
-
     loadContent();
-  }, []);
+    startTimer();
+    const interval = setInterval(() => {
+      nextPhoto();
+    }, 9000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [photoIndex]);
 
   /// Envoi du mail ///
 
@@ -104,7 +127,7 @@ export default function Prestations() {
       </div>
 
       {/* vérifie si les métadatas ont chargé */}
-      {textContent[clickedText] && (
+      {textContent[0] && (
         <div className={styles.middleContainer}>
           <div className={styles.descriptionContainer}>
             <div className={styles.titleContainer}>
@@ -112,7 +135,7 @@ export default function Prestations() {
               <div className={styles.text2}>{secondePartie}</div>
             </div>
             <div className={styles.text} style={{ whiteSpace: "pre-line" }}>
-              {textContent[clickedText].context.alt}
+              {textContent[0].context.alt}
             </div>
           </div>
 
@@ -144,28 +167,53 @@ export default function Prestations() {
             />
 
             <textarea
-              className={styles.normalInput}
+              className={styles.messageInput}
               placeholder="VOTRE MESSAGE"
               name="message"
+              rows={10}
             />
-
+          </form>
+          <div className={styles.sendContainer}>
             <input
               type="submit"
               value="ENVOYER"
               className={styles.sendButton}
             />
-          </form>
+          </div>
         </div>
       )}
       {/* vérifie si les métadatas ont chargé */}
-      {textContent[clickedText] && (
+      {textContent[0] && (
         <div className={styles.photoAreaContainer}>
           <div className={styles.picContainer}>
+            <div className={styles.calque1}>
+              {" "}
+              <div
+                className={styles.sablier}
+                style={{
+                  background: `linear-gradient(to right, black ${timerProgress}%, white 0)`,
+                }}
+              ></div>
+            </div>
+            <div className={styles.calque2}>
+              <div
+                className={styles.previous}
+                onClick={() => {
+                  previousPhoto();
+                }}
+              ></div>
+              <div
+                className={styles.next}
+                onClick={() => {
+                  nextPhoto();
+                }}
+              ></div>
+            </div>
             <Pic2
-              src={textContent[clickedText].src}
-              width={textContent[clickedText].width}
-              height={textContent[clickedText].height}
-              alt={textContent[clickedText].collection}
+              src={textContent[photoIndex].src}
+              width={textContent[photoIndex].width}
+              height={textContent[photoIndex].height}
+              alt={textContent[photoIndex].collection}
             />
           </div>
         </div>
