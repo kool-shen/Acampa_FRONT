@@ -90,6 +90,14 @@ export default function Prestations() {
     dispatch(clickMessage(false));
   };
 
+  /// fade In
+
+  const fadeIn = {
+    opacity: "1",
+    transition: "opacity 0.4s, transform 0.4s",
+    visibility: "visible",
+  };
+
   /// Use<Effect au Mount
 
   useEffect(() => {
@@ -188,12 +196,12 @@ export default function Prestations() {
           <div className={styles.picContainer}>
             <div className={styles.calque1}>
               {" "}
-              <div
+              {/* <div
                 className={styles.sablier}
                 style={{
                   background: `linear-gradient(to right, black ${timerProgress}%, white 0)`,
                 }}
-              ></div>
+              ></div>*/}
             </div>
             <div className={styles.calque2}>
               <div
@@ -214,6 +222,8 @@ export default function Prestations() {
               width={textContent[photoIndex].width}
               height={textContent[photoIndex].height}
               alt={textContent[photoIndex].collection}
+              style={fadeIn}
+              className={styles.test}
             />
           </div>
         </div>

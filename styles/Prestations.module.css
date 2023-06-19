@@ -184,3 +184,7 @@
   border-radius: 5px;
   margin: 2vmin;
 }
+
+.test {
+  opacity: 0;
+}
