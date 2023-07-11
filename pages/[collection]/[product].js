@@ -310,7 +310,7 @@ function productPage() {
       {data && (
         <div
           className={styles.mainContainer}
-          style={{ height: mobileScreen ? "90vh" : "100vh" }}
+          style={{ height: mobileScreen ? "95vh" : "100vh" }}
         >
           <Cart
             style={displayCart}
