@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "../styles/Cart.module.css";
 import Pic from "./Pic";
+import Pic2 from "./Pic2";
 import { useDispatch, useSelector } from "react-redux";
 import { clickMessage } from "@/reducers/message";
 import Message from "./Message";
@@ -194,10 +195,13 @@ function Cart(props) {
             <div className={styles.text}>
               Il n'y a (encore) rien dans votre panier
             </div>
-            <div className={styles.symbolContainer} onClick={props.onClick}>
-              <div className={styles.crossContainer}>
-                <img className={styles.cross} src={"/assets/cross.png"} />
-              </div>
+            <div className={styles.crossContainer} onClick={props.onClick}>
+              <Pic2
+                src={"/assets/cross.png"}
+                width={100}
+                height={100}
+                alt={"cross"}
+              />
             </div>
           </div>
         ) : (

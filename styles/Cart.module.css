@@ -221,6 +221,7 @@ input:checked + .slider:before {
     height: 87vh;
     width: 100vw;
     transform: translateX(-100vw);
+    height: 93vh;
   }
   .eachProductContainer {
     height: auto;
@@ -261,6 +262,8 @@ input:checked + .slider:before {
   }
   .totalPayContainer {
     width: 100vw;
+    height: auto;
+    padding-top: 1vmin;
   }
   .switch {
     position: relative;
