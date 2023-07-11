@@ -196,7 +196,7 @@ function Cart(props) {
             </div>
             <div className={styles.symbolContainer} onClick={props.onClick}>
               <div className={styles.crossContainer}>
-                <img className={styles.cross} src={"/assets/x-mark.png"} />
+                <img className={styles.cross} src={"/assets/cross.png"} />
               </div>
             </div>
           </div>

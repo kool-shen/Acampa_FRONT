@@ -55,6 +55,8 @@
   .middleContainer {
     width: auto;
     padding: 3vmin;
+
+    overflow: scroll;
   }
   .text {
     font-size: 2.5vmin;

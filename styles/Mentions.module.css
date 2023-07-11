@@ -20,6 +20,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow: scroll;
   gap: 4vmin;
   padding: 1vh;
 }

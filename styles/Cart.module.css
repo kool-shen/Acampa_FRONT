@@ -179,7 +179,7 @@ input:checked + .slider:before {
 
 .cross {
   height: 100%;
-  width: auto;
+
   object-fit: cover;
 }
 
@@ -218,7 +218,7 @@ input:checked + .slider:before {
 /* Mobile L*/
 @media screen and (max-width: 425px) {
   .globalContainer {
-    height: 93vh;
+    height: 87vh;
     width: 100vw;
     transform: translateX(-100vw);
   }
@@ -255,7 +255,7 @@ input:checked + .slider:before {
     height: 5vmin;
   }
   .crossContainer {
-    height: 9vmin;
+    height: 15vmin;
 
     padding: 3vmin;
   }
