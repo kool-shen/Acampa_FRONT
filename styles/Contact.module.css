@@ -39,6 +39,7 @@
 @media screen and (max-width: 425px) {
   .mainContainer {
     flex-direction: column;
+    height: 93vh;
   }
   .textContainer {
     height: auto;

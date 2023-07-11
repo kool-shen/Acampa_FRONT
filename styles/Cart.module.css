@@ -218,6 +218,7 @@ input:checked + .slider:before {
 /* Mobile L*/
 @media screen and (max-width: 425px) {
   .globalContainer {
+    height: 93vh;
     width: 100vw;
     transform: translateX(-100vw);
   }

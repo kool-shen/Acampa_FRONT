@@ -45,6 +45,7 @@
 /* Mobile L*/
 @media screen and (max-width: 425px) {
   .mainContainer {
+    height: 93vh;
     flex-direction: column;
   }
   .textContainer {
