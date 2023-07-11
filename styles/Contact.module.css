@@ -3,6 +3,7 @@
   display: flex;
   height: 100vh;
   position: relative;
+  overflow: hidden;
 }
 
 .textContainer {
@@ -33,4 +34,19 @@
   font-size: 1.9vh;
   font-family: "Authentic130";
   color: black;
+}
+
+@media screen and (max-width: 425px) {
+  .mainContainer {
+    flex-direction: column;
+  }
+  .textContainer {
+    height: auto;
+    width: 100vw;
+  }
+  .middleContainer {
+    width: 100vw;
+    padding-left: 3vmin;
+    padding-top: 12vh;
+  }
 }

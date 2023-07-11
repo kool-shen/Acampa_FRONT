@@ -24,13 +24,6 @@
   padding: 1vh;
 }
 
-.descriptionContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4vmin;
-}
-
 .text {
   font-size: 1.9vmin;
   font-family: "Authentic130";
@@ -44,9 +37,23 @@
   color: black;
 }
 
-.photoContainer {
-  width: 50vw;
-  height: 90vh;
-  display: flex;
-  justify-content: center;
+/* Mobile L*/
+@media screen and (max-width: 425px) {
+  .mainContainer {
+    flex-direction: column;
+  }
+  .textContainer {
+    height: auto !important;
+    width: auto;
+  }
+  .middleContainer {
+    width: auto !important;
+    padding: 3vmin;
+  }
+  .text {
+    font-size: 2.5vmin;
+  }
+  .text2 {
+    font-size: 2.5vmin;
+  }
 }

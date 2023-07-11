@@ -6,34 +6,10 @@ import { useDispatch } from "react-redux";
 import { clickMessage } from "@/reducers/message";
 import { useState, useEffect } from "react";
 
-export default function contact() {
-  // FETCH //
-
-  const [content, setContent] = useState();
-
-  const loadContent = async () => {
-    try {
-      const response = await fetch(
-        "https://acampa-back.vercel.app/cloudinary/contact"
-      );
-      const data = await response.json();
-
-      if (data.length > 0) {
-        setContent(data);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    loadContent();
-  }, []);
-
-  /// Config Panier ///
+export default function contact({ content }) {
+  // Config Panier
 
   const [cartClicked, setCartClicked] = useState(false);
-
   const [messageClicked, setMessageClicked] = useState(false);
 
   const displayCart = !cartClicked
@@ -62,7 +38,7 @@ export default function contact() {
           clickCart={() => {
             setCartClicked(true);
           }}
-          display={"none"}
+          display={"block"}
           about={true}
         />
       </div>
@@ -78,4 +54,33 @@ export default function contact() {
       )}
     </div>
   );
+}
+
+export async function getStaticProps() {
+  try {
+    const response = await fetch(
+      "https://acampa-back.vercel.app/cloudinary/contact"
+    );
+    const data = await response.json();
+
+    let content = null;
+    if (data.length > 0) {
+      content = data;
+    }
+
+    return {
+      props: {
+        content,
+      },
+      revalidate: 3600,
+    };
+  } catch (error) {
+    console.error(error);
+
+    return {
+      props: {
+        content: null,
+      },
+    };
+  }
 }

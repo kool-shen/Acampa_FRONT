@@ -3,6 +3,7 @@
   display: flex;
   height: 100vh;
   position: relative;
+  overflow: hidden;
 }
 
 .textContainer {
@@ -36,7 +37,34 @@
 }
 
 .text {
-  font-size: 1.9vh;
+  font-size: 1.9vmin;
   font-family: "Authentic130";
   color: black;
+}
+
+/* Mobile L*/
+@media screen and (max-width: 425px) {
+  .mainContainer {
+    flex-direction: column;
+  }
+  .textContainer {
+    height: auto;
+    width: auto;
+  }
+  .middleContainer {
+    width: auto;
+    padding: 3vmin;
+  }
+  .text {
+    font-size: 2.5vmin;
+  }
+  .rightContainer {
+    justify-content: center;
+    width: 100%;
+    overflow: scroll;
+  }
+
+  .photoAreaContainer {
+    width: 95%;
+  }
 }

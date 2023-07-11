@@ -1,7 +1,7 @@
 .globalContainer {
   height: 100vh;
   position: absolute;
-  z-index: 99;
+
   width: 50vw;
   border-left: 2px solid black;
   display: flex;
@@ -36,7 +36,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  border: 1px solid green;
+  /* border: 1px solid green; */
 }
 
 .bottomRightContainer {
@@ -119,7 +119,7 @@ input:checked + .slider:before {
   padding-top: 10vh;
   padding-bottom: 20vh;
   overflow-y: scroll;
-  z-index: 1;
+
   background-color: #ffe93f;
 }
 
@@ -134,10 +134,18 @@ input:checked + .slider:before {
   display: flex;
   width: 100%;
   min-height: 24vmin;
-
-  justify-content: space-between;
+  /* border: 1px solid red; */
+  justify-content: space-between !important;
   align-items: safe;
+
   border-bottom: 2px solid black;
+}
+
+.productInfoContainer {
+  /* border: 1px solid blue; */
+  display: flex;
+  gap: 2vmin;
+  padding: 1vmin;
 }
 
 .productInfo {
@@ -205,4 +213,87 @@ input:checked + .slider:before {
 .picContainer {
   height: 23vmin;
   align-self: center;
+}
+
+/* Mobile L*/
+@media screen and (max-width: 425px) {
+  .globalContainer {
+    width: 100vw;
+    transform: translateX(-100vw);
+  }
+  .eachProductContainer {
+    height: auto;
+    justify-content: flex-start;
+
+    gap: 3vmin;
+  }
+
+  .sumUpContainer {
+    /* border: 1px solid blue; */
+    width: 100vw;
+  }
+  .text {
+    font-size: 5vmin;
+    transform: translateX(0);
+  }
+
+  .confirmText {
+    font-size: 3.5vmin;
+    font-family: "Authentic130";
+    color: grey;
+  }
+
+  .tinyText {
+    font-size: 3.5vmin;
+
+    font-family: "Authentic90";
+    padding-left: 0.1vmin;
+    padding-bottom: 0.1vmin;
+  }
+  .iconContainer {
+    height: 5vmin;
+  }
+  .crossContainer {
+    height: 9vmin;
+
+    padding: 3vmin;
+  }
+  .totalPayContainer {
+    width: 100vw;
+  }
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 11vmin;
+    height: 6vmin;
+  }
+
+  .switch input {
+    display: none;
+  }
+
+  input:checked + .slider {
+    background-color: black;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(70%);
+  }
+}
+
+.mobileMessageContainer {
+  position: absolute;
+  z-index: 300;
+}
+
+.halo {
+  height: 100vh;
+  width: 100vw;
+  background-color: transparent;
+}
+
+.halo2 {
+  height: 100vh;
+  width: 100vw;
+  background-color: transparent;
 }

@@ -8,6 +8,7 @@ import Pic2 from "@/components/Pic2";
 import Cart from "@/components/Cart";
 import Menu from "@/components/Menu";
 import { addToBasket } from "../../reducers/basket";
+import { GetStaticProps } from "next";
 
 function productPage() {
   /// produit cliqué + création de l'url ///
@@ -332,6 +333,12 @@ function productPage() {
               </div>
               <div className={styles.productFocusContainer}>
                 <div className={styles.textProductContainer}>
+                  {data[0].metadata?.nom_du_produit && (
+                    <div className={styles.productDescription}>
+                      {data[0].metadata?.nom_du_produit.toUpperCase()}
+                    </div>
+                  )}
+
                   <div
                     className={styles.productDescription}
                     style={{ whiteSpace: "pre-line" }}

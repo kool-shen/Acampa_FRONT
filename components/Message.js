@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../styles/Message.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { clickMessage } from "@/reducers/message";
 import { updateProductMot, updateProductSignature } from "@/reducers/basket";
@@ -43,11 +43,27 @@ export default function Message(props) {
   const [message, setMessage] = useState(props.productindex);
   const [signature, setSignature] = useState("");
 
+  const [mobileScreen, setMobileScreen] = useState();
+
+  const calculateScreen = () => {
+    window.innerWidth <= 425 ? setMobileScreen(true) : setMobileScreen(false);
+  };
+
+  useEffect(() => {
+    calculateScreen();
+  }, []);
+
   /// animation du message ///
 
   const displayMessage = messageIsClicked
-    ? { transform: "translateX(-50vw)", transition: "transform 1s" }
-    : { transform: "translateX(30vw)", transition: "transform 1s" };
+    ? {
+        transform: mobileScreen ? "translateX(0)" : "translateX(-50vw)",
+        transition: "transform 1s",
+      }
+    : {
+        transform: mobileScreen ? "translateX(101vw)" : "translateX(50vw)",
+        transition: "transform 1s",
+      };
 
   return (
     <div>

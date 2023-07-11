@@ -9,7 +9,6 @@
   gap: 1vmin;
   border: 2px solid black;
   padding: 1vh;
-  z-index: 22;
 }
 
 .textContainer {
@@ -148,4 +147,68 @@ input:checked + .slider:before {
 
 .addressInput:focus {
   outline: none;
+}
+
+/* Mobile L*/
+@media screen and (max-width: 425px) {
+  .globalContainer {
+    top: 0;
+    width: 85vw;
+
+    gap: 3vmin;
+  }
+  .text {
+    font-size: 4vmin;
+  }
+
+  .cityContainer {
+    border: 1px solid grey;
+  }
+  .districtContainer {
+    flex-wrap: wrap;
+  }
+
+  .validateContainer {
+    border: 1px solid blue;
+  }
+
+  .descriptionText {
+    font-size: 4vmin;
+  }
+  .textContainer {
+    border: 1px solid red;
+  }
+  .inputContainer {
+    border: 1px solid green;
+  }
+  .validateText {
+    font-size: 4vmin;
+  }
+  .signatureInput {
+    font-size: 4vmin;
+    height: auto;
+    width: 30vw;
+  }
+  .addressInput {
+    font-size: 4vmin;
+  }
+
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 11vmin;
+    height: 6vmin;
+  }
+
+  .switch input {
+    display: none;
+  }
+
+  input:checked + .slider {
+    background-color: black;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(70%);
+  }
 }

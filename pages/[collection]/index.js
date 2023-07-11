@@ -46,7 +46,7 @@ export default function index() {
       try {
         if (collection) {
           const response = await fetch(
-            // `http://localhost:3000/cloudinary/collection?collection=${collection}`
+            //`http://localhost:3000/cloudinary/collection?collection=${collection}`
             `https://acampa-back.vercel.app/cloudinary/collection?collection=${collection}`
           );
           const jsonData = await response.json();
@@ -65,6 +65,7 @@ export default function index() {
     };
 
     fetchData();
+    console.log(window.innerWidth);
   }, [collection]);
 
   /// Config Panier ///
@@ -109,88 +110,113 @@ export default function index() {
         <meta name="yo" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      {data && (
-        <div className={styles.mainContainer}>
-          <Cart
-            style={displayCart}
-            isClicked={messageClicked}
-            onClick={() => {
-              setCartClicked(false);
-              setMessageClicked(false);
-              messageIsFalse();
-            }}
-          />
+      <div className={styles.mainContainer}>
+        <Cart
+          style={displayCart}
+          isClicked={messageClicked}
+          onClick={() => {
+            setCartClicked(false);
+            setMessageClicked(false);
+            messageIsFalse();
+          }}
+        />
 
-          <div className={styles.textContainer}>
-            <Menu
-              clickCart={() => {
-                setCartClicked(true);
-              }}
-              indexCategories={indexCategories}
-              aboutSubCatStyle={{ display: "none" }}
-            />
-          </div>
-          <div className={styles.photoContainer}>
-            {data &&
-              data.length > 0 &&
-              data.map((item, index) => (
-                <div
-                  key={item.key}
-                  className={styles.productContainer}
-                  onClick={() => {
-                    if (item.price) {
-                      setCartClicked(false);
-                      setMessageClicked(false);
-                      messageIsFalse();
-                    } else {
-                      null;
-                    }
-                  }}
-                >
-                  <div className={styles.picContainer}>
-                    <Pic2
-                      onClick={() => {
-                        GenerateProductPage(item.name);
-                      }}
-                      src={
-                        indexPhoto === index && twinPhoto
-                          ? twinPhoto
-                          : photo[index]
-                      }
-                      width={item.width}
-                      height={item.height}
-                      alt={item.name}
-                      onMouseEnter={() => {
-                        handleMouseOver(index);
-                      }}
-                      onMouseLeave={handleMouseLeave}
-                    />
-                  </div>
-                  <div className={styles.productInfoContainer}>
-                    {item.price ? (
-                      <>
-                        <div className={styles.productName}>
-                          {item.name.toUpperCase()}
-                        </div>
-                        <div className={styles.productPrice}>
-                          À partir de{" "}
-                          {item.duree
-                            ? item.price * 6 + 40
-                            : item.vin
-                            ? item.price + 15
-                            : item.price}
-                          ,00€
-                        </div>
-                      </>
-                    ) : (
-                      <div className={styles.productName}>BIENTÔT DISPO ;)</div>
-                    )}
-                  </div>
-                </div>
-              ))}
-          </div>
+        <div className={styles.textContainer}>
+          <Menu
+            clickCart={() => {
+              setCartClicked(true);
+            }}
+            indexCategories={indexCategories}
+            aboutSubCatStyle={{ display: "none" }}
+          />
         </div>
-      )}{" "}
+        <div className={styles.photoContainer}>
+          {data &&
+            data.length > 0 &&
+            data.map((item, index) => (
+              <div
+                key={item.key}
+                className={styles.productContainer}
+                onClick={() => {
+                  if (item.price) {
+                    setCartClicked(false);
+                    setMessageClicked(false);
+                    messageIsFalse();
+                  } else {
+                    null;
+                  }
+                }}
+              >
+                <div
+                  className={styles.picContainer}
+                  style={
+                    !item.price
+                      ? {
+                          cursor: "auto",
+                        }
+                      : {
+                          cursor: "pointer",
+                        }
+                  }
+                >
+                  <Pic2
+                    onClick={() => {
+                      GenerateProductPage(item.name);
+                    }}
+                    src={
+                      indexPhoto === index && twinPhoto
+                        ? twinPhoto
+                        : photo[index]
+                    }
+                    width={item.width}
+                    height={item.height}
+                    alt={item.name}
+                    onMouseEnter={() => {
+                      handleMouseOver(index);
+                    }}
+                    onMouseLeave={handleMouseLeave}
+                    style={
+                      !item.price
+                        ? {
+                            opacity: "0.5",
+                            pointerEvents: "none",
+                            cursor: "auto",
+                          }
+                        : ""
+                    }
+                  />
+                </div>
+                <div className={styles.productInfoContainer}>
+                  {item.price ? (
+                    <>
+                      <div className={styles.productName}>
+                        {item.name ? item.name.toUpperCase() : ""}
+                      </div>
+                      <div className={styles.productPrice}>
+                        À partir de{" "}
+                        {item.duree
+                          ? item.price * 6 + 40
+                          : item.vin
+                          ? item.price + 15
+                          : item.price}
+                        ,00€
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className={styles.productName}>
+                        {item.name ? item.name.toUpperCase() : ""}
+                      </div>
+                      <div className={styles.productPrice}>
+                        (BIENTÔT DISPONIBLE)
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>{" "}
     </>
   );
 }

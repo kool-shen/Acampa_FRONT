@@ -51,13 +51,33 @@ export default function Prestations() {
     }, interval);
   }
 
+  /// Charger le texte ///
+
+  const [texte, setTexte] = useState();
+
+  const loadPresentation = async () => {
+    try {
+      const response = await fetch(
+        "https://acampa-back.vercel.app/cloudinary/prestationsTexte"
+        // "http://localhost:3000/cloudinary/prestationsTexte"
+      );
+      const resource = await response.json();
+
+      if (resource.length > 0) {
+        setTexte(resource);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   /// Charger le content ///
 
   const loadContent = async () => {
     try {
       const response = await fetch(
         "https://acampa-back.vercel.app/cloudinary/prestations"
-        //"http://localhost:3000/cloudinary/prestations"
+        // "http://localhost:3000/cloudinary/prestations"
       );
       const content = await response.json();
       setTextContent(content);
@@ -67,8 +87,7 @@ export default function Prestations() {
     }
   };
 
-  let phrase =
-    textContent[0] && textContent[0].metadata.nom_du_produit.toUpperCase();
+  let phrase = texte && texte[0].metadata.toUpperCase();
 
   const milieu = phrase?.lastIndexOf(" ", Math.floor(phrase.length / 2));
   const premierePartie = phrase?.substr(0, milieu);
@@ -102,10 +121,9 @@ export default function Prestations() {
 
   useEffect(() => {
     loadContent();
+    loadPresentation();
     startTimer();
-    const interval = setInterval(() => {
-      nextPhoto();
-    }, 9000);
+    const interval = setInterval(() => {}, 9000);
 
     return () => {
       clearInterval(interval);
@@ -135,7 +153,7 @@ export default function Prestations() {
       </div>
 
       {/* vérifie si les métadatas ont chargé */}
-      {textContent[0] && (
+      {texte && (
         <div className={styles.middleContainer}>
           <div className={styles.descriptionContainer}>
             <div className={styles.titleContainer}>
@@ -143,7 +161,7 @@ export default function Prestations() {
               <div className={styles.text2}>{secondePartie}</div>
             </div>
             <div className={styles.text} style={{ whiteSpace: "pre-line" }}>
-              {textContent[0].context.alt}
+              {texte[0].context}
             </div>
           </div>
 

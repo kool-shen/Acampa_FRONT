@@ -25,6 +25,8 @@ export default function Home() {
   const [menuState, setMenuState] = useState(false);
   const [subCat, setSubCat] = useState(false);
   const [aboutState, setAboutState] = useState(false);
+  const [shopClicked, setShopClicked] = useState(false);
+  const [aboutClicked, setAboutClicked] = useState(false);
 
   const displaySubCat = () => {
     setSubCat(true);
@@ -110,6 +112,23 @@ export default function Home() {
   };
 
   //// Load Cloudinary ////
+  const [texte, setTexte] = useState();
+
+  const loadPresentation = async () => {
+    try {
+      const response = await fetch(
+        "https://acampa-back.vercel.app/cloudinary/presentation"
+        // "http://localhost:3000/cloudinary/presentation"
+      );
+      const resource = await response.json();
+
+      if (resource.length > 0) {
+        setTexte(resource[0].context.alt);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const [fetchData, setFetchData] = useState([]);
 
@@ -117,7 +136,7 @@ export default function Home() {
     try {
       const response = await fetch(
         "https://acampa-back.vercel.app/cloudinary/homepage"
-        //"http://localhost:3000/cloudinary/homepage"
+        // "http://localhost:3000/cloudinary/homepage"
       );
       const resource = await response.json();
 
@@ -155,6 +174,7 @@ export default function Home() {
 
   useEffect(() => {
     loadImage();
+    loadPresentation();
     loadSubCategories();
     menuAnimation();
     shopAnimation();
@@ -311,12 +331,7 @@ export default function Home() {
             floral
           </div>
           <div className={styles.acampaRegular}>basé à Marseille.</div>
-          <div className={styles.acampaDescription}>
-            * "Porter une chose du champ à la maison" dit l’étymologie
-            provençale, une bien jolie manière de définir cette envie de fleurir
-            vos "intérieurs" que ce soit dans vos doux salons d’hiver, vos
-            tablées printanières ou simplement vos envies du coeur.
-          </div>
+          {texte && <div className={styles.acampaDescription}>{texte}</div>}
         </div>
         <div
           className={styles.logoContainer}
@@ -361,11 +376,9 @@ export default function Home() {
           <div className={styles.categoryContainer} ref={menuRef}>
             <div className={styles.titleContainer}>
               <div
-                onMouseEnter={() => {
-                  displaySubCat();
-                }}
-                onMouseLeave={() => {
-                  hideSubCat();
+                onClick={() => {
+                  setShopClicked(!shopClicked);
+                  shopClicked ? hideSubCat() : displaySubCat();
                 }}
                 style={removeLinkStyle}
                 className={styles.title}
@@ -374,16 +387,7 @@ export default function Home() {
               </div>
             </div>
             {subCategories ? (
-              <div
-                className={styles.shopSubCategoryContainer}
-                ref={subCatRef}
-                onMouseEnter={() => {
-                  displaySubCat();
-                }}
-                onMouseLeave={() => {
-                  hideSubCat();
-                }}
-              >
+              <div className={styles.shopSubCategoryContainer} ref={subCatRef}>
                 {subCategories.map((data, i) => (
                   <div
                     className={styles.subcatContainer}
@@ -416,11 +420,9 @@ export default function Home() {
             <div className={styles.titleContainer}>
               <div
                 className={styles.title}
-                onMouseEnter={() => {
-                  displayAbout();
-                }}
-                onMouseLeave={() => {
-                  hideAbout();
+                onClick={() => {
+                  setAboutClicked(!aboutClicked);
+                  aboutClicked ? hideAbout() : displayAbout();
                 }}
               >
                 À propos
@@ -430,12 +432,12 @@ export default function Home() {
             <div
               className={styles.shopSubCategoryContainer}
               ref={aboutCategoryRef}
-              onMouseEnter={() => {
-                displayAbout();
-              }}
-              onMouseLeave={() => {
-                hideAbout();
-              }}
+              // onMouseEnter={() => {
+              //   displayAbout();
+              // }}
+              // onMouseLeave={() => {
+              //   hideAbout();
+              // }}
 
               /* style={props.aboutSubCatStyle}*/
             >
@@ -519,7 +521,10 @@ export default function Home() {
                           width={data.width}
                           height={data.height}
                           alt={data.collection}
-                          onClick={() => clickPhoto(data)}
+                          onClick={() => {
+                            clickPhoto(data);
+                            console.log(texte);
+                          }}
                           style={
                             data.src === hoveredInfos.src ||
                             hoveredInfos.src === ""

@@ -22,6 +22,7 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 2vmin;
   width: 82vw;
+  overflow: scroll;
 }
 
 /* Laptop XL */
@@ -52,7 +53,7 @@
     align-items: center;
   }
   .textContainer {
-    width: 50vw;
+    width: 100vw;
     align-self: flex-start;
 
     height: auto;
@@ -62,10 +63,15 @@
     grid-template-columns: repeat(2, 1fr);
     width: 90vw;
     padding: 5vmin;
-    overflow: scroll;
   }
   .picContainer {
     height: 70vmin !important;
+  }
+  .productName {
+    font-size: 2.5vmin !important;
+  }
+  .productPrice {
+    font-size: 2.5vmin !important;
   }
 }
 
@@ -118,6 +124,4 @@
   height: 35vmin;
 
   display: flex;
-
-  cursor: pointer;
 }

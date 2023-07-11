@@ -73,3 +73,42 @@
   /* border: 1px solid green; */
   cursor: pointer;
 }
+
+/* Mobile L*/
+@media screen and (max-width: 425px) {
+  .mainContainer {
+    flex-direction: column;
+  }
+  .leftContainer {
+    width: auto;
+    height: auto;
+  }
+  .rightContainer {
+    width: auto;
+    overflow: scroll;
+    justify-content: flex-start;
+  }
+  .infoContainer {
+    width: auto;
+    height: auto;
+    padding: 3vmin;
+    justify-content: flex-start;
+  }
+  .text {
+    font-size: 2.5vmin;
+  }
+  .text2 {
+    font-size: 2.5vmin;
+  }
+  .newsContainer {
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4vmin;
+  }
+  .productContainer {
+    height: 30vh;
+    width: 40vw;
+  }
+}

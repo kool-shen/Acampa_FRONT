@@ -8,34 +8,11 @@
   font-size: 1.7vmin;
 }
 
-/* Mobile L*/
-@media screen and (max-width: 425px) {
-  .menu {
-    font-size: 7vmin;
-  }
-  .tiret {
-    display: none;
-  }
-  .cartContainer {
-    top: -5vmin !important;
-    left: 146%;
-    height: 36px !important;
-    width: 20% !important;
-    /* background-color: #ffe93f;
-    border: 1px solid green; */
-  }
-  .panierContainer {
-    height: 100% !important;
-  }
-  .basketCircleContainer {
-    height: 60% !important;
-    width: 60% !important;
-    left: 80% !important;
-    top: -10%;
-  }
-  .basketCircle {
-    height: 7vmin !important;
-  }
+.burger {
+  position: absolute;
+  padding-left: 3vw;
+  padding-top: 1vh;
+  z-index: 3;
 }
 
 .flowerContainer {
@@ -188,3 +165,74 @@
 .panierContainer:hover {
   transform: scale(1.2);
 }
+
+/* Mobile L*/
+
+@media screen and (max-width: 425px) {
+  .title {
+    font-size: 9vmin;
+    padding-left: 3vmin;
+  }
+  .shopSubCategory {
+    font-size: 9vmin;
+    padding-left: 3vmin;
+  }
+  .basketCircleContainer {
+    top: -18px;
+    left: 10px;
+    width: 16px;
+    height: 16px;
+  }
+  .basketCircle {
+    transform: translateY(-3px);
+  }
+}
+.mobileMenuContainer {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.mobileIconContainer {
+  display: flex;
+  justify-content: center;
+  height: 15%;
+
+  gap: 3vmin;
+  transform: translateY(100%);
+
+  padding-right: 3vmin;
+}
+
+.mobilePanier {
+  position: relative;
+}
+
+.mobileburgerContainer {
+  height: 30%;
+  transform: translateY(40%);
+  padding-left: 3vmin;
+}
+
+.mobileFlowerContainer {
+  height: 70%;
+  align-self: center;
+}
+
+.mobileListContainer {
+  position: absolute;
+  border: 2px solid black;
+  background-color: white;
+  height: 100vh;
+  width: 100vw;
+  z-index: 8;
+  overflow-y: scroll;
+}
+
+.mobileCrossContainer {
+  height: 15vmin;
+  width: 15vmin;
+}
+/* ///////*/

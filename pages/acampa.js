@@ -64,7 +64,7 @@ export default function acampa() {
           clickCart={() => {
             setCartClicked(true);
           }}
-          display={"none"}
+          display={"block"}
           about={true}
         />
       </div>

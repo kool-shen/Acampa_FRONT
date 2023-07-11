@@ -78,3 +78,16 @@
   font-family: "Authentic130";
   padding: 1vmin;
 }
+
+/* Mobile L*/
+@media screen and (max-width: 425px) {
+  .messageContainer {
+    width: 99vw;
+  }
+  .text {
+    font-size: 4vmin;
+  }
+  .textareaContainer {
+    width: 96%;
+  }
+}

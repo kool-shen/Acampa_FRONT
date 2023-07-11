@@ -173,6 +173,8 @@
   display: flex;
   justify-content: flex-end;
   gap: 8vmin;
+  /* border: 1px solid green; */
+  padding-right: 3vmin;
 }
 
 .scrollContainerBottom2 {
@@ -182,6 +184,8 @@
   gap: 2vmin;
   max-width: 100%;
   padding-left: 2vmin;
+  padding-top: 2vmin;
+  /* border: 1px solid red; */
 }
 
 .leftPicContainer2 {
@@ -204,6 +208,7 @@
   padding-right: 6%;
   height: 70%;
   opacity: 1;
+  /* border: 1px solid blue; */
 }
 
 .pic3Container {

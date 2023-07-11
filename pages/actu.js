@@ -96,7 +96,7 @@ export default function actu() {
           clickCart={() => {
             setCartClicked(true);
           }}
-          display={"none"}
+          display={"block"}
           about={true}
         />
       </div>

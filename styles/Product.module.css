@@ -4,6 +4,7 @@
   display: flex;
   height: 100vh;
   position: relative;
+  overflow: hidden;
 }
 
 .textContainer {
@@ -48,14 +49,6 @@
 
 /* Shop  */
 
-.productInfoContainer {
-  display: flex;
-  max-width: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-  height: auto;
-}
-
 .productName {
   font-size: 1.9vh;
   font-family: "Authentic130";
@@ -77,14 +70,12 @@
   justify-content: space-between;
   height: auto;
   align-self: flex-end;
-
-  /*border: 2px solid green;*/
   padding: 2vmin;
   gap: 5vmin;
 }
 
 .productDescription {
-  font-size: 1.7vmin;
+  font-size: 1.9vmin;
   font-family: "Authentic130";
   color: black;
 }
@@ -98,8 +89,10 @@
 
 .textProductContainer {
   justify-self: center;
-
-  /*border : 2px solid red;*/
+  display: flex;
+  flex-direction: column;
+  gap: 2vmin;
+  /* border: 2px solid red; */
 }
 
 .numbersProductContainer {
@@ -143,7 +136,7 @@
 }
 
 .panierText {
-  font-size: 1.7vmin;
+  font-size: 1.9vmin;
   font-family: "Authentic130";
 }
 
@@ -224,4 +217,47 @@
 .slash {
   font-size: 1.9vmin;
   font-family: "Authentic130";
+}
+
+/* Mobile L*/
+@media screen and (max-width: 425px) {
+  .mainContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+  .textContainer {
+    width: 100vw;
+    height: auto;
+  }
+  .focusContainer {
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2vmin;
+    height: auto;
+    width: 90%;
+  }
+  .galleryContainer {
+    width: 100%;
+    justify-content: center;
+    overflow: scroll;
+  }
+  .picContainer {
+    height: 50vh;
+  }
+
+  .productFocusContainer {
+    align-self: center;
+    width: 100%;
+  }
+
+  .productDescription {
+    font-size: 4vmin;
+    overflow: scroll;
+  }
+  .logoContainer {
+    height: 6.5vmin;
+  }
+  .panierText {
+    font-size: 4vmin;
+  }
 }
