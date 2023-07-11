@@ -212,6 +212,14 @@ function productPage() {
 
   const [data, setData] = useState();
 
+  ////// MOBILE /////
+
+  const [mobileScreen, setMobileScreen] = useState();
+
+  const calculateScreen = () => {
+    window.innerWidth <= 425 ? setMobileScreen(true) : setMobileScreen(false);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -252,6 +260,7 @@ function productPage() {
 
     fetchData();
     loadSubCategories();
+    calculateScreen();
   }, [
     collection,
     product,
@@ -299,7 +308,10 @@ function productPage() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       {data && (
-        <div className={styles.mainContainer}>
+        <div
+          className={styles.mainContainer}
+          style={{ height: mobileScreen ? "90vh" : "100vh" }}
+        >
           <Cart
             style={displayCart}
             isClicked={messageClicked}
