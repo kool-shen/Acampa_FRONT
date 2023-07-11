@@ -308,10 +308,7 @@ function productPage() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       {data && (
-        <div
-          className={styles.mainContainer}
-          style={{ height: mobileScreen ? "95vh" : "100vh" }}
-        >
+        <div className={styles.mainContainer}>
           <Cart
             style={displayCart}
             isClicked={messageClicked}
