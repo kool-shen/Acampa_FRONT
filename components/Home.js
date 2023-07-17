@@ -285,7 +285,7 @@ export default function Home() {
     visibility: "visible",
   };
 
-  return (
+  return !mobileScreen ? (
     <div
       className={styles.mainContainer}
       ref={scrollContainerRef}
@@ -361,7 +361,7 @@ export default function Home() {
             className={styles.burgerContainer}
             onClick={() => {
               displayMenu();
-              console.log(mobileScreen);
+              console.log(window.innerWidth);
             }}
             ref={burgerRef}
             /*style={burgerStyle}*/
@@ -597,5 +597,7 @@ export default function Home() {
         );
       })}
     </div>
+  ) : (
+    <div className={styles.mobileMainContainer}>YO</div>
   );
 }

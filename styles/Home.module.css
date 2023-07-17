@@ -303,5 +303,20 @@
     height: 900vh;
     flex-direction: column;
     overflow: unset;
+    border: 5px solid red;
   }
+  .pic1Container {
+    overflow: unset;
+  }
+
+  .pic3Container {
+    overflow: unset;
+  }
+}
+
+.mobileMainContainer {
+  height: 900vh;
+  width: 100vw;
+  overflow: scroll;
+  border: 5px solid red;
 }
