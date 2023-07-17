@@ -16,10 +16,10 @@
 }
 
 .galleryContainer {
-  width: 82vw;
+  min-width: 82vw;
   display: flex;
-  justify-content: flex-end;
-  flex-wrap: wrap;
+  /* border: 1px solid red; */
+  justify-content: space-between;
   overflow: hidden;
 }
 
@@ -29,9 +29,10 @@
 
 .focusContainer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   height: 100vh;
-  width: 80vw;
+  /* border: 1px SOLID blue; */
+  width: 100%;
 }
 
 .propriétésContainer {
@@ -65,9 +66,9 @@
 
 .productFocusContainer {
   display: flex;
-  width: 27vw;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   height: auto;
   align-self: flex-end;
   padding: 2vmin;
@@ -144,6 +145,7 @@
 
 .picContainer {
   height: 100vh;
+  width: 100%;
 }
 
 .focusContainer > .productInfoContainer {
@@ -187,9 +189,8 @@
 
 .inputContainer {
   display: flex;
-  width: 15vw;
+
   align-items: flex-end;
-  gap: 1vmin;
 }
 
 .dateInput {
@@ -197,9 +198,9 @@
   font-family: "Authentic130";
   background-color: white;
   border: none;
-
+  width: 2.9vw;
   border-bottom: 2px dashed black;
-  width: 4vw;
+
   height: 1.7vmin;
 }
 
@@ -241,9 +242,11 @@
     width: 100%;
     justify-content: center;
     overflow: scroll;
+    flex-wrap: wrap;
   }
   .picContainer {
     height: 50vh;
+    width: 90%;
   }
 
   .productFocusContainer {
@@ -256,9 +259,15 @@
     overflow: scroll;
   }
   .logoContainer {
-    height: 6.5vmin;
+    height: 5.5vmin;
   }
   .panierText {
     font-size: 4vmin;
+  }
+  .dateInput {
+    font-size: 4vmin;
+    width: 10vw;
+    height: auto;
+    height: 4vmin;
   }
 }

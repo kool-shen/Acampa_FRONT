@@ -161,26 +161,14 @@ input:checked + .slider:before {
     font-size: 4vmin;
   }
 
-  .cityContainer {
-    border: 1px solid grey;
-  }
   .districtContainer {
     flex-wrap: wrap;
-  }
-
-  .validateContainer {
-    border: 1px solid blue;
   }
 
   .descriptionText {
     font-size: 4vmin;
   }
-  .textContainer {
-    border: 1px solid red;
-  }
-  .inputContainer {
-    border: 1px solid green;
-  }
+
   .validateText {
     font-size: 4vmin;
   }

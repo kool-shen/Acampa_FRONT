@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import styles from "@/styles/Product.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
 import { clickMessage } from "@/reducers/message";
@@ -190,6 +190,12 @@ function productPage() {
     dispatch(clickMessage(false));
   };
 
+  //// config Inputs ///
+
+  const jourRef = useRef(null);
+  const moisRef = useRef(null);
+  const annéeRef = useRef(null);
+
   /// fetch DATA / fetch sous catégories shop & useEffect ///
 
   const [indexCategories, setIndexCategories] = useState([]);
@@ -328,18 +334,18 @@ function productPage() {
             />
           </div>
           <div className={styles.galleryContainer}>
+            <div className={styles.picContainer}>
+              <Pic2
+                src={data[0].src}
+                width={data[0].width}
+                height={data[0].height}
+                alt={data[0].context?.alt}
+                onClick={() => {
+                  console.log(initialPrice, quantity, dureeIndex);
+                }}
+              />
+            </div>
             <div className={styles.focusContainer}>
-              <div className={styles.picContainer}>
-                <Pic2
-                  src={data[0].src}
-                  width={data[0].width}
-                  height={data[0].height}
-                  alt={data[0].context?.alt}
-                  onClick={() => {
-                    console.log(initialPrice, quantity, dureeIndex);
-                  }}
-                />
-              </div>
               <div className={styles.productFocusContainer}>
                 <div className={styles.textProductContainer}>
                   {data[0].metadata?.nom_du_produit && (
@@ -604,9 +610,15 @@ function productPage() {
                                   .slice(0, 2)
                                   .replace(/[^a-zA-Z0-9]/g, "");
                                 setJour(filteredValue);
+                                if (filteredValue.length === 2) {
+                                  moisRef.current.focus();
+                                }
                               }}
+                              ref={jourRef}
                               className={styles.dateInput}
-                              style={{ width: "2vw" }}
+                              style={{
+                                width: mobileScreen ? "5vw" : "1.5vw",
+                              }}
                             />
                             <div className={styles.slash}>/</div>
                             <textarea
@@ -617,9 +629,15 @@ function productPage() {
                                   .slice(0, 2)
                                   .replace(/[^a-zA-Z0-9]/g, "");
                                 setMois(filteredValue);
+                                if (filteredValue.length === 2) {
+                                  annéeRef.current.focus();
+                                }
                               }}
                               className={styles.dateInput}
-                              style={{ width: "2vw" }}
+                              ref={moisRef}
+                              style={{
+                                width: mobileScreen ? "5vw" : "1.5vw",
+                              }}
                             />
 
                             <div className={styles.slash}>/</div>
@@ -632,8 +650,12 @@ function productPage() {
                                   .slice(0, 4)
                                   .replace(/[^a-zA-Z0-9]/g, "");
                                 setAnnée(filteredValue);
+                                if (filteredValue.length === 4) {
+                                  annéeRef.current.blur();
+                                }
                               }}
                               className={styles.dateInput}
+                              ref={annéeRef}
                             />
                           </div>
                         </div>
