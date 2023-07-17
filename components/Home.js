@@ -170,6 +170,14 @@ export default function Home() {
 
   const [isClicked, setIsClicked] = useState(false);
 
+  /// Mobile ///
+
+  const [mobileScreen, setMobileScreen] = useState();
+
+  const calculateScreen = () => {
+    window.innerWidth <= 425 ? setMobileScreen(true) : setMobileScreen(false);
+  };
+
   ///
 
   useEffect(() => {
@@ -179,6 +187,7 @@ export default function Home() {
     menuAnimation();
     shopAnimation();
     aboutAnimation();
+    calculateScreen();
 
     /// scroll horizontal ///
 
@@ -280,7 +289,7 @@ export default function Home() {
     <div
       className={styles.mainContainer}
       ref={scrollContainerRef}
-      onWheel={handleScroll}
+      onWheel={mobileScreen ? undefined : handleScroll}
       onClick={() => {
         isClicked && crossClick();
       }}
@@ -352,6 +361,7 @@ export default function Home() {
             className={styles.burgerContainer}
             onClick={() => {
               displayMenu();
+              console.log(mobileScreen);
             }}
             ref={burgerRef}
             /*style={burgerStyle}*/

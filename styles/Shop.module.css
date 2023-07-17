@@ -56,6 +56,7 @@
   display: flex;
   flex-direction: column;
   gap: 2vmin;
+  position: relative;
 }
 
 .secondContainer {
@@ -93,8 +94,20 @@
 .picContainer {
   width: 100%;
   height: 35vmin;
-
+  position: relative;
   display: flex;
+}
+
+.twinPicContainer {
+  opacity: 0;
+  height: 35vmin;
+  position: absolute;
+  background-color: black;
+  z-index: 900;
+}
+
+.twinPicContainer:hover {
+  opacity: 1;
 }
 
 /* Mobile L*/

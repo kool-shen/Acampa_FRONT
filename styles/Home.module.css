@@ -296,3 +296,12 @@
   bottom: 0.8%;
   cursor: pointer;
 }
+
+/* Mobile L*/
+@media screen and (max-width: 425px) {
+  .mainContainer {
+    height: 900vh;
+    flex-direction: column;
+    overflow: unset;
+  }
+}

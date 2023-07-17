@@ -86,22 +86,6 @@ export default function index() {
 
   /// Twin photo ///
 
-  const [photo, setPhoto] = useState([]);
-  const [twinPhoto, setTwinPhoto] = useState([]);
-  const [indexPhoto, setIndexPhoto] = useState();
-
-  const handleMouseOver = (index) => {
-    setIndexPhoto(index);
-    const twinArray = data.map(({ twin }) => twin);
-    setTwinPhoto(twinArray[index]);
-  };
-
-  const handleMouseLeave = () => {
-    setIndexPhoto("");
-
-    setTwinPhoto("");
-  };
-
   return (
     <>
       <Head>
@@ -148,7 +132,7 @@ export default function index() {
                 }}
               >
                 <div
-                  className={styles.picContainer}
+                  className={styles.twinPicContainer}
                   style={
                     !item.price
                       ? {
@@ -163,18 +147,38 @@ export default function index() {
                     onClick={() => {
                       GenerateProductPage(item.name);
                     }}
-                    src={
-                      indexPhoto === index && twinPhoto
-                        ? twinPhoto
-                        : photo[index]
-                    }
+                    src={item.twin ? item.twin : item.src}
                     width={item.width}
                     height={item.height}
                     alt={item.name}
-                    onMouseEnter={() => {
-                      handleMouseOver(index);
+                    className={styles.twinPhoto}
+                    style={
+                      !item.price
+                        ? {
+                            display: "none",
+                          }
+                        : ""
+                    }
+                  />
+                </div>
+                <div
+                  className={styles.picContainer}
+                  style={
+                    !item.price
+                      ? { opacity: "1", pointerEvents: "none", cursor: "auto" }
+                      : {
+                          cursor: "pointer",
+                        }
+                  }
+                >
+                  <Pic2
+                    onClick={() => {
+                      GenerateProductPage(item.name);
                     }}
-                    onMouseLeave={handleMouseLeave}
+                    src={item.src}
+                    width={item.width}
+                    height={item.height}
+                    alt={item.name}
                     style={
                       !item.price
                         ? {
@@ -184,8 +188,10 @@ export default function index() {
                           }
                         : ""
                     }
+                    className={styles.mainPhoto}
                   />
                 </div>
+
                 <div className={styles.productInfoContainer}>
                   {item.price ? (
                     <>
