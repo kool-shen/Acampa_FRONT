@@ -150,7 +150,7 @@ export default function Home() {
           delay: 2,
           duration: 1,
         })
-      : "";
+      : console.log("yo");
   };
 
   /// Version mobile ///
