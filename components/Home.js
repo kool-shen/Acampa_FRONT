@@ -20,6 +20,7 @@ export default function Home() {
   const descriptionRef = useRef(null);
   const subCatRef = useRef(null);
   const aboutCategoryRef = useRef(null);
+  const scrollRef = useRef(null);
 
   const menuTimeline = gsap.timeline({
     defaults: { duration: 0.05, ease: "power2" },
@@ -102,6 +103,68 @@ export default function Home() {
           .to(crossRef.current, { visibility: "hidden", display: "none" })
           .to(menuRef.current.children, { opacity: 0, visibility: "hidden" })
           .to(burgerRef.current, { visibility: "visible", display: "block" });
+  };
+
+  /// Anim scroll au mount de la Home + scroll horizontal ///
+
+  /// Scroll horizontal ///
+
+  const scrollContainerRef = useRef(null);
+
+  function handleScroll(e) {
+    e.preventDefault();
+
+    const race = 35; // How many pixels to scroll
+    const container = scrollContainerRef.current;
+
+    if (e.deltaY > 0) {
+      // Scroll right
+      container.scrollLeft += race;
+    } else {
+      // Scroll left
+      container.scrollLeft -= race;
+    }
+  }
+
+  /// Version Web ///
+
+  /// Mobile ///
+
+  const [mobileScreen, setMobileScreen] = useState();
+
+  const calculateScreen = () => {
+    window.innerWidth <= 425 ? setMobileScreen(true) : setMobileScreen(false);
+  };
+
+  ///
+
+  const isWeb = !mobileScreen && mobileScreen !== undefined;
+  const isMobile = mobileScreen && mobileScreen !== undefined;
+
+  const webScrollAnimation = () => {
+    isWeb
+      ? gsap.to(scrollContainerRef.current, {
+          x: "-=200",
+          repeat: 1,
+          yoyo: true,
+          delay: 2,
+          duration: 1,
+        })
+      : "";
+  };
+
+  /// Version mobile ///
+
+  const mobileScrollAnimation = () => {
+    scrollRef.current && isMobile
+      ? gsap.to(scrollRef.current, {
+          y: "-=200",
+          repeat: 1,
+          yoyo: true,
+          delay: 2,
+          duration: 1,
+        })
+      : "";
   };
 
   /// description qui disparit quand on clique sur une photo ///
@@ -190,21 +253,12 @@ export default function Home() {
     dispatch(clickMessage(false));
   };
 
-  /// Mobile ///
-
-  const [mobileScreen, setMobileScreen] = useState();
-
-  const calculateScreen = () => {
-    window.innerWidth <= 425 ? setMobileScreen(true) : setMobileScreen(false);
-  };
-
-  ///
-
   useEffect(() => {
     loadImage();
     loadPresentation();
     loadSubCategories();
-
+    mobileScrollAnimation();
+    webScrollAnimation();
     calculateScreen();
 
     !mobileScreen && (menuAnimation(), aboutAnimation(), shopAnimation());
@@ -221,7 +275,15 @@ export default function Home() {
           opacity: 1,
           duration: 0.8,
         });
-  }, [toggle, menuState, subCat, aboutState, isClicked]);
+  }, [
+    toggle,
+    menuState,
+    subCat,
+    aboutState,
+    isClicked,
+    scrollRef.current,
+    scrollContainerRef.current,
+  ]);
 
   /// Générer page product depuis click menu ///
 
@@ -230,25 +292,6 @@ export default function Home() {
   const GenerateCollectionPage = (collectionName) => {
     router.push(`/${collectionName}`);
   };
-
-  /// Scroll horizontal ///
-
-  const scrollContainerRef = useRef(null);
-
-  function handleScroll(e) {
-    e.preventDefault();
-
-    const race = 35; // How many pixels to scroll
-    const container = scrollContainerRef.current;
-
-    if (e.deltaY > 0) {
-      // Scroll right
-      container.scrollLeft += race;
-    } else {
-      // Scroll left
-      container.scrollLeft -= race;
-    }
-  }
 
   /// Virer le style du link ///
 
@@ -305,6 +348,10 @@ export default function Home() {
     visibility: "visible",
   };
 
+  const mainStyle = {
+    display: mobileScreen !== undefined ? "flex" : "none",
+  };
+
   return !mobileScreen ? (
     <div
       className={styles.mainContainer}
@@ -312,7 +359,9 @@ export default function Home() {
       onWheel={mobileScreen ? undefined : handleScroll}
       onClick={() => {
         isClicked && crossClick();
+        webScrollAnimation();
       }}
+      style={mainStyle}
     >
       <div className={styles.presentationContainer}>
         <div
@@ -381,7 +430,6 @@ export default function Home() {
             className={styles.burgerContainer}
             onClick={() => {
               displayMenu();
-              console.log(mobilescr);
             }}
             ref={burgerRef}
             /*style={burgerStyle}*/
@@ -530,7 +578,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
       {Array.from({ length: repeatCount }, (_, index) => {
         const startIndex = index * (sequenceLength + 1); // Calculer l'index de départ
 
@@ -618,18 +665,58 @@ export default function Home() {
       })}
     </div>
   ) : (
-    <div className={styles.mobileMainContainer}>
+    <div
+      className={styles.mobileMainContainer}
+      onClick={() => {
+        isClicked && crossClick();
+      }}
+      ref={scrollRef}
+    >
       <div className={styles.presentationContainer}>
-        <Cart
-          style={displayCart}
-          isClicked={messageClicked}
-          onClick={() => {
-            setCartClicked(false);
-            setMessageClicked(false);
-            messageIsFalse();
-          }}
-        />
+        <div
+          className={styles.hoveredDescriptionContainer}
+          style={isClicked ? fadeIn : fadeOut}
+        >
+          <img
+            src={"/assets/x-mark.png"}
+            width={30}
+            height={30}
+            onClick={() => {
+              crossClick();
+            }}
+            className={styles.cross}
+          />
+          <div className={styles.hoveredName}>
+            {hoveredInfos.nom ? hoveredInfos.nom.toUpperCase() : ""}
+          </div>
+          <div
+            className={styles.hoveredDescription}
+            style={isClicked ? fadeIn : fadeOut}
+          >
+            {hoveredInfos.description ? hoveredInfos.description : ""}
+          </div>
+          {hoveredInfos.refShop && (
+            <div className={styles.linkShopContainer}>
+              <Link
+                className={styles.linkShop}
+                //style={removeLinkStyle}
+                href={`${hoveredInfos.refShop}`}
+              >
+                VOIR DANS LA BOUTIQUE
+              </Link>
+            </div>
+          )}
+        </div>
         <div className={styles.textContainer}>
+          <Cart
+            style={displayCart}
+            isClicked={messageClicked}
+            onClick={() => {
+              setCartClicked(false);
+              setMessageClicked(false);
+              messageIsFalse();
+            }}
+          />
           <Menu
             clickCart={() => {
               setCartClicked(true);

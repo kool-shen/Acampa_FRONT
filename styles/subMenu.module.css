@@ -140,7 +140,7 @@
 
 .basketCircle {
   font-family: "Authentic90";
-  /* font-size: 1.7vmin; */
+  font-size: 1.7vmin;
   height: 1.7vmin;
 }
 
@@ -185,6 +185,7 @@
   }
   .basketCircle {
     transform: translateY(-3px);
+    font-size: 3vmin;
   }
 }
 .mobileMenuContainer {

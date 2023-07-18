@@ -306,8 +306,6 @@
   .mainContainer {
     height: 900vh;
     flex-direction: column;
-
-    border: 5px solid red;
   }
   .pic1Container {
     overflow: unset;
@@ -343,6 +341,22 @@
     z-index: -1;
     overflow: hidden;
   }
+
+  .hoveredName {
+    font-size: 4vmin;
+  }
+
+  .hoveredDescription {
+    font-size: 3vmin;
+    width: 40vw;
+  }
+  .linkShop {
+    font-size: 4vmin;
+    font-family: "Authentic130";
+    color: black;
+    text-decoration: none;
+    border-bottom: 2px solid black;
+  }
 }
 
 .mobileMainContainer {
@@ -357,7 +371,7 @@
   width: 100vw;
   position: fixed;
 
-  z-index: 9;
+  z-index: 2;
 }
 
 .mobilePhotoContainer {

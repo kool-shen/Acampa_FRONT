@@ -19,10 +19,9 @@
   width: 27vw;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  padding-top: 12vh;
   overflow: scroll;
   gap: 4vmin;
-  padding: 1vh;
 }
 
 .text {
