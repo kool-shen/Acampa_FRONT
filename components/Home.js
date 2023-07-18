@@ -2,9 +2,14 @@ import React from "react";
 import styles from "../styles/Home.module.css";
 import friseStylesfrom from "../styles/Frise2.module.css";
 import { useState, useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 import Pic from "./Pic";
+import Menu from "./Menu";
+import Cart from "./Cart";
 import Link from "next/link";
 import { gsap } from "gsap";
+import { clickMessage } from "@/reducers/message";
+
 import { useRouter } from "next/router";
 
 export default function Home() {
@@ -170,6 +175,21 @@ export default function Home() {
 
   const [isClicked, setIsClicked] = useState(false);
 
+  // Config Panier
+
+  const [cartClicked, setCartClicked] = useState(false);
+  const [messageClicked, setMessageClicked] = useState(false);
+
+  const displayCart = !cartClicked
+    ? { transform: "translateX(0)", transition: "transform 1s" }
+    : { transition: "transform 1s" };
+
+  const dispatch = useDispatch();
+
+  const messageIsFalse = () => {
+    dispatch(clickMessage(false));
+  };
+
   /// Mobile ///
 
   const [mobileScreen, setMobileScreen] = useState();
@@ -184,10 +204,10 @@ export default function Home() {
     loadImage();
     loadPresentation();
     loadSubCategories();
-    menuAnimation();
-    shopAnimation();
-    aboutAnimation();
+
     calculateScreen();
+
+    !mobileScreen && (menuAnimation(), aboutAnimation(), shopAnimation());
 
     /// scroll horizontal ///
 
@@ -239,7 +259,7 @@ export default function Home() {
   //////////
 
   const repeatCount = 3;
-  const sequenceLength = 4;
+  const sequenceLength = mobileScreen ? 5 : 4;
 
   /// EFFET FOCUS ONCLICK PHOTO ///
 
@@ -361,7 +381,7 @@ export default function Home() {
             className={styles.burgerContainer}
             onClick={() => {
               displayMenu();
-              console.log(window.innerWidth);
+              console.log(mobilescr);
             }}
             ref={burgerRef}
             /*style={burgerStyle}*/
@@ -598,6 +618,159 @@ export default function Home() {
       })}
     </div>
   ) : (
-    <div className={styles.mobileMainContainer}>YO</div>
+    <div className={styles.mobileMainContainer}>
+      <div className={styles.presentationContainer}>
+        <Cart
+          style={displayCart}
+          isClicked={messageClicked}
+          onClick={() => {
+            setCartClicked(false);
+            setMessageClicked(false);
+            messageIsFalse();
+          }}
+        />
+        <div className={styles.textContainer}>
+          <Menu
+            clickCart={() => {
+              setCartClicked(true);
+            }}
+            display={"block"}
+            about={true}
+            flowerStyle={"hidden"}
+          />
+        </div>
+        <div
+          className={styles.acampaContainer}
+          //style={isClicked ? fadeOut : fadeIn && { transitionDelay: "0.2s" }}
+          ref={descriptionRef}
+        >
+          <div className={styles.acampaBold}>
+            Acampá*
+            <div /> <div className={styles.acampaBold}></div>est un atelier
+            floral
+          </div>
+          <div className={styles.acampaRegular}>basé à Marseille.</div>
+          {texte && <div className={styles.acampaDescription}>{texte}</div>}
+        </div>
+        <div
+          className={styles.logoContainer}
+          style={isClicked ? fadeOut : fadeIn}
+        >
+          <Pic
+            className={styles.logo}
+            width={542}
+            height={956}
+            src={"/assets/Logo-fleur.png"}
+          />
+        </div>
+      </div>
+      {Array.from({ length: repeatCount }, (_, index) => {
+        const startIndex = index * (sequenceLength + 1); // Calculer l'index de départ
+
+        return (
+          <div className={styles.mobilePhotoContainer} key={index}>
+            <div className={styles.mobileScrollContainer1}>
+              {fetchData
+                .slice(startIndex, startIndex + 2)
+                .map((data, dataIndex) => (
+                  <div className={styles.cadre}>
+                    <div className={styles.mobilePic1} key={dataIndex}>
+                      {fetchData.length > 0 && (
+                        <Pic
+                          src={data.src}
+                          width={data.width}
+                          height={data.height}
+                          alt={data.collection}
+                          onClick={() => {
+                            clickPhoto(data);
+                            console.log(texte);
+                          }}
+                          style={
+                            data.src === hoveredInfos.src ||
+                            hoveredInfos.src === ""
+                              ? fadeIn
+                              : fadeOut
+                          }
+                        />
+                      )}
+                    </div>
+                  </div>
+                ))}
+            </div>
+            <div className={styles.mobileScrollContainer2}>
+              <div className={styles.mobilePic2}>
+                {fetchData.length > 0 && (
+                  <Pic
+                    src={fetchData[startIndex + 2].src}
+                    width={fetchData[startIndex + 2].width}
+                    height={fetchData[startIndex + 2].height}
+                    alt={fetchData[startIndex + 2].collection}
+                    onClick={() => clickPhoto(fetchData[startIndex + 2])}
+                    style={
+                      fetchData[startIndex + 2].src === hoveredInfos.src ||
+                      hoveredInfos.src === ""
+                        ? fadeIn
+                        : fadeOut
+                    }
+                  />
+                )}
+              </div>
+            </div>
+            <div className={styles.mobileScrollContainer1}>
+              {fetchData
+                .slice(startIndex + 3, startIndex + 5)
+                .map((data, dataIndex) => (
+                  <>
+                    <div className={styles.cadre}>
+                      <div
+                        className={styles[`mobilePic${dataIndex + 3}`]}
+                        key={dataIndex}
+                      >
+                        {fetchData.length > 0 && (
+                          <Pic
+                            src={data.src}
+                            width={data.width}
+                            height={data.height}
+                            alt={data.collection}
+                            onClick={() => {
+                              clickPhoto(data);
+                              console.log(texte);
+                            }}
+                            style={
+                              data.src === hoveredInfos.src ||
+                              hoveredInfos.src === ""
+                                ? fadeIn
+                                : fadeOut
+                            }
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </>
+                ))}
+            </div>
+            <div className={styles.mobileScrollContainer2}>
+              <div className={styles.mobilePic6}>
+                {fetchData.length > 0 && (
+                  <Pic
+                    src={fetchData[startIndex + 5].src}
+                    width={fetchData[startIndex + 5].width}
+                    height={fetchData[startIndex + 5].height}
+                    alt={fetchData[startIndex + 5].collection}
+                    onClick={() => clickPhoto(fetchData[startIndex + 5])}
+                    style={
+                      fetchData[startIndex + 5].src === hoveredInfos.src ||
+                      hoveredInfos.src === ""
+                        ? fadeIn
+                        : fadeOut
+                    }
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
   );
 }

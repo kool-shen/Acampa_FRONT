@@ -23,3 +23,10 @@ body {
 html {
   overflow: hidden;
 }
+
+@media screen and (max-width: 425px) {
+  html {
+    overflow-y: unset;
+    overflow-x: hidden;
+  }
+}

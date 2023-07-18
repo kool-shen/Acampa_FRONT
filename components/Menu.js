@@ -535,6 +535,7 @@ export default function Menu(props) {
           height={100}
           alt={"logo fleur"}
           className={menuStyles.flower}
+          style={{ visibility: props.flowerStyle }}
         />
       </Link>
       <div>
