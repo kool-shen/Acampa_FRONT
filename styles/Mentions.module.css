@@ -24,6 +24,10 @@
   gap: 4vmin;
 }
 
+.middleContainer::-webkit-scrollbar {
+  display: none;
+}
+
 .text {
   font-size: 1.9vmin;
   font-family: "Authentic130";

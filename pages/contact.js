@@ -45,7 +45,14 @@ export default function contact({ content }) {
       {content && (
         <>
           <div className={styles.middleContainer}>
-            <div className={styles.text}>{content[0].ligne1}</div>
+            <div
+              className={styles.text}
+              onClick={() => {
+                console.log(localStorage);
+              }}
+            >
+              {content[0].ligne1}
+            </div>
             <div className={styles.text} style={{ whiteSpace: "pre-line" }}>
               {content[0].context.alt}
             </div>

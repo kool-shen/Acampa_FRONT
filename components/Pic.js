@@ -8,6 +8,10 @@ function Pic(props) {
 
   const handleLoad = () => {
     setstillLoading(false);
+    // console.log(props.src);
+    if (props.onImageLoad && typeof props.onImageLoad === "function") {
+      props.onImageLoad(); // Appel de la fonction de rappel pour signaler le chargement d'une image
+    }
   };
 
   const isImage = props.src.endsWith(".jpg") || props.src.endsWith(".png");
@@ -32,6 +36,7 @@ function Pic(props) {
           style={props.style}
           onMouseEnter={props.onMouseEnter}
           onMouseLeave={props.onMouseLeave}
+          loading="eager"
         />
       </div>
     );
@@ -50,6 +55,7 @@ function Pic(props) {
           width={props.width}
           height={props.height}
           onClick={props.onClick}
+          onLoadedMetadata={handleLoad}
           alt={"video Acampà"}
           style={props.style}
           autoPlay

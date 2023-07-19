@@ -17,6 +17,7 @@
 
 .galleryContainer {
   min-width: 82vw;
+
   display: flex;
   /* border: 1px solid red; */
   justify-content: space-between;
@@ -68,8 +69,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
   height: auto;
+  width: 100%;
   align-self: flex-end;
   padding: 2vmin;
   gap: 5vmin;
@@ -89,7 +91,6 @@
 }
 
 .textProductContainer {
-  justify-self: center;
   display: flex;
   flex-direction: column;
   gap: 2vmin;
@@ -145,7 +146,7 @@
 
 .picContainer {
   height: 100vh;
-  width: 100%;
+  min-width: 40vw;
 }
 
 .focusContainer > .productInfoContainer {

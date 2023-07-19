@@ -1,4 +1,4 @@
-import React from "react";
+import React, { cache } from "react";
 import Image from "next/image";
 import styles from "@/styles/Mentions.module.css";
 import Cart from "@/components/Cart";
@@ -13,17 +13,31 @@ export default function mentions() {
   // FETCH //
 
   const [content, setContent] = useState();
+  const [cacheTime, setCacheTime] = useState(0);
 
   const loadContent = async () => {
-    try {
-      const response = await fetch(
-        "https://acampa-back.vercel.app/cloudinary/mentions"
-      );
-      const data = await response.json();
+    const getCachedData = () => {
+      const cachedData = localStorage.getItem("apiData");
+      return cachedData ? JSON.parse(cachedData) : null;
+    };
 
-      if (data.length > 0) {
-        setContent(data);
-        setDescriptionUp(data[0].ligne1);
+    try {
+      const cachedData = getCachedData();
+      if (cachedData !== null && cacheTime < Date.now() / 1000) {
+        setContent(cachedData);
+        console.log("cache");
+      } else {
+        const response = await fetch(
+          "https://acampa-back.vercel.app/cloudinary/mentions"
+        );
+        const data = await response.json();
+
+        if (data.length > 0) {
+          console.log("backend", data);
+          setContent(data);
+          localStorage.setItem("apiData", JSON.stringify(data));
+          setCacheTime(Date.now() / 1000 + 1200); // 20 minutes in seconds
+        }
       }
     } catch (error) {
       console.error(error);
@@ -31,9 +45,10 @@ export default function mentions() {
   };
 
   useEffect(() => {
-    loadContent();
-  }, []);
-
+    if (!content) {
+      loadContent();
+    }
+  }, [content]);
   /// Config Panier ///
 
   const [cartClicked, setCartClicked] = useState(false);
@@ -74,7 +89,14 @@ export default function mentions() {
         <>
           <div className={styles.middleContainer}>
             <div className={styles.titleContainer}>
-              <div className={styles.text}>{content[0].ligne1}</div>
+              <div
+                className={styles.text}
+                onClick={() => {
+                  console.log();
+                }}
+              >
+                {content[0].ligne1}
+              </div>
               <div className={styles.text2}>{content[0].ligne2}</div>
             </div>
             <div className={styles.text} style={{ whiteSpace: "pre-line" }}>

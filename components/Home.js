@@ -7,6 +7,7 @@ import Pic from "./Pic";
 import Menu from "./Menu";
 import Cart from "./Cart";
 import Link from "next/link";
+import Loader from "./Loader";
 import { gsap } from "gsap";
 import { clickMessage } from "@/reducers/message";
 
@@ -138,19 +139,40 @@ export default function Home() {
 
   ///
 
+  ////////// Gérer les photos //////
+
+  const repeatCount = 3;
+  const sequenceLength = mobileScreen ? 5 : 4;
+
+  const [loadedImagesCount, setLoadedImagesCount] = useState(0);
+
+  const handleImageLoad = () => {
+    setLoadedImagesCount((prevCount) => prevCount + 1);
+  };
+
+  const [allImagesLoaded, setAllImagesLoaded] = useState(false);
+
+  const handleAllImagesLoaded = () => {
+    (sequenceLength + 1) * repeatCount === loadedImagesCount &&
+      setAllImagesLoaded(true);
+  };
+
+  //////
+
   const isWeb = !mobileScreen && mobileScreen !== undefined;
   const isMobile = mobileScreen && mobileScreen !== undefined;
 
   const webScrollAnimation = () => {
-    isWeb
-      ? gsap.to(scrollContainerRef.current, {
-          x: "-=200",
-          repeat: 1,
-          yoyo: true,
-          delay: 2,
-          duration: 1,
-        })
-      : console.log("yo");
+    scrollContainerRef.current &&
+      isWeb &&
+      gsap.to(scrollContainerRef.current, {
+        x: "-=200",
+        repeat: 1,
+        yoyo: true,
+        delay: 2,
+        duration: 0.6,
+      }),
+      console.log("c'est là");
   };
 
   /// Version mobile ///
@@ -161,8 +183,8 @@ export default function Home() {
           y: "-=200",
           repeat: 1,
           yoyo: true,
-          delay: 2,
-          duration: 1,
+          delay: 4,
+          duration: 0.6,
         })
       : "";
   };
@@ -253,38 +275,6 @@ export default function Home() {
     dispatch(clickMessage(false));
   };
 
-  useEffect(() => {
-    loadImage();
-    loadPresentation();
-    loadSubCategories();
-    mobileScrollAnimation();
-    webScrollAnimation();
-    calculateScreen();
-
-    !mobileScreen && (menuAnimation(), aboutAnimation(), shopAnimation());
-
-    /// scroll horizontal ///
-
-    //// animation GSAP ////
-    toggle
-      ? gsap.to(descriptionRef.current, {
-          opacity: 0,
-          duration: 0.8,
-        })
-      : gsap.to(descriptionRef.current, {
-          opacity: 1,
-          duration: 0.8,
-        });
-  }, [
-    toggle,
-    menuState,
-    subCat,
-    aboutState,
-    isClicked,
-    scrollRef.current,
-    scrollContainerRef.current,
-  ]);
-
   /// Générer page product depuis click menu ///
 
   const router = useRouter();
@@ -299,10 +289,6 @@ export default function Home() {
     textDecoration: "none",
     color: "inherit",
   };
-  //////////
-
-  const repeatCount = 3;
-  const sequenceLength = mobileScreen ? 5 : 4;
 
   /// EFFET FOCUS ONCLICK PHOTO ///
 
@@ -352,6 +338,48 @@ export default function Home() {
     display: mobileScreen !== undefined ? "flex" : "none",
   };
 
+  useEffect(() => {
+    webScrollAnimation();
+  }, [scrollContainerRef.current]);
+
+  useEffect(() => {
+    loadImage();
+    loadPresentation();
+    loadSubCategories();
+    // isMobile && mobileScrollAnimation();
+    // isWeb ? webScrollAnimation() : console.log("hey");
+    // webScrollAnimation();
+    handleAllImagesLoaded();
+    calculateScreen();
+
+    !mobileScreen && (menuAnimation(), aboutAnimation(), shopAnimation());
+
+    /// scroll horizontal ///
+
+    //// animation GSAP ////
+    toggle
+      ? gsap.to(descriptionRef.current, {
+          opacity: 0,
+          duration: 0.8,
+        })
+      : gsap.to(descriptionRef.current, {
+          opacity: 1,
+          duration: 0.8,
+        });
+  }, [
+    toggle,
+    menuState,
+    subCat,
+    aboutState,
+    isClicked,
+    scrollRef.current,
+    scrollContainerRef.current,
+    allImagesLoaded,
+    isWeb,
+    isMobile,
+    loadedImagesCount,
+  ]);
+
   return !mobileScreen ? (
     <div
       className={styles.mainContainer}
@@ -359,10 +387,15 @@ export default function Home() {
       onWheel={mobileScreen ? undefined : handleScroll}
       onClick={() => {
         isClicked && crossClick();
-        webScrollAnimation();
+        console.log(
+          allImagesLoaded,
+          (sequenceLength + 1) * repeatCount,
+          loadedImagesCount
+        );
       }}
       style={mainStyle}
     >
+      {/* <Loader style={{ display: allImagesLoaded ? "none" : "flex" }} /> */}
       <div className={styles.presentationContainer}>
         <div
           className={styles.hoveredDescriptionContainer}
@@ -608,6 +641,9 @@ export default function Home() {
                               ? fadeIn
                               : fadeOut
                           }
+                          onImageLoad={() => {
+                            handleImageLoad();
+                          }}
                         />
                       )}
                     </div>
@@ -637,6 +673,9 @@ export default function Home() {
                               ? fadeIn
                               : fadeOut
                           }
+                          onImageLoad={() => {
+                            handleImageLoad();
+                          }}
                         />
                       )}
                     </div>
@@ -656,6 +695,9 @@ export default function Home() {
                         ? fadeIn
                         : fadeOut
                     }
+                    onImageLoad={() => {
+                      handleImageLoad();
+                    }}
                   />
                 )}
               </div>
@@ -672,6 +714,7 @@ export default function Home() {
       }}
       ref={scrollRef}
     >
+      <Loader style={{ display: imagesLoaded ? "none" : "flex" }} />
       <div className={styles.presentationContainer}>
         <div
           className={styles.hoveredDescriptionContainer}
@@ -699,7 +742,6 @@ export default function Home() {
             <div className={styles.linkShopContainer}>
               <Link
                 className={styles.linkShop}
-                //style={removeLinkStyle}
                 href={`${hoveredInfos.refShop}`}
               >
                 VOIR DANS LA BOUTIQUE
@@ -778,6 +820,9 @@ export default function Home() {
                               ? fadeIn
                               : fadeOut
                           }
+                          onImageLoad={() => {
+                            handleImageLoad();
+                          }}
                         />
                       )}
                     </div>
@@ -799,6 +844,9 @@ export default function Home() {
                         ? fadeIn
                         : fadeOut
                     }
+                    onImageLoad={() => {
+                      handleImageLoad();
+                    }}
                   />
                 )}
               </div>
@@ -829,6 +877,9 @@ export default function Home() {
                                 ? fadeIn
                                 : fadeOut
                             }
+                            onImageLoad={() => {
+                              handleImageLoad();
+                            }}
                           />
                         )}
                       </div>
@@ -851,6 +902,9 @@ export default function Home() {
                         ? fadeIn
                         : fadeOut
                     }
+                    onImageLoad={() => {
+                      handleImageLoad();
+                    }}
                   />
                 )}
               </div>
