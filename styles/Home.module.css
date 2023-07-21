@@ -408,63 +408,138 @@
 }
 
 .mobilePhotoContainer {
+  position: relative;
   width: 100vw;
-  height: 150vh;
+  height: 130vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
 }
 
 .mobileScrollContainer1 {
+  /* position: absolute; */
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+
+  gap: 2vmin;
+  /* border: 1px solid red; */
+  width: 100%;
+  z-index: 88;
+  transform: translateX(5%);
+  padding-top: 3vmin;
+  padding-bottom: 3vmin;
 }
 
 .mobileScrollContainer2 {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-end;
+  /* border: 1px solid salmon; */
+  padding-right: 10%;
+  width: 154%;
+  position: relative;
+  transform: translateX(-33%);
+  padding-top: 5vmin;
+  padding-bottom: 5vmin;
 }
 
 .mobilePic1 {
-  width: 60%;
+  width: 40vw;
   /* padding-left: 14%; */
   opacity: 1;
   overflow: hidden;
+  /* border: 2px solid green; */
+  position: relative;
+}
+
+.mobileHoveredContainer1 {
+  position: fixed;
+  left: 40vw;
+  padding: 2vmin;
+  display: flex;
+  flex-direction: column;
+  gap: 2vmin;
+  height: auto;
+  z-index: 4;
+  /* border: 2px solid green; */
+}
+
+.mobileHoveredContainer2 {
+  position: fixed;
+  top: 19vh;
+  left: 52vw;
+  padding: 2vmin;
+  display: flex;
+  flex-direction: column;
+  gap: 2vmin;
+  height: auto;
+  z-index: 4;
+  /* border: 2px solid blue; */
 }
 
 .mobilePic2 {
-  width: 100%;
-  padding-right: 14%;
+  width: 40vw;
+
   opacity: 1;
-  overflow: hidden;
+  align-self: flex-end;
+  /* border: 2px solid yellow; */
 }
 
 .mobilePic3 {
-  width: 100%;
-  padding-right: 14%;
+  position: absolute;
+  width: 68vw;
+
   opacity: 1;
-  overflow: hidden;
+
+  /* border: 2px solid blue; */
+}
+
+.mobileScrollContainer3 {
+  /* position: absolute; */
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+  /* border: 1px solid red; */
+  width: 100%;
+  z-index: 88;
+  transform: translateX(5%);
+  padding-top: 3vmin;
+  padding-bottom: 3vmin;
 }
 
 .mobilePic4 {
-  width: 100%;
-  padding-right: 14%;
+  width: 35vw;
+  align-self: center;
   opacity: 1;
-  overflow: hidden;
+  transform: translateX(5%);
+  /* border: 2px solid orange; */
 }
 
 .mobilePic5 {
-  width: 100%;
-  padding-right: 14%;
+  width: 53vw;
+
   opacity: 1;
   overflow: hidden;
+  /* border: 2px solid purple; */
+}
+
+.mobileScrollContainer4 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* border: 1px solid red; */
+  width: 100%;
+  z-index: 88;
+  padding-top: 5vmin;
+  padding-bottom: 5vmin;
 }
 
 .mobilePic6 {
-  width: 100%;
-  padding-right: 14%;
+  width: 35vw;
+
   opacity: 1;
   overflow: hidden;
+  /* border: 2px solid black; */
 }

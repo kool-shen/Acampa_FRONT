@@ -169,10 +169,9 @@ export default function Home() {
         x: "-=200",
         repeat: 1,
         yoyo: true,
-        delay: 2,
+        delay: 1,
         duration: 0.6,
-      }),
-      console.log("c'est là");
+      });
   };
 
   /// Version mobile ///
@@ -183,7 +182,7 @@ export default function Home() {
           y: "-=200",
           repeat: 1,
           yoyo: true,
-          delay: 4,
+          delay: 1,
           duration: 0.6,
         })
       : "";
@@ -445,7 +444,7 @@ export default function Home() {
 
   useEffect(() => {
     handleAllImagesLoaded();
-    allImagesLoaded && isWeb ? webScrollAnimation() : mobileScrollAnimation;
+    allImagesLoaded && (isWeb ? webScrollAnimation() : mobileScrollAnimation());
     return () => {};
   }, [loadedImagesCount, allImagesLoaded]);
 
@@ -732,7 +731,6 @@ export default function Home() {
                           alt={data.collection}
                           onClick={() => {
                             clickPhoto(data, dataIndex);
-                            console.log(dataIndex, startIndex);
                           }}
                           style={
                             data.src === hoveredInfos.src ||
@@ -747,7 +745,7 @@ export default function Home() {
                       )}
                     </div>
                     <div
-                      className={styles.hoveredDescriptionContainer1}
+                      className={styles.mobileHoveredContainer1}
                       style={
                         isClicked && hoveredInfos.src === data.src
                           ? fadeIn
@@ -927,7 +925,6 @@ export default function Home() {
       }}
       ref={scrollRef}
     >
-      <Loader style={{ display: imagesLoaded ? "none" : "flex" }} />
       <div className={styles.presentationContainer}>
         <div className={styles.textContainer}>
           <Cart
@@ -982,8 +979,105 @@ export default function Home() {
               {fetchData
                 .slice(startIndex, startIndex + 2)
                 .map((data, dataIndex) => (
-                  <div className={styles.cadre}>
-                    <div className={styles.mobilePic1} key={dataIndex}>
+                  <>
+                    <div
+                      className={styles[`mobilePic${dataIndex + 1}`]}
+                      key={dataIndex}
+                    >
+                      {fetchData.length > 0 && (
+                        <Pic
+                          src={data.src}
+                          width={data.width}
+                          height={data.height}
+                          alt={data.collection}
+                          onClick={() => {
+                            clickPhoto(data, dataIndex);
+                            console.log(texte);
+                          }}
+                          style={
+                            data.src === hoveredInfos.src ||
+                            hoveredInfos.src === ""
+                              ? fadeIn
+                              : fadeOut
+                          }
+                          onImageLoad={() => {
+                            handleImageLoad();
+                          }}
+                        />
+                      )}
+                    </div>
+                    <div
+                      className={
+                        styles[`mobileHoveredContainer${dataIndex + 1}`]
+                      }
+                      style={
+                        isClicked && hoveredInfos.src === data.src
+                          ? fadeIn
+                          : fadeOut
+                      }
+                    >
+                      <img
+                        src={"/assets/x-mark.png"}
+                        width={30}
+                        height={30}
+                        onClick={() => {
+                          crossClick();
+                        }}
+                        className={styles.cross}
+                      />
+                      <div className={styles.hoveredName}>
+                        {hoveredInfos.nom ? hoveredInfos.nom.toUpperCase() : ""}
+                      </div>
+                      <div className={styles.hoveredDescription}>
+                        {hoveredInfos.description
+                          ? hoveredInfos.description
+                          : ""}
+                      </div>
+                      {hoveredInfos.refShop && (
+                        <div className={styles.linkShopContainer}>
+                          <Link
+                            className={styles.linkShop}
+                            href={`${hoveredInfos.refShop}`}
+                          >
+                            VOIR DANS LA BOUTIQUE
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                ))}
+            </div>
+            <div className={styles.mobileScrollContainer2}>
+              <div className={styles.mobilePic3}>
+                {fetchData.length > 0 && (
+                  <Pic
+                    src={fetchData[startIndex + 2].src}
+                    width={fetchData[startIndex + 2].width}
+                    height={fetchData[startIndex + 2].height}
+                    alt={fetchData[startIndex + 2].collection}
+                    onClick={() => clickPhoto(fetchData[startIndex + 2])}
+                    style={
+                      fetchData[startIndex + 2].src === hoveredInfos.src ||
+                      hoveredInfos.src === ""
+                        ? fadeIn
+                        : fadeOut
+                    }
+                    onImageLoad={() => {
+                      handleImageLoad();
+                    }}
+                  />
+                )}
+              </div>
+            </div>
+            <div className={styles.mobileScrollContainer3}>
+              {fetchData
+                .slice(startIndex + 3, startIndex + 5)
+                .map((data, dataIndex) => (
+                  <>
+                    <div
+                      className={styles[`mobilePic${dataIndex + 4}`]}
+                      key={dataIndex}
+                    >
                       {fetchData.length > 0 && (
                         <Pic
                           src={data.src}
@@ -1006,68 +1100,10 @@ export default function Home() {
                         />
                       )}
                     </div>
-                  </div>
-                ))}
-            </div>
-            <div className={styles.mobileScrollContainer2}>
-              <div className={styles.mobilePic2}>
-                {fetchData.length > 0 && (
-                  <Pic
-                    src={fetchData[startIndex + 2].src}
-                    width={fetchData[startIndex + 2].width}
-                    height={fetchData[startIndex + 2].height}
-                    alt={fetchData[startIndex + 2].collection}
-                    onClick={() => clickPhoto(fetchData[startIndex + 2])}
-                    style={
-                      fetchData[startIndex + 2].src === hoveredInfos.src ||
-                      hoveredInfos.src === ""
-                        ? fadeIn
-                        : fadeOut
-                    }
-                    onImageLoad={() => {
-                      handleImageLoad();
-                    }}
-                  />
-                )}
-              </div>
-            </div>
-            <div className={styles.mobileScrollContainer1}>
-              {fetchData
-                .slice(startIndex + 3, startIndex + 5)
-                .map((data, dataIndex) => (
-                  <>
-                    <div className={styles.cadre}>
-                      <div
-                        className={styles[`mobilePic${dataIndex + 3}`]}
-                        key={dataIndex}
-                      >
-                        {fetchData.length > 0 && (
-                          <Pic
-                            src={data.src}
-                            width={data.width}
-                            height={data.height}
-                            alt={data.collection}
-                            onClick={() => {
-                              clickPhoto(data);
-                              console.log(texte);
-                            }}
-                            style={
-                              data.src === hoveredInfos.src ||
-                              hoveredInfos.src === ""
-                                ? fadeIn
-                                : fadeOut
-                            }
-                            onImageLoad={() => {
-                              handleImageLoad();
-                            }}
-                          />
-                        )}
-                      </div>
-                    </div>
                   </>
                 ))}
             </div>
-            <div className={styles.mobileScrollContainer2}>
+            <div className={styles.mobileScrollContainer4}>
               <div className={styles.mobilePic6}>
                 {fetchData.length > 0 && (
                   <Pic
