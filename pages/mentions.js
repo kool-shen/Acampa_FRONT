@@ -13,7 +13,6 @@ export default function mentions() {
   // FETCH //
 
   const [content, setContent] = useState();
-  const [cacheTime, setCacheTime] = useState(0);
 
   const loadContent = async () => {
     const getCachedData = () => {
@@ -23,7 +22,7 @@ export default function mentions() {
 
     try {
       const cachedData = getCachedData();
-      if (cachedData !== null && cacheTime < Date.now() / 1000) {
+      if (cachedData !== null) {
         setContent(cachedData);
         console.log("cache");
       } else {
@@ -36,7 +35,6 @@ export default function mentions() {
           console.log("backend", data);
           setContent(data);
           localStorage.setItem("apiData", JSON.stringify(data));
-          setCacheTime(Date.now() / 1000 + 1200); // 20 minutes in seconds
         }
       }
     } catch (error) {
@@ -44,10 +42,21 @@ export default function mentions() {
     }
   };
 
+  const clearCache = () => {
+    localStorage.removeItem("apiData");
+    console.log("cache cleared");
+  };
+
   useEffect(() => {
     if (!content) {
       loadContent();
     }
+
+    const interval = setInterval(clearCache, 1800000);
+
+    return () => {
+      clearInterval(interval);
+    };
   }, [content]);
   /// Config Panier ///
 

@@ -140,7 +140,6 @@ export default function Home() {
   ///
 
   ////////// Gérer les photos //////
-
   const repeatCount = 3;
   const sequenceLength = mobileScreen ? 5 : 4;
 
@@ -153,8 +152,9 @@ export default function Home() {
   const [allImagesLoaded, setAllImagesLoaded] = useState(false);
 
   const handleAllImagesLoaded = () => {
-    (sequenceLength + 1) * repeatCount === loadedImagesCount &&
+    if (loadedImagesCount === (sequenceLength + 1) * repeatCount) {
       setAllImagesLoaded(true);
+    }
   };
 
   //////
@@ -202,7 +202,10 @@ export default function Home() {
   };
 
   //// Load Cloudinary ////
+
   const [texte, setTexte] = useState();
+  const [fetchData, setFetchData] = useState([]);
+  const [subCategories, setSubcategories] = useState();
 
   const loadPresentation = async () => {
     try {
@@ -214,13 +217,14 @@ export default function Home() {
 
       if (resource.length > 0) {
         setTexte(resource[0].context.alt);
+        // Cache the API data
+        localStorage.setItem("presentationData", JSON.stringify(resource));
+        console.log("backend");
       }
     } catch (error) {
       console.error(error);
     }
   };
-
-  const [fetchData, setFetchData] = useState([]);
 
   const loadImage = async () => {
     try {
@@ -232,13 +236,13 @@ export default function Home() {
 
       if (resource.length > 0) {
         setFetchData(resource);
+        // Cache the API data
+        localStorage.setItem("homepageData", JSON.stringify(resource));
       }
     } catch (error) {
       console.error(error);
     }
   };
-
-  const [subCategories, setSubcategories] = useState();
 
   const loadSubCategories = async () => {
     try {
@@ -250,11 +254,75 @@ export default function Home() {
 
       if (indexlist.length > 0) {
         setSubcategories(indexlist);
+        // Cache the API data
+        localStorage.setItem("subcategoriesData", JSON.stringify(indexlist));
       }
     } catch (error) {
       console.error(error);
     }
   };
+
+  const clearCache = () => {
+    // Clear the cache every 30 minutes
+    localStorage.removeItem("presentationData");
+    localStorage.removeItem("homepageData");
+    localStorage.removeItem("subcategoriesData");
+    console.log("cache cleared");
+  };
+
+  // const [texte, setTexte] = useState();
+
+  // const loadPresentation = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       "https://acampa-back.vercel.app/cloudinary/presentation"
+  //       // "http://localhost:3000/cloudinary/presentation"
+  //     );
+  //     const resource = await response.json();
+
+  //     if (resource.length > 0) {
+  //       setTexte(resource[0].context.alt);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // const [fetchData, setFetchData] = useState([]);
+
+  // const loadImage = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       "https://acampa-back.vercel.app/cloudinary/homepage"
+  //       // "http://localhost:3000/cloudinary/homepage"
+  //     );
+  //     const resource = await response.json();
+
+  //     if (resource.length > 0) {
+  //       setFetchData(resource);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // const [subCategories, setSubcategories] = useState();
+
+  // const loadSubCategories = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       "https://acampa-back.vercel.app/cloudinary/shopSubcategories"
+  //       // "http://localhost:3000/cloudinary/shopSubcategories"
+  //     );
+  //     const indexlist = await response.json();
+
+  //     if (indexlist.length > 0) {
+  //       setSubcategories(indexlist);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   ///
 
@@ -296,16 +364,18 @@ export default function Home() {
     src: "",
     nom: "",
     description: "",
+    index: null,
   });
 
-  const clickPhoto = (data) => {
+  const clickPhoto = (data, index) => {
     setHoveredInfos({
       src: data.src,
       nom: data.metadata?.nom_du_produit,
       description: data.context?.alt,
       refShop: data.metadata?.ml4tdfywqkkgth7uun95,
+      index: index,
     });
-    console.log(hoveredInfos);
+
     hideMenu();
     setIsClicked(true);
     hide();
@@ -338,18 +408,52 @@ export default function Home() {
     display: mobileScreen !== undefined ? "flex" : "none",
   };
 
-  useEffect(() => {
-    webScrollAnimation();
-  }, [scrollContainerRef.current]);
+  /// USEEFFECT LOAD API / CACHE ////
 
   useEffect(() => {
-    loadImage();
-    loadPresentation();
-    loadSubCategories();
+    // Check if the API data is cached
+    const presentationData = localStorage.getItem("presentationData");
+    const homepageData = localStorage.getItem("homepageData");
+    const subcategoriesData = localStorage.getItem("subcategoriesData");
+
+    if (
+      presentationData !== null &&
+      homepageData !== null &&
+      subcategoriesData !== null
+    ) {
+      // Use the cached data
+      setTexte(JSON.parse(presentationData)[0].context.alt);
+      setFetchData(JSON.parse(homepageData));
+      setSubcategories(JSON.parse(subcategoriesData));
+      console.log("cache");
+    } else {
+      // Fetch the API data
+      loadPresentation();
+      loadImage();
+      loadSubCategories();
+    }
+
+    const interval = setInterval(clearCache, 1800000);
+
+    return () => {
+      clearInterval(interval);
+      interval;
+    };
+  }, []);
+
+  /////////////////
+
+  useEffect(() => {
+    handleAllImagesLoaded();
+    allImagesLoaded && isWeb ? webScrollAnimation() : mobileScrollAnimation;
+    return () => {};
+  }, [loadedImagesCount, allImagesLoaded]);
+
+  useEffect(() => {
     // isMobile && mobileScrollAnimation();
     // isWeb ? webScrollAnimation() : console.log("hey");
     // webScrollAnimation();
-    handleAllImagesLoaded();
+
     calculateScreen();
 
     !mobileScreen && (menuAnimation(), aboutAnimation(), shopAnimation());
@@ -372,12 +476,12 @@ export default function Home() {
     subCat,
     aboutState,
     isClicked,
-    scrollRef.current,
-    scrollContainerRef.current,
-    allImagesLoaded,
-    isWeb,
-    isMobile,
-    loadedImagesCount,
+    // scrollRef.current,
+    // scrollContainerRef.current,
+    // allImagesLoaded,
+    // isWeb,
+    // isMobile,
+    // loadedImagesCount,
   ]);
 
   return !mobileScreen ? (
@@ -387,50 +491,45 @@ export default function Home() {
       onWheel={mobileScreen ? undefined : handleScroll}
       onClick={() => {
         isClicked && crossClick();
-        console.log(
-          allImagesLoaded,
-          (sequenceLength + 1) * repeatCount,
-          loadedImagesCount
-        );
       }}
       style={mainStyle}
     >
-      {/* <Loader style={{ display: allImagesLoaded ? "none" : "flex" }} /> */}
-      <div className={styles.presentationContainer}>
+      {/* <div
+        className={styles.hoveredDescriptionContainer}
+        style={isClicked ? fadeIn : fadeOut}
+      >
+        <img
+          src={"/assets/x-mark.png"}
+          width={30}
+          height={30}
+          onClick={() => {
+            crossClick();
+          }}
+          className={styles.cross}
+        />
+        <div className={styles.hoveredName}>
+          {hoveredInfos.nom ? hoveredInfos.nom.toUpperCase() : ""}
+        </div>
         <div
-          className={styles.hoveredDescriptionContainer}
+          className={styles.hoveredDescription}
           style={isClicked ? fadeIn : fadeOut}
         >
-          <img
-            src={"/assets/x-mark.png"}
-            width={30}
-            height={30}
-            onClick={() => {
-              crossClick();
-            }}
-            className={styles.cross}
-          />
-          <div className={styles.hoveredName}>
-            {hoveredInfos.nom ? hoveredInfos.nom.toUpperCase() : ""}
-          </div>
-          <div
-            className={styles.hoveredDescription}
-            style={isClicked ? fadeIn : fadeOut}
-          >
-            {hoveredInfos.description ? hoveredInfos.description : ""}
-          </div>
-          {hoveredInfos.refShop && (
-            <div className={styles.linkShopContainer}>
-              <Link
-                className={styles.linkShop}
-                //style={removeLinkStyle}
-                href={`${hoveredInfos.refShop}`}
-              >
-                VOIR DANS LA BOUTIQUE
-              </Link>
-            </div>
-          )}
+          {hoveredInfos.description ? hoveredInfos.description : ""}
         </div>
+        {hoveredInfos.refShop && (
+          <div className={styles.linkShopContainer}>
+            <Link
+              className={styles.linkShop}
+              //style={removeLinkStyle}
+              href={`${hoveredInfos.refShop}`}
+            >
+              VOIR DANS LA BOUTIQUE
+            </Link>
+          </div>
+        )}
+      </div> */}
+      {/* <Loader style={{ display: allImagesLoaded ? "none" : "flex" }} /> */}
+      <div className={styles.presentationContainer}>
         <div
           className={styles.acampaContainer}
           //style={isClicked ? fadeOut : fadeIn && { transitionDelay: "0.2s" }}
@@ -632,8 +731,8 @@ export default function Home() {
                           height={data.height}
                           alt={data.collection}
                           onClick={() => {
-                            clickPhoto(data);
-                            console.log(texte);
+                            clickPhoto(data, dataIndex);
+                            console.log(dataIndex, startIndex);
                           }}
                           style={
                             data.src === hoveredInfos.src ||
@@ -645,6 +744,42 @@ export default function Home() {
                             handleImageLoad();
                           }}
                         />
+                      )}
+                    </div>
+                    <div
+                      className={styles.hoveredDescriptionContainer1}
+                      style={
+                        isClicked && hoveredInfos.src === data.src
+                          ? fadeIn
+                          : fadeOut
+                      }
+                    >
+                      <img
+                        src={"/assets/x-mark.png"}
+                        width={30}
+                        height={30}
+                        onClick={() => {
+                          crossClick();
+                        }}
+                        className={styles.cross}
+                      />
+                      <div className={styles.hoveredName}>
+                        {hoveredInfos.nom ? hoveredInfos.nom.toUpperCase() : ""}
+                      </div>
+                      <div className={styles.hoveredDescription}>
+                        {hoveredInfos.description
+                          ? hoveredInfos.description
+                          : ""}
+                      </div>
+                      {hoveredInfos.refShop && (
+                        <div className={styles.linkShopContainer}>
+                          <Link
+                            className={styles.linkShop}
+                            href={`${hoveredInfos.refShop}`}
+                          >
+                            VOIR DANS LA BOUTIQUE
+                          </Link>
+                        </div>
                       )}
                     </div>
                   </div>
@@ -655,30 +790,73 @@ export default function Home() {
                 {fetchData
                   .slice(startIndex + 2, startIndex + 4)
                   .map((data, dataIndex) => (
-                    <div
-                      className={styles[`pic${dataIndex + 3}Container`]}
-                      // style={{ border: "1px solid green" }}
-                      key={dataIndex}
-                    >
-                      {fetchData.length > 0 && (
-                        <Pic
-                          src={data.src}
-                          width={data.width}
-                          height={data.height}
-                          alt={data.collection}
-                          onClick={() => clickPhoto(data)}
-                          style={
-                            data.src === hoveredInfos.src ||
-                            hoveredInfos.src === ""
-                              ? fadeIn
-                              : fadeOut
-                          }
-                          onImageLoad={() => {
-                            handleImageLoad();
+                    <>
+                      <div
+                        className={styles[`pic${dataIndex + 3}Container`]}
+                        // style={{ border: "1px solid green" }}
+                        key={dataIndex}
+                      >
+                        {fetchData.length > 0 && (
+                          <Pic
+                            src={data.src}
+                            width={data.width}
+                            height={data.height}
+                            alt={data.collection}
+                            onClick={() => {
+                              clickPhoto(data);
+                              console.log(dataIndex + 3, hoveredInfos.index);
+                            }}
+                            style={
+                              data.src === hoveredInfos.src ||
+                              hoveredInfos.src === ""
+                                ? fadeIn
+                                : fadeOut
+                            }
+                            onImageLoad={() => {
+                              handleImageLoad();
+                            }}
+                          />
+                        )}
+                      </div>
+                      <div
+                        className={styles.hoveredDescriptionContainer2}
+                        style={
+                          isClicked && hoveredInfos.src === data.src
+                            ? fadeIn
+                            : fadeOut
+                        }
+                      >
+                        <img
+                          src={"/assets/x-mark.png"}
+                          width={30}
+                          height={30}
+                          onClick={() => {
+                            crossClick();
                           }}
+                          className={styles.cross}
                         />
-                      )}
-                    </div>
+                        <div className={styles.hoveredName}>
+                          {hoveredInfos.nom
+                            ? hoveredInfos.nom.toUpperCase()
+                            : ""}
+                        </div>
+                        <div className={styles.hoveredDescription}>
+                          {hoveredInfos.description
+                            ? hoveredInfos.description
+                            : ""}
+                        </div>
+                        {hoveredInfos.refShop && (
+                          <div className={styles.linkShopContainer}>
+                            <Link
+                              className={styles.linkShop}
+                              href={`${hoveredInfos.refShop}`}
+                            >
+                              VOIR DANS LA BOUTIQUE
+                            </Link>
+                          </div>
+                        )}
+                      </div>
+                    </>
                   ))}
               </div>
               <div className={styles.pic5Container}>
@@ -701,6 +879,41 @@ export default function Home() {
                   />
                 )}
               </div>
+              <div
+                className={styles.hoveredDescriptionContainer}
+                style={
+                  isClicked &&
+                  hoveredInfos.src === fetchData[startIndex + 4].src
+                    ? fadeIn
+                    : fadeOut
+                }
+              >
+                <img
+                  src={"/assets/x-mark.png"}
+                  width={30}
+                  height={30}
+                  onClick={() => {
+                    crossClick();
+                  }}
+                  className={styles.cross}
+                />
+                <div className={styles.hoveredName}>
+                  {hoveredInfos.nom ? hoveredInfos.nom.toUpperCase() : ""}
+                </div>
+                <div className={styles.hoveredDescription}>
+                  {hoveredInfos.description ? hoveredInfos.description : ""}
+                </div>
+                {hoveredInfos.refShop && (
+                  <div className={styles.linkShopContainer}>
+                    <Link
+                      className={styles.linkShop}
+                      href={`${hoveredInfos.refShop}`}
+                    >
+                      VOIR DANS LA BOUTIQUE
+                    </Link>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         );
@@ -716,39 +929,6 @@ export default function Home() {
     >
       <Loader style={{ display: imagesLoaded ? "none" : "flex" }} />
       <div className={styles.presentationContainer}>
-        <div
-          className={styles.hoveredDescriptionContainer}
-          style={isClicked ? fadeIn : fadeOut}
-        >
-          <img
-            src={"/assets/x-mark.png"}
-            width={30}
-            height={30}
-            onClick={() => {
-              crossClick();
-            }}
-            className={styles.cross}
-          />
-          <div className={styles.hoveredName}>
-            {hoveredInfos.nom ? hoveredInfos.nom.toUpperCase() : ""}
-          </div>
-          <div
-            className={styles.hoveredDescription}
-            style={isClicked ? fadeIn : fadeOut}
-          >
-            {hoveredInfos.description ? hoveredInfos.description : ""}
-          </div>
-          {hoveredInfos.refShop && (
-            <div className={styles.linkShopContainer}>
-              <Link
-                className={styles.linkShop}
-                href={`${hoveredInfos.refShop}`}
-              >
-                VOIR DANS LA BOUTIQUE
-              </Link>
-            </div>
-          )}
-        </div>
         <div className={styles.textContainer}>
           <Cart
             style={displayCart}

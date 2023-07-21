@@ -24,8 +24,30 @@
 
 .hoveredDescriptionContainer {
   position: fixed;
-  left: 15vw;
+
   top: 8vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2vmin;
+  height: auto;
+  z-index: 4;
+}
+
+.hoveredDescriptionContainer1 {
+  position: fixed;
+  top: 60vh;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2vmin;
+  height: auto;
+  z-index: 4;
+}
+
+.hoveredDescriptionContainer2 {
+  position: fixed;
+  top: 10vh;
+
   display: flex;
   flex-direction: column;
   gap: 2vmin;

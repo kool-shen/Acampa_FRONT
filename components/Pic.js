@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styles from "../styles/Pic.module.css";
 import Image from "next/image";
-import "lazysizes";
 
 function Pic(props) {
   const [stillLoading, setstillLoading] = useState(true);
@@ -30,8 +29,8 @@ function Pic(props) {
           width={props.width}
           height={props.height}
           alt={"yo"}
-          className={`${styles.picLoaded} lazyload`}
-          onLoad={handleLoad}
+          className={styles.picLoaded}
+          onLoadingComplete={handleLoad}
           onClick={props.onClick}
           style={props.style}
           onMouseEnter={props.onMouseEnter}
@@ -51,7 +50,7 @@ function Pic(props) {
       >
         <video
           src={props.src}
-          className={`${styles.picLoaded} lazyload`}
+          className={styles.picLoaded}
           width={props.width}
           height={props.height}
           onClick={props.onClick}

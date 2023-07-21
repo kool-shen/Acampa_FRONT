@@ -146,9 +146,9 @@ function productPage() {
     const sizePrice = index * 15;
     let vinPrice = 0;
 
-    if (data[0].metadata?.vin && (vinIndex === 0 || vinIndex === 1)) {
+    if (data[0]?.metadata?.vin && (vinIndex === 0 || vinIndex === 1)) {
       vinPrice = 15;
-    } else if (vinIndex === 2) {
+    } else if (data[0]?.metadata?.vin && vinIndex === 2) {
       vinPrice = 20;
     } else if (!vinIndex) {
       vinPrice = 0;
@@ -165,7 +165,7 @@ function productPage() {
       return selectedMontant * quantity + sizePrice;
     } else {
       const livraison = 40 * (dureeIndex + 1);
-      return data[0].metadata?.duree
+      return data[0]?.metadata?.duree
         ? ////calcul du prix si abonnement ////
           (initialPrice + sizePrice) * 6 * quantity * (dureeIndex + 1) +
             livraison
@@ -226,44 +226,61 @@ function productPage() {
     window.innerWidth <= 425 ? setMobileScreen(true) : setMobileScreen(false);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (collection && product) {
-          const response = await fetch(
-            // `http://localhost:3000/cloudinary/product?product=${product}`
-            `https://acampa-back.vercel.app/cloudinary/product?product=${product}`
+  /// FETCH DATA / CACHE ///
+
+  const fetchData = async () => {
+    try {
+      if (collection && product) {
+        const response = await fetch(
+          `http://localhost:3000/cloudinary/product?product=${product}`
+          //`https://acampa-back.vercel.app/cloudinary/product?product=${product}`
+        );
+        const jsonData = await response.json();
+
+        if (jsonData) {
+          setData(jsonData);
+          setIndexes(jsonData);
+          localStorage.setItem(
+            `productData/${collection}/${product}`,
+            JSON.stringify(jsonData)
           );
-          const jsonData = await response.json();
-
-          if (jsonData) {
-            setData(jsonData);
-            setSizeLength(jsonData[0].metadata.tailles?.length ?? 0);
-            setCouleurLength(jsonData[0].metadata.couleur?.length ?? 0);
-            setVarietesLength(jsonData[0].metadata.Varietes?.length ?? 0);
-            setCadeauLength(
-              jsonData[0].metadata.montant_carte_cadeau?.length ?? 0
-            );
-            setDureeLength(jsonData[0].metadata.duree?.length ?? 0);
-            setVinLength(jsonData[0].metadata.vin?.length ?? 0);
-            setInitialPrice(jsonData[0].metadata.prix);
-            if (data[0].metadata?.montant_carte_cadeau) {
-              const newPrice = calculatePrice(
-                sizeIndex ? sizeIndex : 0,
-                cadeauIndex
-              );
-              setPrice(newPrice);
-            } else {
-              const newPrice = calculatePrice(sizeIndex ? sizeIndex : 0);
-              setPrice(newPrice);
-            }
-          }
+          console.log("backend");
         }
-      } catch (error) {
-        console.error(error);
       }
-    };
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
+  const setIndexes = (e) => {
+    setSizeLength(e[0].metadata?.tailles?.length ?? 0);
+    setCouleurLength(e[0].metadata?.couleur?.length ?? 0);
+    setVarietesLength(e[0].metadata?.Varietes?.length ?? 0);
+    setCadeauLength(e[0].metadata?.montant_carte_cadeau?.length ?? 0);
+    setDureeLength(e[0].metadata?.duree?.length ?? 0);
+    setVinLength(e[0].metadata?.vin?.length ?? 0);
+    setInitialPrice(e[0].metadata?.prix);
+
+    if (e[0].metadata?.montant_carte_cadeau) {
+      const newPrice = calculatePrice(sizeIndex ? sizeIndex : 0, cadeauIndex);
+      setPrice(newPrice);
+    } else {
+      const newPrice = calculatePrice(sizeIndex ? sizeIndex : 0);
+      setPrice(newPrice);
+    }
+  };
+
+  useEffect(() => {
+    // const eachProductData = localStorage.getItem(
+    //   `productData/${collection}/${product}`
+    // );
+    // if (eachProductData) {
+    //   console.log(JSON.parse(eachProductData));
+    //   setData(JSON.parse(eachProductData));
+    //   setIndexes(JSON.parse(eachProductData));
+    // } else {
+    //   fetchData();
+    // }
     fetchData();
     loadSubCategories();
     calculateScreen();

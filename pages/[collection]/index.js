@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { clickMessage } from "@/reducers/message";
 import Cart from "@/components/Cart";
 import Menu from "@/components/Menu";
-
 import Pic2 from "@/components/Pic2";
 import styles from "@/styles/Shop.module.css";
 import Head from "next/head";
@@ -21,52 +20,59 @@ export default function index() {
 
   /// fetch DATA / fetch sous catégories shop & useEffect ///
 
-  const [indexCategories, setIndexCategories] = useState([]);
+  const [data, setData] = useState();
 
-  const loadSubCategories = async () => {
+  const fetchData = async () => {
     try {
-      const response = await fetch(
-        `https://acampa-back.vercel.app/cloudinary/folders`
-        // "http://localhost:3000/cloudinary/folders"
-      );
-      const indexlist = await response.json();
+      if (collection) {
+        const response = await fetch(
+          //`http://localhost:3000/cloudinary/collection?collection=${collection}`
+          `https://acampa-back.vercel.app/cloudinary/collection?collection=${collection}`
+        );
+        const jsonData = await response.json();
 
-      if (indexlist.length > 0) {
-        setIndexCategories(indexlist);
+        if (jsonData && jsonData.length > 0) {
+          setData(jsonData);
+          localStorage.setItem(
+            `productData${collection}`,
+            JSON.stringify(jsonData)
+          );
+          console.log("backend");
+        }
       }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const [data, setData] = useState();
+  const clearCache = () => {
+    // Clear the cache every 30 minutes
+    localStorage.removeItem("presentationData");
+    localStorage.removeItem("homepageData");
+    localStorage.removeItem("subcategoriesData");
+    console.log("cache cleared");
+  };
+
+  /// USEEFFECT LOAD API / CACHE ////
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (collection) {
-          const response = await fetch(
-            //`http://localhost:3000/cloudinary/collection?collection=${collection}`
-            `https://acampa-back.vercel.app/cloudinary/collection?collection=${collection}`
-          );
-          const jsonData = await response.json();
+    const productData = localStorage.getItem(`productData${collection}`);
 
-          if (jsonData && jsonData.length > 0) {
-            const srcArray = jsonData.map(({ src }) => src);
-            setData(jsonData);
-            setPhoto(srcArray);
-            console.log(jsonData);
-          }
-        }
-      } catch (error) {
-        console.error(error);
-      }
-      loadSubCategories();
+    if (productData) {
+      setData(JSON.parse(productData));
+      console.log("cache");
+    } else {
+      fetchData();
+    }
+
+    const interval = setInterval(clearCache, 1800000);
+
+    return () => {
+      clearInterval(interval);
     };
-
-    fetchData();
-    console.log(window.innerWidth);
   }, [collection]);
+
+  /////////////////
 
   /// Config Panier ///
 
@@ -110,7 +116,6 @@ export default function index() {
             clickCart={() => {
               setCartClicked(true);
             }}
-            indexCategories={indexCategories}
             aboutSubCatStyle={{ display: "none" }}
           />
         </div>
