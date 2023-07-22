@@ -133,7 +133,7 @@ input:checked + .slider:before {
 .eachProductContainer {
   display: flex;
   width: 100%;
-  min-height: 24vmin;
+  /* min-height: 24vmin; */
   /* border: 1px solid red; */
   justify-content: space-between !important;
   align-items: safe;
@@ -264,6 +264,7 @@ input:checked + .slider:before {
     width: 100vw;
     height: auto;
     padding-top: 1vmin;
+    top: 84vh;
   }
   .switch {
     position: relative;

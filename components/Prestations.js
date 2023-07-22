@@ -137,7 +137,7 @@ export default function Prestations() {
           clickCart={() => {
             setCartClicked(true);
           }}
-          display={"none"}
+          display={"block"}
         />
       </div>
       <div className={styles.secondContainer}>
