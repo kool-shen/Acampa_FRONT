@@ -203,7 +203,7 @@ function productPage() {
   const loadSubCategories = async () => {
     try {
       const response = await fetch(
-        // "http://localhost:3000/cloudinary/folders"
+        //"http://localhost:3000/cloudinary/folders"
         "https://acampa-back.vercel.app/cloudinary/folders"
       );
       const indexlist = await response.json();

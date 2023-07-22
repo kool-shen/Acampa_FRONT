@@ -24,19 +24,8 @@
 
 .hoveredDescriptionContainer {
   position: fixed;
-
   top: 8vh;
-  display: flex;
-  flex-direction: column;
-  gap: 2vmin;
-  height: auto;
-  z-index: 4;
-}
-
-.hoveredDescriptionContainer1 {
-  position: fixed;
-  top: 60vh;
-
+  right: 1vmin;
   display: flex;
   flex-direction: column;
   gap: 2vmin;
@@ -53,6 +42,19 @@
   gap: 2vmin;
   height: auto;
   z-index: 4;
+}
+
+.hoveredDescriptionContainer3 {
+  position: fixed;
+  bottom: 150%;
+  width: 100%;
+  right: 1vmin;
+  display: flex;
+  flex-direction: column;
+  gap: 2vmin;
+  height: auto;
+  z-index: 4;
+  /* border: 2px solid red; */
 }
 
 .hoveredName {
@@ -190,16 +192,38 @@
   flex-direction: column;
 }
 
-.scrollContainerTop2 {
+.scrollContainerTop {
   height: 50%;
   display: flex;
   justify-content: flex-end;
   gap: 8vmin;
-  /* border: 1px solid green; */
+  /* border: 2px solid green; */
   padding-right: 3vmin;
 }
 
-.scrollContainerBottom2 {
+.test {
+  height: 300px;
+  width: 300px;
+  position: absolute;
+  background-color: black;
+  z-index: 99;
+}
+
+.hoveredDescriptionContainer1 {
+  position: absolute;
+  left: 0vw;
+  top: 112%;
+  padding: 2vmin;
+  display: flex;
+  flex-direction: column;
+  gap: 2vmin;
+  height: auto;
+  width: 100%;
+  z-index: 90;
+  /* border: 2px solid blue; */
+}
+
+.scrollContainerBottom {
   height: 50%;
   display: flex;
   justify-content: space-around;
@@ -218,11 +242,8 @@
 .pic1Container {
   height: 98%;
   opacity: 1;
-  overflow: hidden;
-}
-
-.scrollContainer {
-  background-color: black;
+  position: relative;
+  /* border: 2px solid purple; */
 }
 
 .pic2Container {
@@ -230,25 +251,27 @@
   padding-right: 6%;
   height: 70%;
   opacity: 1;
+  position: relative;
   /* border: 1px solid blue; */
 }
 
 .pic3Container {
   height: 70%;
   opacity: 1;
-
+  position: relative;
   overflow: hidden;
 }
 .pic4Container {
   height: 70%;
   opacity: 1;
   object-fit: cover;
+  position: relative;
 }
 
 .pic5Container {
   height: 100%;
   object-fit: cover;
-
+  position: relative;
   transform: translateY(15%);
 }
 
@@ -376,15 +399,15 @@
   }
 
   .hoveredName {
-    font-size: 4vmin;
+    font-size: 3vmin;
   }
 
   .hoveredDescription {
     font-size: 3vmin;
-    width: 40vw;
+    width: 90%;
   }
   .linkShop {
-    font-size: 4vmin;
+    font-size: 3vmin;
     font-family: "Authentic130";
     color: black;
     text-decoration: none;
@@ -416,6 +439,8 @@
   grid-template-rows: 1fr 1fr;
 }
 
+/*// 1 //*/
+
 .mobileScrollContainer1 {
   /* position: absolute; */
   display: flex;
@@ -428,19 +453,6 @@
   transform: translateX(5%);
   padding-top: 3vmin;
   padding-bottom: 3vmin;
-}
-
-.mobileScrollContainer2 {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  /* border: 1px solid salmon; */
-  padding-right: 10%;
-  width: 154%;
-  position: relative;
-  transform: translateX(-33%);
-  padding-top: 5vmin;
-  padding-bottom: 5vmin;
 }
 
 .mobilePic1 {
@@ -460,21 +472,24 @@
   flex-direction: column;
   gap: 2vmin;
   height: auto;
+  width: 100%;
   z-index: 4;
   /* border: 2px solid green; */
 }
 
-.mobileHoveredContainer2 {
-  position: fixed;
-  top: 19vh;
-  left: 52vw;
-  padding: 2vmin;
+/*// 2 //*/
+
+.mobileScrollContainer2 {
   display: flex;
   flex-direction: column;
-  gap: 2vmin;
-  height: auto;
-  z-index: 4;
-  /* border: 2px solid blue; */
+  justify-content: flex-end;
+  /* border: 1px solid salmon; */
+  padding-right: 10%;
+  width: 154%;
+  position: relative;
+  transform: translateX(-33%);
+  padding-top: 5vmin;
+  padding-bottom: 5vmin;
 }
 
 .mobilePic2 {
@@ -485,13 +500,39 @@
   /* border: 2px solid yellow; */
 }
 
+.mobileHoveredContainer2 {
+  position: fixed;
+  top: 19vh;
+  left: 54vw;
+  padding: 2vmin;
+  display: flex;
+  flex-direction: column;
+  gap: 2vmin;
+  height: auto;
+  width: 80%;
+  z-index: 4;
+  /* border: 2px solid blue; */
+}
+
+/*// 3 //*/
+
 .mobilePic3 {
   position: absolute;
   width: 68vw;
-
   opacity: 1;
+}
 
-  /* border: 2px solid blue; */
+.mobileHoveredContainer3 {
+  position: fixed;
+  top: 64vh;
+
+  left: -20vw;
+  padding: 2vmin;
+  display: flex;
+  flex-direction: column;
+  gap: 2vmin;
+  height: auto;
+  z-index: 4;
 }
 
 .mobileScrollContainer3 {
@@ -508,21 +549,7 @@
   padding-bottom: 3vmin;
 }
 
-.mobilePic4 {
-  width: 35vw;
-  align-self: center;
-  opacity: 1;
-  transform: translateX(5%);
-  /* border: 2px solid orange; */
-}
-
-.mobilePic5 {
-  width: 53vw;
-
-  opacity: 1;
-  overflow: hidden;
-  /* border: 2px solid purple; */
-}
+/*// 3 //*/
 
 .mobileScrollContainer4 {
   display: flex;
@@ -536,10 +563,61 @@
   padding-bottom: 5vmin;
 }
 
-.mobilePic6 {
+.mobilePic4 {
   width: 35vw;
+  align-self: center;
+  opacity: 1;
+  transform: translateX(5%);
+}
+
+.mobileHoveredContainer4 {
+  position: fixed;
+  top: -5vh;
+  right: -40vw;
+  left: 50vw;
+  padding: 2vmin;
+  display: flex;
+  flex-direction: column;
+  gap: 2vmin;
+  height: auto;
+  z-index: 4;
+}
+
+.mobilePic5 {
+  width: 53vw;
 
   opacity: 1;
   overflow: hidden;
-  /* border: 2px solid black; */
+}
+
+.mobileHoveredContainer5 {
+  position: fixed;
+  top: 66vh;
+  left: 0vw;
+  padding: 2vmin;
+  display: flex;
+  flex-direction: column;
+  gap: 2vmin;
+  height: auto;
+  width: 100%;
+  z-index: 4;
+}
+
+.mobilePic6 {
+  width: 35vw;
+  opacity: 1;
+  overflow: hidden;
+}
+
+.mobileHoveredContainer6 {
+  position: fixed;
+  right: 1vmin;
+  left: 1vmin;
+  padding: 2vmin;
+  display: flex;
+  flex-direction: column;
+  gap: 2vmin;
+  height: auto;
+  width: 50%;
+  z-index: 4;
 }
