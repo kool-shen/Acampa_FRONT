@@ -47,15 +47,17 @@
   .mainContainer {
     height: 93vh;
     flex-direction: column;
+    /* justify-content: space-around; */
   }
   .textContainer {
     height: auto;
     width: auto;
+    display: flex;
+    flex-direction: column;
   }
   .middleContainer {
     width: auto;
     padding: 3vmin;
-
     overflow: scroll;
   }
   .text {

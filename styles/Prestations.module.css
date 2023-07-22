@@ -14,6 +14,14 @@
   flex-direction: column;
 }
 
+.secondContainer {
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10vmin;
+}
+
 .middleContainer {
   max-height: 100vh;
   width: 25vw;
@@ -33,6 +41,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   gap: 4vmin;
 }
 
@@ -47,11 +56,12 @@
   font-size: 1.7vmin;
   font-family: "Authentic130";
   color: black;
+  height: auto;
 }
 
 .text2 {
   padding-left: 10%;
-  font-size: 1.9vh;
+  font-size: 1.7vmin;
   font-family: "Authentic130";
   color: black;
 }
@@ -197,5 +207,46 @@
   .menuContainer {
     width: 100vw;
     height: auto;
+  }
+  .text {
+    font-size: 4vmin;
+  }
+  .text2 {
+    font-size: 4vmin;
+  }
+
+  .normalInput {
+    font-size: 4vmin;
+    width: 94%;
+  }
+  .messageInput {
+    font-size: 4vmin;
+    width: 70%;
+  }
+  .sendButton {
+    font-size: 4vmin;
+  }
+  .middleContainer {
+    width: auto;
+    height: auto !important;
+    padding: 3vmin;
+  }
+  .photoAreaContainer {
+    width: auto;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .picContainer {
+    min-height: auto;
+    width: 95%;
+    position: relative;
+  }
+  .calque1 {
+    min-height: 100%;
+  }
+
+  .calque2 {
+    min-height: 100%;
   }
 }
