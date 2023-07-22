@@ -232,8 +232,8 @@ function productPage() {
     try {
       if (collection && product) {
         const response = await fetch(
-          `http://localhost:3000/cloudinary/product?product=${product}`
-          //`https://acampa-back.vercel.app/cloudinary/product?product=${product}`
+          // `http://localhost:3000/cloudinary/product?product=${product}`
+          `https://acampa-back.vercel.app/cloudinary/product?product=${product}`
         );
         const jsonData = await response.json();
 
