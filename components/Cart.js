@@ -157,16 +157,16 @@ function Cart(props) {
         ref={props.ref}
       >
         {mobileScreen && deliveryIsClicked ? (
-          <div className={styles.halo2}>
-            <div className={styles.halo}>
-              <Delivery
-                style={displayDelivery}
-                onConfirmationChange={handleConfirmationChange}
-                isConfirmed={isConfirmed}
-              />
-            </div>
-          </div>
+          // <div className={styles.halo2}>
+          //   <div className={styles.halo}>
+          <Delivery
+            style={displayDelivery}
+            onConfirmationChange={handleConfirmationChange}
+            isConfirmed={isConfirmed}
+          />
         ) : (
+          //   </div>
+          // </div>
           <Delivery
             style={displayDelivery}
             onConfirmationChange={handleConfirmationChange}

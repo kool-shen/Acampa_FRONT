@@ -1,26 +1,40 @@
-.globalContainer {
+.main {
   height: 100vh;
   position: absolute;
-
   width: 50vw;
-  border-left: 2px solid black;
-  display: flex;
-  flex-direction: column;
+
   left: 100%;
   transform: translateX(-50vw);
 
+  z-index: 99;
+}
+
+.globalContainer {
+  min-height: 100%;
+  width: 100%;
+  position: relative;
+
+  border-left: 2px solid black;
+  display: flex;
+  flex-direction: column;
+
+  /* transform: translateX(-50vw); */
+  justify-content: space-between;
   background-color: #ffe93f;
   z-index: 99;
 }
 
+.sumProductContainer {
+  /* overflow: scroll; */
+  display: inline-block;
+}
 .sumUpContainer {
   display: flex;
   background-color: #ffe93f;
-  height: 10vh;
-  width: 50vw;
+  height: auto;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
-  position: fixed;
   border-bottom: 2px solid black;
   z-index: 4;
 }
@@ -28,9 +42,9 @@
 .totalPayContainer {
   background-color: #ffe93f;
   width: 50vw;
-  top: 80vh;
-  height: 20vh;
-  position: fixed;
+
+  /* min-height: 15vh; */
+
   border-top: 2px solid black;
   z-index: 4;
   display: flex;
@@ -53,11 +67,11 @@
 }
 
 .deliveryContainer {
-  height: 80%;
   width: auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  padding: 1vmin;
 }
 
 .switchContainer {
@@ -112,14 +126,17 @@ input:checked + .slider:before {
   transform: translateX(60%);
 }
 
+.totalText {
+  font-size: 2.5vmin;
+  font-family: "Authentic130";
+}
+
 .productContainer {
+  max-height: 82vh;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-
-  padding-top: 10vh;
-  padding-bottom: 20vh;
-  overflow-y: scroll;
-
+  overflow: auto;
   background-color: #ffe93f;
 }
 
@@ -217,11 +234,15 @@ input:checked + .slider:before {
 
 /* Mobile L*/
 @media screen and (max-width: 425px) {
-  .globalContainer {
+  .main {
     height: 100vh;
     width: 100vw;
     transform: translateX(-100vw);
     height: 93vh;
+  }
+
+  .productContainer {
+    justify-self: flex-start;
   }
   .eachProductContainer {
     height: auto;
@@ -232,7 +253,7 @@ input:checked + .slider:before {
 
   .sumUpContainer {
     /* border: 1px solid blue; */
-    width: 100vw;
+    width: 100%;
   }
   .text {
     font-size: 5vmin;
@@ -243,6 +264,9 @@ input:checked + .slider:before {
     font-size: 3.5vmin;
     font-family: "Authentic130";
     color: grey;
+  }
+  .productContainer {
+    max-height: 75vh;
   }
 
   .tinyText {
@@ -289,16 +313,4 @@ input:checked + .slider:before {
 .mobileMessageContainer {
   position: absolute;
   z-index: 300;
-}
-
-.halo {
-  height: 100vh;
-  width: 100vw;
-  background-color: transparent;
-}
-
-.halo2 {
-  height: 100vh;
-  width: 100vw;
-  background-color: transparent;
 }

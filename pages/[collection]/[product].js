@@ -5,10 +5,10 @@ import Head from "next/head";
 import { useDispatch, useSelector } from "react-redux";
 import { clickMessage } from "@/reducers/message";
 import Pic2 from "@/components/Pic2";
-import Cart from "@/components/Cart";
 import Menu from "@/components/Menu";
 import { addToBasket } from "../../reducers/basket";
 import { GetStaticProps } from "next";
+import Panier from "@/components/Panier";
 
 function productPage() {
   /// produit cliqué + création de l'url ///
@@ -332,7 +332,7 @@ function productPage() {
       </Head>
       {data && (
         <div className={styles.mainContainer}>
-          <Cart
+          <Panier
             style={displayCart}
             isClicked={messageClicked}
             onClick={() => {
