@@ -16,7 +16,7 @@ function LandingPage(props) {
             />
           </div>
           <div className={styles.text}>{props.message}</div>
-          <div className={styles.button} onClick={props.onClickCross}>
+          <div className={styles.button} onClick={props.onClickButon}>
             <div className={styles.text}>{props.button}</div>
           </div>
         </div>
