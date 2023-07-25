@@ -331,275 +331,100 @@ function productPage() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       {data && (
-        <div className={styles.mainContainer}>
-          <Panier
-            style={displayCart}
-            isClicked={messageClicked}
-            onClick={() => {
-              setCartClicked(false);
-              setMessageClicked(false);
-              messageIsFalse();
-            }}
-          />
-
-          <div className={styles.textContainer}>
-            <Menu
-              clickCart={() => {
-                setCartClicked(true);
+        <div className={styles.main}>
+          <div className={styles.mainContainer}>
+            <Panier
+              style={displayCart}
+              isClicked={messageClicked}
+              onClick={() => {
+                setCartClicked(false);
+                setMessageClicked(false);
+                messageIsFalse();
               }}
-              indexCategories={indexCategories}
             />
-          </div>
-          <div className={styles.galleryContainer}>
-            <div className={styles.picContainer}>
-              <Pic2
-                src={data[0].src}
-                width={data[0].width}
-                height={data[0].height}
-                alt={data[0].context?.alt}
-                onClick={() => {
-                  console.log(initialPrice, quantity, dureeIndex);
+            <div className={styles.textContainer}>
+              <Menu
+                clickCart={() => {
+                  setCartClicked(true);
                 }}
+                indexCategories={indexCategories}
               />
             </div>
-            <div className={styles.focusContainer}>
-              <div className={styles.productFocusContainer}>
-                <div className={styles.textProductContainer}>
-                  {data[0].metadata?.nom_du_produit && (
-                    <div className={styles.productDescription}>
-                      {data[0].metadata?.nom_du_produit.toUpperCase()}
-                    </div>
-                  )}
-
-                  <div
-                    className={styles.productDescription}
-                    style={{ whiteSpace: "pre-line" }}
-                  >
-                    {data[0].context?.alt}
-                  </div>
-                  <div className={styles.productDescription}>_</div>
-                </div>
-                <div className={styles.numbersProductContainer}>
-                  {!data[0].metadata.tailles &&
-                    !data[0].metadata.Varietes &&
-                    !data[0].metadata.montant_carte_cadeau &&
-                    !data[0].metadata.couleur && (
-                      <div className={styles.choiceContainer}>
-                        <div className={styles.productDescription}>
-                          PRIX UNIQUE
-                        </div>
+            <div className={styles.galleryContainer}>
+              <div className={styles.picContainer}>
+                <Pic2
+                  src={data[0].src}
+                  width={data[0].width}
+                  height={data[0].height}
+                  alt={data[0].context?.alt}
+                  onClick={() => {
+                    console.log(initialPrice, quantity, dureeIndex);
+                  }}
+                />
+              </div>
+              <div className={styles.focusContainer}>
+                <div className={styles.productFocusContainer}>
+                  <div className={styles.textProductContainer}>
+                    {data[0].metadata?.nom_du_produit && (
+                      <div className={styles.productDescription}>
+                        {data[0].metadata?.nom_du_produit.toUpperCase()}
                       </div>
                     )}
 
-                  <div className={styles.choiceContainer}>
                     <div
                       className={styles.productDescription}
-                    >{`${price},00€`}</div>
+                      style={{ whiteSpace: "pre-line" }}
+                    >
+                      {data[0].context?.alt}
+                    </div>
+                    <div className={styles.productDescription}>_</div>
                   </div>
+                  <div className={styles.numbersProductContainer}>
+                    {!data[0].metadata.tailles &&
+                      !data[0].metadata.Varietes &&
+                      !data[0].metadata.montant_carte_cadeau &&
+                      !data[0].metadata.couleur && (
+                        <div className={styles.choiceContainer}>
+                          <div className={styles.productDescription}>
+                            PRIX UNIQUE
+                          </div>
+                        </div>
+                      )}
 
-                  {data[0].metadata?.tailles ? (
-                    <div className={styles.propriétésContainer}>
-                      <div className={styles.choiceContainer}>
-                        <div className={styles.productDescription}>TAILLE</div>
-                      </div>
-                      <div className={styles.choiceContainer}>
-                        {/* <div
+                    <div className={styles.choiceContainer}>
+                      <div
+                        className={styles.productDescription}
+                      >{`${price},00€`}</div>
+                    </div>
+
+                    {data[0].metadata?.tailles ? (
+                      <div className={styles.propriétésContainer}>
+                        <div className={styles.choiceContainer}>
+                          <div className={styles.productDescription}>
+                            TAILLE
+                          </div>
+                        </div>
+                        <div className={styles.choiceContainer}>
+                          {/* <div
                           className={styles.productDescription}
                           onClick={previousSize}
                         >
                           &lt;
                         </div> */}
-                        <div className={styles.logoContainer}>
-                          <Pic2
-                            src={"/assets/left.png"}
-                            width={100}
-                            height={100}
-                            alt={"choix précédent"}
-                            onClick={previousSize}
-                          />
-                        </div>
-                        <div className={styles.valueContainer}>
-                          <div className={styles.productDescription}>
-                            {data[0].metadata?.tailles[sizeIndex].toUpperCase()}
-                          </div>
-                        </div>
-                        <div className={styles.logoContainer}>
-                          <Pic2
-                            src={"/assets/right.png"}
-                            width={100}
-                            height={100}
-                            alt={"choix suivant"}
-                            onClick={nextSize}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                  {data[0].metadata?.couleur ? (
-                    <div className={styles.propriétésContainer}>
-                      <div className={styles.choiceContainer}>
-                        <div className={styles.productDescription}>COULEUR</div>
-                      </div>
-                      <div className={styles.choiceContainer}>
-                        <div className={styles.logoContainer}>
-                          <Pic2
-                            src={"/assets/left.png"}
-                            width={100}
-                            height={100}
-                            alt={"choix précédent"}
-                            onClick={previousCouleur}
-                          />
-                        </div>
-                        <div className={styles.valueContainer}>
-                          <div className={styles.productDescription}>
-                            {data[0].metadata?.couleur[couleurIndex]
-                              .replace(/_/g, " ")
-                              .toUpperCase()}
-                          </div>
-                        </div>
-                        <div className={styles.logoContainer}>
-                          <Pic2
-                            src={"/assets/right.png"}
-                            width={100}
-                            height={100}
-                            alt={"choix suivant"}
-                            onClick={nextCouleur}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                  {data[0].metadata?.Varietes ? (
-                    <div className={styles.propriétésContainer}>
-                      <div className={styles.choiceContainer}>
-                        <div className={styles.productDescription}>VARIÉTÉ</div>
-                      </div>
-                      <div className={styles.choiceContainer}>
-                        <div className={styles.logoContainer}>
-                          <Pic2
-                            src={"/assets/left.png"}
-                            width={100}
-                            height={100}
-                            alt={"choix précédent"}
-                            onClick={previousVarietes}
-                          />
-                        </div>
-                        <div className={styles.valueContainer}>
-                          <div className={styles.productDescription}>
-                            {data[0].metadata?.Varietes[varietesIndex]
-                              .replace(/_/g, " ")
-                              .toUpperCase()}
-                          </div>
-                        </div>
-                        <div className={styles.logoContainer}>
-                          <Pic2
-                            src={"/assets/right.png"}
-                            width={100}
-                            height={100}
-                            alt={"choix suivant"}
-                            onClick={nextVarietes}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                  {data[0].metadata?.vin ? (
-                    <div className={styles.propriétésContainer}>
-                      <div className={styles.choiceContainer}>
-                        <div className={styles.productDescription}>VIN</div>
-                      </div>
-                      <div className={styles.choiceContainer}>
-                        <div className={styles.logoContainer}>
-                          <Pic2
-                            src={"/assets/left.png"}
-                            width={100}
-                            height={100}
-                            alt={"choix précédent"}
-                            onClick={previousVin}
-                          />
-                        </div>
-                        <div className={styles.valueContainer}>
-                          <div className={styles.productDescription}>
-                            {data[0].metadata?.vin[vinIndex]
-                              .replace(/_/g, " ")
-                              .toUpperCase()}
-                          </div>
-                        </div>
-                        <div className={styles.logoContainer}>
-                          <Pic2
-                            src={"/assets/right.png"}
-                            width={100}
-                            height={100}
-                            alt={"choix suivant"}
-                            onClick={() => {
-                              nextVin();
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                  {data[0].metadata?.montant_carte_cadeau ? (
-                    <div className={styles.propriétésContainer}>
-                      <div className={styles.choiceContainer}>
-                        <div className={styles.productDescription}>MONTANT</div>
-                      </div>
-                      <div className={styles.choiceContainer}>
-                        <div className={styles.logoContainer}>
-                          <Pic2
-                            src={"/assets/left.png"}
-                            width={100}
-                            height={100}
-                            alt={"choix précédent"}
-                            onClick={previousCadeau}
-                          />
-                        </div>
-                        <div className={styles.valueContainer}>
-                          <div className={styles.productDescription}>
-                            {`${data[0].metadata?.montant_carte_cadeau[cadeauIndex]},00€`}
-                          </div>
-                        </div>
-                        <div className={styles.logoContainer}>
-                          <Pic2
-                            src={"/assets/right.png"}
-                            width={100}
-                            height={100}
-                            alt={"choix suivant"}
-                            onClick={nextCadeau}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                  {data[0].metadata?.duree ? (
-                    <>
-                      <div className={styles.propriétésContainer}>
-                        <div className={styles.choiceContainer}>
-                          <div className={styles.productDescription}>DURÉE</div>
-                        </div>
-                        <div className={styles.choiceContainer}>
                           <div className={styles.logoContainer}>
                             <Pic2
                               src={"/assets/left.png"}
                               width={100}
                               height={100}
                               alt={"choix précédent"}
-                              onClick={previousDuree}
+                              onClick={previousSize}
                             />
                           </div>
                           <div className={styles.valueContainer}>
                             <div className={styles.productDescription}>
-                              {`${data[0].metadata?.duree[dureeIndex]} mois`}
+                              {data[0].metadata?.tailles[
+                                sizeIndex
+                              ].toUpperCase()}
                             </div>
                           </div>
                           <div className={styles.logoContainer}>
@@ -608,127 +433,317 @@ function productPage() {
                               width={100}
                               height={100}
                               alt={"choix suivant"}
-                              onClick={nextDuree}
+                              onClick={nextSize}
                             />
                           </div>
                         </div>
                       </div>
+                    ) : (
+                      ""
+                    )}
+                    {data[0].metadata?.couleur ? (
                       <div className={styles.propriétésContainer}>
                         <div className={styles.choiceContainer}>
-                          <div className={styles.productDescription}>DATE</div>
+                          <div className={styles.productDescription}>
+                            COULEUR
+                          </div>
                         </div>
                         <div className={styles.choiceContainer}>
-                          <div className={styles.inputContainer}>
-                            <textarea
-                              value={jour}
-                              onChange={(e) => {
-                                const inputValue = e.target.value;
-                                const filteredValue = inputValue
-                                  .slice(0, 2)
-                                  .replace(/[^a-zA-Z0-9]/g, "");
-                                setJour(filteredValue);
-                                if (filteredValue.length === 2) {
-                                  moisRef.current.focus();
-                                }
-                              }}
-                              ref={jourRef}
-                              className={styles.dateInput}
-                              style={{
-                                width: mobileScreen ? "5vw" : "1.5vw",
-                              }}
+                          <div className={styles.logoContainer}>
+                            <Pic2
+                              src={"/assets/left.png"}
+                              width={100}
+                              height={100}
+                              alt={"choix précédent"}
+                              onClick={previousCouleur}
                             />
-                            <div className={styles.slash}>/</div>
-                            <textarea
-                              value={mois}
-                              onChange={(e) => {
-                                const inputValue = e.target.value;
-                                const filteredValue = inputValue
-                                  .slice(0, 2)
-                                  .replace(/[^a-zA-Z0-9]/g, "");
-                                setMois(filteredValue);
-                                if (filteredValue.length === 2) {
-                                  annéeRef.current.focus();
-                                }
-                              }}
-                              className={styles.dateInput}
-                              ref={moisRef}
-                              style={{
-                                width: mobileScreen ? "5vw" : "1.5vw",
-                              }}
-                            />
-
-                            <div className={styles.slash}>/</div>
-
-                            <textarea
-                              value={année}
-                              onChange={(e) => {
-                                const inputValue = e.target.value;
-                                const filteredValue = inputValue
-                                  .slice(0, 4)
-                                  .replace(/[^a-zA-Z0-9]/g, "");
-                                setAnnée(filteredValue);
-                                if (filteredValue.length === 4) {
-                                  annéeRef.current.blur();
-                                }
-                              }}
-                              className={styles.dateInput}
-                              ref={annéeRef}
+                          </div>
+                          <div className={styles.valueContainer}>
+                            <div className={styles.productDescription}>
+                              {data[0].metadata?.couleur[couleurIndex]
+                                .replace(/_/g, " ")
+                                .toUpperCase()}
+                            </div>
+                          </div>
+                          <div className={styles.logoContainer}>
+                            <Pic2
+                              src={"/assets/right.png"}
+                              width={100}
+                              height={100}
+                              alt={"choix suivant"}
+                              onClick={nextCouleur}
                             />
                           </div>
                         </div>
                       </div>
-                    </>
-                  ) : (
-                    ""
-                  )}
-                </div>
-                <div className={styles.panierContainer}>
-                  <div className={styles.quantityContainer}>
-                    <img
-                      width={12}
-                      height={12}
-                      src={"/assets/MOINS.png"}
-                      alt={"MOINS"}
-                      onClick={removeQuantity}
-                    />
-                    <div className={styles.valueContainer}>
-                      <div
-                        className={styles.productDescription}
-                        style={{ paddingTop: "2px" }}
-                      >
-                        {quantity}
+                    ) : (
+                      ""
+                    )}
+                    {data[0].metadata?.Varietes ? (
+                      <div className={styles.propriétésContainer}>
+                        <div className={styles.choiceContainer}>
+                          <div className={styles.productDescription}>
+                            VARIÉTÉ
+                          </div>
+                        </div>
+                        <div className={styles.choiceContainer}>
+                          <div className={styles.logoContainer}>
+                            <Pic2
+                              src={"/assets/left.png"}
+                              width={100}
+                              height={100}
+                              alt={"choix précédent"}
+                              onClick={previousVarietes}
+                            />
+                          </div>
+                          <div className={styles.valueContainer}>
+                            <div className={styles.productDescription}>
+                              {data[0].metadata?.Varietes[varietesIndex]
+                                .replace(/_/g, " ")
+                                .toUpperCase()}
+                            </div>
+                          </div>
+                          <div className={styles.logoContainer}>
+                            <Pic2
+                              src={"/assets/right.png"}
+                              width={100}
+                              height={100}
+                              alt={"choix suivant"}
+                              onClick={nextVarietes}
+                            />
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    ) : (
+                      ""
+                    )}
+                    {data[0].metadata?.vin ? (
+                      <div className={styles.propriétésContainer}>
+                        <div className={styles.choiceContainer}>
+                          <div className={styles.productDescription}>VIN</div>
+                        </div>
+                        <div className={styles.choiceContainer}>
+                          <div className={styles.logoContainer}>
+                            <Pic2
+                              src={"/assets/left.png"}
+                              width={100}
+                              height={100}
+                              alt={"choix précédent"}
+                              onClick={previousVin}
+                            />
+                          </div>
+                          <div className={styles.valueContainer}>
+                            <div className={styles.productDescription}>
+                              {data[0].metadata?.vin[vinIndex]
+                                .replace(/_/g, " ")
+                                .toUpperCase()}
+                            </div>
+                          </div>
+                          <div className={styles.logoContainer}>
+                            <Pic2
+                              src={"/assets/right.png"}
+                              width={100}
+                              height={100}
+                              alt={"choix suivant"}
+                              onClick={() => {
+                                nextVin();
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                    {data[0].metadata?.montant_carte_cadeau ? (
+                      <div className={styles.propriétésContainer}>
+                        <div className={styles.choiceContainer}>
+                          <div className={styles.productDescription}>
+                            MONTANT
+                          </div>
+                        </div>
+                        <div className={styles.choiceContainer}>
+                          <div className={styles.logoContainer}>
+                            <Pic2
+                              src={"/assets/left.png"}
+                              width={100}
+                              height={100}
+                              alt={"choix précédent"}
+                              onClick={previousCadeau}
+                            />
+                          </div>
+                          <div className={styles.valueContainer}>
+                            <div className={styles.productDescription}>
+                              {`${data[0].metadata?.montant_carte_cadeau[cadeauIndex]},00€`}
+                            </div>
+                          </div>
+                          <div className={styles.logoContainer}>
+                            <Pic2
+                              src={"/assets/right.png"}
+                              width={100}
+                              height={100}
+                              alt={"choix suivant"}
+                              onClick={nextCadeau}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                    {data[0].metadata?.duree ? (
+                      <>
+                        <div className={styles.propriétésContainer}>
+                          <div className={styles.choiceContainer}>
+                            <div className={styles.productDescription}>
+                              DURÉE
+                            </div>
+                          </div>
+                          <div className={styles.choiceContainer}>
+                            <div className={styles.logoContainer}>
+                              <Pic2
+                                src={"/assets/left.png"}
+                                width={100}
+                                height={100}
+                                alt={"choix précédent"}
+                                onClick={previousDuree}
+                              />
+                            </div>
+                            <div className={styles.valueContainer}>
+                              <div className={styles.productDescription}>
+                                {`${data[0].metadata?.duree[dureeIndex]} mois`}
+                              </div>
+                            </div>
+                            <div className={styles.logoContainer}>
+                              <Pic2
+                                src={"/assets/right.png"}
+                                width={100}
+                                height={100}
+                                alt={"choix suivant"}
+                                onClick={nextDuree}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className={styles.propriétésContainer}>
+                          <div className={styles.choiceContainer}>
+                            <div className={styles.productDescription}>
+                              DATE
+                            </div>
+                          </div>
+                          <div className={styles.choiceContainer}>
+                            <div className={styles.inputContainer}>
+                              <textarea
+                                value={jour}
+                                onChange={(e) => {
+                                  const inputValue = e.target.value;
+                                  const filteredValue = inputValue
+                                    .slice(0, 2)
+                                    .replace(/[^a-zA-Z0-9]/g, "");
+                                  setJour(filteredValue);
+                                  if (filteredValue.length === 2) {
+                                    moisRef.current.focus();
+                                  }
+                                }}
+                                ref={jourRef}
+                                className={styles.dateInput}
+                                style={{
+                                  width: mobileScreen ? "5vw" : "1.5vw",
+                                }}
+                              />
+                              <div className={styles.slash}>/</div>
+                              <textarea
+                                value={mois}
+                                onChange={(e) => {
+                                  const inputValue = e.target.value;
+                                  const filteredValue = inputValue
+                                    .slice(0, 2)
+                                    .replace(/[^a-zA-Z0-9]/g, "");
+                                  setMois(filteredValue);
+                                  if (filteredValue.length === 2) {
+                                    annéeRef.current.focus();
+                                  }
+                                }}
+                                className={styles.dateInput}
+                                ref={moisRef}
+                                style={{
+                                  width: mobileScreen ? "5vw" : "1.5vw",
+                                }}
+                              />
 
-                    <img
-                      width={12}
-                      height={12}
-                      src={"/assets/PLUS.png"}
-                      alt={"PLUS"}
-                      onClick={addQuantity}
-                    />
+                              <div className={styles.slash}>/</div>
+
+                              <textarea
+                                value={année}
+                                onChange={(e) => {
+                                  const inputValue = e.target.value;
+                                  const filteredValue = inputValue
+                                    .slice(0, 4)
+                                    .replace(/[^a-zA-Z0-9]/g, "");
+                                  setAnnée(filteredValue);
+                                  if (filteredValue.length === 4) {
+                                    annéeRef.current.blur();
+                                  }
+                                }}
+                                className={styles.dateInput}
+                                ref={annéeRef}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      ""
+                    )}
                   </div>
-                  <div
-                    className={styles.panierText}
-                    onClick={() => {
-                      addProduct();
-                    }}
-                  >
-                    AJOUTER AU PANIER <span></span>
-                    <img
-                      width={12}
-                      height={12}
-                      src={"/assets/PLUS.png"}
-                      alt={"PLUS"}
-                      onClick={addQuantity}
-                    />
+                  <div className={styles.panierContainer}>
+                    <div className={styles.quantityContainer}>
+                      <img
+                        width={12}
+                        height={12}
+                        src={"/assets/MOINS.png"}
+                        alt={"MOINS"}
+                        onClick={removeQuantity}
+                      />
+                      <div className={styles.valueContainer}>
+                        <div
+                          className={styles.productDescription}
+                          style={{ paddingTop: "2px" }}
+                        >
+                          {quantity}
+                        </div>
+                      </div>
+
+                      <img
+                        width={12}
+                        height={12}
+                        src={"/assets/PLUS.png"}
+                        alt={"PLUS"}
+                        onClick={addQuantity}
+                      />
+                    </div>
+                    <div
+                      className={styles.panierText}
+                      onClick={() => {
+                        addProduct();
+                      }}
+                    >
+                      AJOUTER AU PANIER <span></span>
+                      <img
+                        width={12}
+                        height={12}
+                        src={"/assets/PLUS.png"}
+                        alt={"PLUS"}
+                        onClick={addQuantity}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      )}{" "}
+      )}
     </>
   );
 }
