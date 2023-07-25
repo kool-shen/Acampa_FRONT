@@ -193,9 +193,7 @@ export default function Prestations() {
           }
         }}
         onClickButton={() => {
-          {
-            handleModalButton();
-          }
+          handleModalButton();
         }}
         style={landingStyle}
       />
@@ -214,7 +212,6 @@ export default function Prestations() {
           clickCart={() => {
             setCartClicked(true);
           }}
-          display={"block"}
         />
       </div>
       <div className={styles.secondContainer}>
@@ -335,6 +332,9 @@ export default function Prestations() {
             setMailSent(undefined);
           }
         }}
+        onClickButton={() => {
+          handleModalButton();
+        }}
         style={landingStyle}
       />
       <Panier
@@ -352,7 +352,6 @@ export default function Prestations() {
           clickCart={() => {
             setCartClicked(true);
           }}
-          display={"none"}
         />
       </div>
 
