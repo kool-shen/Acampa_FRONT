@@ -222,7 +222,9 @@ function Panier(props) {
                   className={styles.productContainer}
                   style={{
                     display:
-                      mobileScreen && deliveryIsClicked ? "none" : "block",
+                      mobileScreen && deliveryIsClicked && !isConfirmed
+                        ? "none"
+                        : "block",
                   }}
                 >
                   {basketValue.map((data, i) => (
@@ -278,7 +280,8 @@ function Panier(props) {
                               {`Durée de l'abonnement : ${basketValue[i].durée} mois`}
                             </div>
                           )}
-                          {basketValue[0].dateDébut.includes(undefined) ? (
+                          {basketValue[i].dateDébut ? (
+                            //   basketValue[0].dateDébut.includes(undefined)
                             <div className={styles.tinyText}>
                               {`Date : ${basketValue[i].dateDébut}`}
                             </div>

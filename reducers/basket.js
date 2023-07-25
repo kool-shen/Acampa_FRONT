@@ -12,6 +12,9 @@ export const basketSlice = createSlice({
     addToBasket: (state, action) => {
       state.value = state.value.concat(action.payload);
     },
+    updateBasket: (state, action) => {
+      state.value = action.payload;
+    },
     removeFromBasket: (state, action) => {
       const index = action.payload;
       if (index !== -1) {
@@ -35,5 +38,6 @@ export const {
   updateProductMot,
   updateProductSignature,
   setClientData,
+  updateBasket,
 } = basketSlice.actions;
 export default basketSlice.reducer;

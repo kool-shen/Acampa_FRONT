@@ -1,0 +1,79 @@
+.mainContainer {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: opacity 0.6s ease;
+}
+
+.globalContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  /* border: 2px solid black; */
+  height: auto;
+  width: 40%;
+  gap: 2vmin;
+}
+
+.text {
+  font-size: 2.5vmin;
+  font-family: "Authentic130";
+  color: white;
+  width: auto;
+  /* border: 2px solid red; */
+  padding: 1vmin;
+  text-align: center;
+}
+
+.button {
+  border: 2px solid white;
+}
+
+.button:hover {
+  border: 2px solid #ffe93f;
+  cursor: pointer;
+}
+.crossContainer {
+  height: 7vmin;
+  align-self: flex-start;
+  padding: 1vmin;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 425px) {
+  .text {
+    font-size: 9vmin;
+  }
+  .textContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    /* border: 2px solid black; */
+    height: auto;
+    width: 70%;
+    gap: 10vmin;
+  }
+  .button:focus {
+    border: 2px solid #ffe93f;
+    cursor: pointer;
+  }
+
+  .crossContainer {
+    height: 20vmin;
+  }
+}

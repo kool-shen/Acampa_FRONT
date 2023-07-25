@@ -2,13 +2,16 @@ import React from "react";
 import styles from "../styles/Delivery.module.css";
 import { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { sendClientData } from "@/reducers/clientData";
+import clientData, { sendClientData } from "@/reducers/clientData";
+import { addToBasket, updateBasket } from "../reducers/basket";
+import { clickDelivery } from "@/reducers/delivery";
+
 import { gsap } from "gsap";
 
 export default function Delivery(props) {
   // Reducer adresse client //
-  const clientAddress = useSelector((state) => state.clientData.value);
 
+  const basketValue = useSelector((state) => state.basket.value);
   const dispatch = useDispatch();
 
   /// Choix Sud / Nord / Autres ///
@@ -19,6 +22,7 @@ export default function Delivery(props) {
 
   const handleSudCheck = () => {
     setArea("Sud");
+
     if (!sudChecked) {
       setSudChecked(true);
       if (nordChecked) setNordChecked(false);
@@ -53,6 +57,7 @@ export default function Delivery(props) {
   const [ZIPCode, setZIPCode] = useState("");
 
   const getClientData = () => {
+    /// envoyer les infos ///
     const clientData = {
       prenom,
       nom,
@@ -62,7 +67,41 @@ export default function Delivery(props) {
     };
     dispatch(sendClientData(clientData));
     handleConfirmationChange();
+    addDeliveryPrice();
   };
+
+  const deliveryPrice = area === "Sud" ? 10 : area === "Nord" ? 15 : 0;
+
+  /// créer ou remplacer un produit livraison ///
+
+  const addDeliveryPrice = () => {
+    const deliveryAsProduct = {
+      nom: "Livraison",
+      photo: "/assets/Logo-fleur.png",
+      height: 1351,
+      width: 2377,
+      quantité: 1,
+      prix: deliveryPrice,
+      mot: " ",
+    };
+
+    const indexToReplace = basketValue.findIndex(
+      (obj) => obj.nom === "Livraison"
+    );
+
+    if (indexToReplace !== -1) {
+      const updatedBasket = [...basketValue]; // Make a copy of the basketValue array
+      updatedBasket[indexToReplace] = deliveryAsProduct; // Update the copy with the new delivery information
+      dispatch(updateBasket(updatedBasket)); // Dispatch the updated copy
+    } else {
+      dispatch(addToBasket(deliveryAsProduct));
+      console.log("à ajouter");
+    }
+
+    //// fermer la livraison
+  };
+
+  /// animation s'il manque un champs ////
 
   const missingValue =
     prenom === "" || nom === "" || address === "" || ZIPCode === "";
@@ -90,10 +129,6 @@ export default function Delivery(props) {
     setToggle(!toggle);
     animation();
   };
-
-  /*useEffect(() => {
-    animation();
-  }, [toggle]);*/
 
   /// style Focus ///
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Pic from "./Pic";
 import Pic2 from "./Pic2";
 import styles from "../styles/Prestations.module.css";
@@ -6,6 +6,8 @@ import Menu from "./Menu";
 import Cart from "./Cart";
 import { useDispatch } from "react-redux";
 import { clickMessage } from "@/reducers/message";
+import emailjs from "emailjs-com";
+import LandingPage from "./LandingPage";
 
 export default function Prestations() {
   /// Contenu texte ///
@@ -119,9 +121,83 @@ export default function Prestations() {
   }, [photoIndex]);
 
   /// Envoi du mail ///
+  const form = useRef();
+
+  const [email, setEmail] = useState("");
+  const [prénom, setPrénom] = useState("");
+  const [nom, setNom] = useState("");
+  const [message, setMessage] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [mailSent, setMailSent] = useState();
+
+  const landingStyle =
+    mailSent !== undefined ? { opacity: 1 } : { opacity: 0, zIndex: -9 };
+
+  const landingText =
+    mailSent && mailSent !== undefined
+      ? "Votre message est bien arrivé dans ma boite mail, je vous répond dès que possible!"
+      : !mailSent && mailSent !== undefined
+      ? "OOOUUUUPS on dirait que ça n'a pas fonctionné. Si le problème persiste, appelez-moi directement !"
+      : "";
+
+  const buttonText =
+    mailSent && mailSent !== undefined ? "Continuer sur le site" : "Réessayer";
+
+  const handleSubmit = (e) => {
+    console.log("yo");
+    e.preventDefault();
+
+    // // Configuration pour EmailJS
+
+    emailjs
+      .sendForm(
+        "service_t69endk",
+        "template_qy2txxn",
+        form.current,
+        "Ho4XwMXgDTIHsuP8_"
+      )
+      .then(
+        (result) => {
+          console.log("E-mail envoyé avec succès !", result);
+          console.log(result.text);
+          setMailSent(true);
+        },
+        (error) => {
+          console.log("Erreur lors de l'envoi de l'e-mail :", error);
+          setMailSent(false);
+        }
+      );
+
+    // Réinitialiser le formulaire après l'envoi
+    setEmail("");
+    setPrénom("");
+    setNom("");
+    setTelephone("");
+    setMessage("");
+  };
+
+  const handleModalButton = () => {
+    mailSent ? setMailSent(undefined) : handleSubmit();
+  };
 
   return mobileScreen ? (
+    /////VERSION MOBILE /////
     <div className={styles.mainContainer}>
+      <LandingPage
+        message={landingText}
+        button={buttonText}
+        onClickCross={() => {
+          {
+            setMailSent(undefined);
+          }
+        }}
+        onClickButton={() => {
+          {
+            handleModalButton();
+          }
+        }}
+        style={landingStyle}
+      />
       <Cart
         style={displayCart}
         isClicked={messageClicked}
@@ -153,7 +229,7 @@ export default function Prestations() {
               </div>
             </div>
 
-            <form className={styles.form}>
+            <form className={styles.form} ref={form} onSubmit={handleSubmit}>
               <h3 className={styles.text}>
                 Pour me faire part de vos envies !
               </h3>
@@ -162,24 +238,38 @@ export default function Prestations() {
                 className={styles.normalInput}
                 placeholder="PRÉNOM"
                 name="user_firstName"
+                value={prénom}
+                onChange={(e) => setPrénom(e.target.value)}
+                required
               />
+
               <input
                 type="text"
                 className={styles.normalInput}
                 placeholder="NOM"
+                value={nom}
                 name="user_lastName"
+                onChange={(e) => setNom(e.target.value)}
+                required
               />
+
               <input
                 type="text"
                 className={styles.normalInput}
                 placeholder="MAIL"
                 name="user_email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
               <input
                 type="text"
                 className={styles.normalInput}
                 placeholder="TÉLÉPHONE"
                 name="user_phone"
+                value={telephone}
+                onChange={(e) => setTelephone(e.target.value)}
+                required
               />
 
               <textarea
@@ -187,15 +277,18 @@ export default function Prestations() {
                 placeholder="VOTRE MESSAGE"
                 name="message"
                 rows={10}
+                onChange={(e) => setMessage(e.target.value)}
+                value={message}
+                required
               />
+              <div className={styles.sendContainer}>
+                <input
+                  type="submit"
+                  value="ENVOYER"
+                  className={styles.sendButton}
+                />
+              </div>
             </form>
-            <div className={styles.sendContainer}>
-              <input
-                type="submit"
-                value="ENVOYER"
-                className={styles.sendButton}
-              />
-            </div>
           </div>
         )}
 
@@ -231,7 +324,18 @@ export default function Prestations() {
       </div>
     </div>
   ) : (
+    /////VERSION WEB /////
     <div className={styles.mainContainer}>
+      <LandingPage
+        message={landingText}
+        button={buttonText}
+        onClickCross={() => {
+          {
+            setMailSent(undefined);
+          }
+        }}
+        style={landingStyle}
+      />
       <Cart
         style={displayCart}
         isClicked={messageClicked}
@@ -263,31 +367,45 @@ export default function Prestations() {
             </div>
           </div>
 
-          <form className={styles.form}>
+          <form className={styles.form} ref={form} onSubmit={handleSubmit}>
             <h3 className={styles.text}>Pour me faire part de vos envies !</h3>
             <input
               type="text"
               className={styles.normalInput}
               placeholder="PRÉNOM"
               name="user_firstName"
+              value={prénom}
+              onChange={(e) => setPrénom(e.target.value)}
+              required
             />
+
             <input
               type="text"
               className={styles.normalInput}
               placeholder="NOM"
+              value={nom}
               name="user_lastName"
+              onChange={(e) => setNom(e.target.value)}
+              required
             />
+
             <input
               type="text"
               className={styles.normalInput}
               placeholder="MAIL"
               name="user_email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
             <input
               type="text"
               className={styles.normalInput}
               placeholder="TÉLÉPHONE"
               name="user_phone"
+              value={telephone}
+              onChange={(e) => setTelephone(e.target.value)}
+              required
             />
 
             <textarea
@@ -295,15 +413,18 @@ export default function Prestations() {
               placeholder="VOTRE MESSAGE"
               name="message"
               rows={10}
+              onChange={(e) => setMessage(e.target.value)}
+              value={message}
+              required
             />
+            <div className={styles.sendContainer}>
+              <input
+                type="submit"
+                value="ENVOYER"
+                className={styles.sendButton}
+              />
+            </div>
           </form>
-          <div className={styles.sendContainer}>
-            <input
-              type="submit"
-              value="ENVOYER"
-              className={styles.sendButton}
-            />
-          </div>
         </div>
       )}
 

@@ -259,6 +259,9 @@ input:checked + .slider:before {
     font-size: 5vmin;
     transform: translateX(0);
   }
+  .totalText {
+    font-size: 5vmin;
+  }
 
   .confirmText {
     font-size: 3.5vmin;
