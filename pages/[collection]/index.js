@@ -8,6 +8,7 @@ import Menu from "@/components/Menu";
 import Pic2 from "@/components/Pic2";
 import styles from "@/styles/Shop.module.css";
 import Head from "next/head";
+import Panier from "@/components/Panier";
 
 export default function index() {
   const router = useRouter();
@@ -101,7 +102,7 @@ export default function index() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <div className={styles.mainContainer}>
-        <Cart
+        <Panier
           style={displayCart}
           isClicked={messageClicked}
           onClick={() => {

@@ -1,17 +1,14 @@
 import React from "react";
 import styles from "../styles/Home.module.css";
-import friseStylesfrom from "../styles/Frise2.module.css";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import Pic from "./Pic";
 import Menu from "./Menu";
-import Cart from "./Cart";
 import Link from "next/link";
-import Loader from "./Loader";
 import { gsap } from "gsap";
 import { clickMessage } from "@/reducers/message";
-
 import { useRouter } from "next/router";
+import Panier from "./Panier";
 
 export default function Home() {
   /// ANIMATIONS ////
@@ -839,7 +836,7 @@ export default function Home() {
     >
       <div className={styles.presentationContainer}>
         <div className={styles.textContainer}>
-          <Cart
+          <Panier
             style={displayCart}
             isClicked={messageClicked}
             onClick={() => {

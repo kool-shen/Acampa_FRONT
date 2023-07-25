@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { clickMessage } from "@/reducers/message";
 import { useState, useEffect } from "react";
 import Pic2 from "@/components/Pic2";
+import Panier from "@/components/Panier";
 
 export default function acampa() {
   // FETCH //
@@ -49,7 +50,7 @@ export default function acampa() {
 
   return (
     <div className={styles.mainContainer}>
-      <Cart
+      <Panier
         style={displayCart}
         isClicked={messageClicked}
         onClick={() => {

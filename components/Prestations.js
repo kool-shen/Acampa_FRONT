@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { clickMessage } from "@/reducers/message";
 import emailjs from "emailjs-com";
 import LandingPage from "./LandingPage";
+import Panier from "./Panier";
 
 export default function Prestations() {
   /// Contenu texte ///
@@ -198,7 +199,7 @@ export default function Prestations() {
         }}
         style={landingStyle}
       />
-      <Cart
+      <Panier
         style={displayCart}
         isClicked={messageClicked}
         onClick={() => {
@@ -336,7 +337,7 @@ export default function Prestations() {
         }}
         style={landingStyle}
       />
-      <Cart
+      <Panier
         style={displayCart}
         isClicked={messageClicked}
         onClick={() => {

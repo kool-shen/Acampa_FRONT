@@ -5,6 +5,7 @@ import Menu from "@/components/Menu";
 import { useDispatch } from "react-redux";
 import { clickMessage } from "@/reducers/message";
 import { useState, useEffect } from "react";
+import Panier from "@/components/Panier";
 
 export default function contact({ content }) {
   // Config Panier
@@ -24,7 +25,7 @@ export default function contact({ content }) {
 
   return (
     <div className={styles.mainContainer}>
-      <Cart
+      <Panier
         style={displayCart}
         isClicked={messageClicked}
         onClick={() => {

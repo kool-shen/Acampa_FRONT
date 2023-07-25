@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Pic from "@/components/Pic";
 import Pic2 from "@/components/Pic2";
+import Panier from "@/components/Panier";
 
 export default function actu() {
   /// Charger le content ///
@@ -82,7 +83,7 @@ export default function actu() {
 
   return (
     <div className={styles.mainContainer}>
-      <Cart
+      <Panier
         style={displayCart}
         isClicked={messageClicked}
         onClick={() => {

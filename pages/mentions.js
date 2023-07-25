@@ -8,6 +8,7 @@ import Pic from "@/components/Pic";
 import { useDispatch } from "react-redux";
 import { clickMessage } from "@/reducers/message";
 import { useState, useEffect } from "react";
+import Panier from "@/components/Panier";
 
 export default function mentions() {
   // FETCH //
@@ -76,7 +77,7 @@ export default function mentions() {
 
   return (
     <div className={styles.mainContainer}>
-      <Cart
+      <Panier
         style={displayCart}
         isClicked={messageClicked}
         onClick={() => {
