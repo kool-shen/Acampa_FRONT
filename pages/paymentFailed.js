@@ -27,7 +27,8 @@ export default function paymentFailed() {
         </div>
         <div className={styles.textContainer}>
           <div className={styles.text} style={{ color: "black" }}>
-            Désolé, votre paiement n'a pas pu aboutir...
+            Désolé, votre paiement n'a pas pu aboutir... Vous n'avez pas été
+            débité.
           </div>
           <div
             className={styles.button}

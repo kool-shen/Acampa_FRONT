@@ -47,3 +47,25 @@
 .text:hover {
   color: black;
 }
+
+@media screen and (max-width: 425px) {
+  .text {
+    font-size: 5vmin;
+  }
+  .textContainer {
+    height: auto;
+    width: 70%;
+    gap: 10vmin;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .text {
+    font-size: 7vmin;
+  }
+  .textContainer {
+    height: auto;
+    width: 80%;
+    gap: 10vmin;
+  }
+}

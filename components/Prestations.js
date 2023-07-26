@@ -181,6 +181,9 @@ export default function Prestations() {
     mailSent ? setMailSent(undefined) : handleSubmit();
   };
 
+  const [required1, setRequired1] = useState(false);
+  const [required2, setRequired2] = useState(false);
+
   return mobileScreen ? (
     /////VERSION MOBILE /////
     <div className={styles.mainContainer}>
@@ -238,7 +241,6 @@ export default function Prestations() {
                 name="user_firstName"
                 value={prénom}
                 onChange={(e) => setPrénom(e.target.value)}
-                required
               />
 
               <input
@@ -248,7 +250,6 @@ export default function Prestations() {
                 value={nom}
                 name="user_lastName"
                 onChange={(e) => setNom(e.target.value)}
-                required
               />
 
               <input
@@ -258,7 +259,6 @@ export default function Prestations() {
                 name="user_email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                required
               />
               <input
                 type="text"
@@ -267,7 +267,6 @@ export default function Prestations() {
                 name="user_phone"
                 value={telephone}
                 onChange={(e) => setTelephone(e.target.value)}
-                required
               />
 
               <textarea
@@ -277,8 +276,8 @@ export default function Prestations() {
                 rows={10}
                 onChange={(e) => setMessage(e.target.value)}
                 value={message}
-                required
               />
+
               <div className={styles.sendContainer}>
                 <input
                   type="submit"
@@ -367,7 +366,7 @@ export default function Prestations() {
             </div>
           </div>
 
-          <form className={styles.form} ref={form} onSubmit={handleSubmit}>
+          <form className={styles.form} ref={form}>
             <h3 className={styles.text}>Pour me faire part de vos envies !</h3>
             <div className={styles.inputContainer}>
               <input
@@ -377,7 +376,9 @@ export default function Prestations() {
                 name="user_firstName"
                 value={prénom}
                 onChange={(e) => setPrénom(e.target.value)}
-                required
+                onBlur={() => {
+                  console.log("it's blurred");
+                }}
               />
 
               <input
@@ -387,18 +388,32 @@ export default function Prestations() {
                 value={nom}
                 name="user_lastName"
                 onChange={(e) => setNom(e.target.value)}
-                required
               />
-
-              <input
-                type="text"
-                className={styles.normalInput}
-                placeholder="MAIL"
-                name="user_email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
+              <div className={styles.singleInputContainer}>
+                <input
+                  type="text"
+                  className={styles.normalInput}
+                  placeholder="MAIL"
+                  name="user_email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  onFocus={() => setRequired1(false)}
+                  onBlur={() => setRequired1(true)}
+                />
+                <div
+                  className={styles.required}
+                  style={{ display: required1 && !email ? "flex" : "none" }}
+                >
+                  <div
+                    className={styles.text}
+                    style={{
+                      color: "white",
+                    }}
+                  >
+                    Champ requis !
+                  </div>
+                </div>
+              </div>
               <input
                 type="text"
                 className={styles.normalInput}
@@ -406,25 +421,41 @@ export default function Prestations() {
                 name="user_phone"
                 value={telephone}
                 onChange={(e) => setTelephone(e.target.value)}
-                required
               />
 
-              <textarea
-                className={styles.messageInput}
-                placeholder="VOTRE MESSAGE"
-                name="message"
-                rows={8}
-                onChange={(e) => setMessage(e.target.value)}
-                value={message}
-                required
-              />
+              <div className={styles.singleInputContainer}>
+                <textarea
+                  className={styles.messageInput}
+                  placeholder="VOTRE MESSAGE"
+                  name="message"
+                  rows={8}
+                  onChange={(e) => setMessage(e.target.value)}
+                  value={message}
+                  onFocus={() => setRequired2(false)}
+                  onBlur={() => setRequired2(true)}
+                />
+                <div
+                  className={styles.required}
+                  style={{ display: required2 && !message ? "flex" : "none" }}
+                >
+                  <div
+                    className={styles.text}
+                    style={{
+                      color: "white",
+                    }}
+                  >
+                    Champ requis !
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className={styles.sendContainer}>
-              <input
-                type="submit"
-                value="ENVOYER"
-                className={styles.sendButton}
-              />
+            <div
+              className={styles.sendContainer}
+              onClick={() => {
+                !required1 && !required2 && handleSubmit;
+              }}
+            >
+              <div className={styles.sendButton}>ENVOYER</div>
             </div>
           </form>
         </div>
