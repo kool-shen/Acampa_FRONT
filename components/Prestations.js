@@ -234,56 +234,58 @@ export default function Prestations() {
               <h3 className={styles.text}>
                 Pour me faire part de vos envies !
               </h3>
-              <input
-                type="text"
-                className={styles.normalInput}
-                placeholder="PRÉNOM"
-                name="user_firstName"
-                value={prénom}
-                onChange={(e) => setPrénom(e.target.value)}
-              />
-
-              <input
-                type="text"
-                className={styles.normalInput}
-                placeholder="NOM"
-                value={nom}
-                name="user_lastName"
-                onChange={(e) => setNom(e.target.value)}
-              />
-
-              <input
-                type="text"
-                className={styles.normalInput}
-                placeholder="MAIL"
-                name="user_email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input
-                type="text"
-                className={styles.normalInput}
-                placeholder="TÉLÉPHONE"
-                name="user_phone"
-                value={telephone}
-                onChange={(e) => setTelephone(e.target.value)}
-              />
-
-              <textarea
-                className={styles.messageInput}
-                placeholder="VOTRE MESSAGE"
-                name="message"
-                rows={10}
-                onChange={(e) => setMessage(e.target.value)}
-                value={message}
-              />
-
-              <div className={styles.sendContainer}>
+              <div className={styles.inputContainer}>
                 <input
-                  type="submit"
-                  value="ENVOYER"
-                  className={styles.sendButton}
+                  type="text"
+                  className={styles.normalInput}
+                  placeholder="PRÉNOM"
+                  name="user_firstName"
+                  value={prénom}
+                  onChange={(e) => setPrénom(e.target.value)}
                 />
+
+                <input
+                  type="text"
+                  className={styles.normalInput}
+                  placeholder="NOM"
+                  value={nom}
+                  name="user_lastName"
+                  onChange={(e) => setNom(e.target.value)}
+                />
+
+                <input
+                  type="text"
+                  className={styles.normalInput}
+                  placeholder="MAIL"
+                  name="user_email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                  type="text"
+                  className={styles.normalInput}
+                  placeholder="TÉLÉPHONE"
+                  name="user_phone"
+                  value={telephone}
+                  onChange={(e) => setTelephone(e.target.value)}
+                />
+
+                <textarea
+                  className={styles.messageInput}
+                  placeholder="VOTRE MESSAGE"
+                  name="message"
+                  rows={10}
+                  onChange={(e) => setMessage(e.target.value)}
+                  value={message}
+                />
+
+                <div className={styles.sendContainer}>
+                  <input
+                    type="submit"
+                    value="ENVOYER"
+                    className={styles.sendButton}
+                  />
+                </div>
               </div>
             </form>
           </div>
