@@ -21,11 +21,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  position: relative;
   /* border: 2px solid black; */
   height: auto;
   width: 40%;
   gap: 2vmin;
+  transform: translateY(-7vmin);
 }
 
 .text {

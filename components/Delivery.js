@@ -77,7 +77,8 @@ export default function Delivery(props) {
   const addDeliveryPrice = () => {
     const deliveryAsProduct = {
       nom: "Livraison",
-      photo: "/assets/Logo-fleur.png",
+      photo:
+        "https://res.cloudinary.com/djnnxlvp3/image/upload/v1684956788/%C3%80%20Propos/Mentions%20L%C3%A9gales/Bon_cadeau_nhqzz9.jpg",
       height: 1351,
       width: 2377,
       quantité: 1,

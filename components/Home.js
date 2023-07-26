@@ -110,9 +110,7 @@ export default function Home() {
   const scrollContainerRef = useRef(null);
 
   function handleScroll(e) {
-    e.preventDefault();
-
-    const race = 35; // How many pixels to scroll
+    const race = 15; // How many pixels to scroll
     const container = scrollContainerRef.current;
 
     if (e.deltaY > 0) {
@@ -154,7 +152,9 @@ export default function Home() {
     }
   };
 
-  //////
+  ////// Animation scroll au mount ///
+
+  const [animationPlayed, setAnimationPlayed] = useState(false);
 
   const isWeb = !mobileScreen && mobileScreen !== undefined;
   const isMobile = mobileScreen && mobileScreen !== undefined;
@@ -168,6 +168,9 @@ export default function Home() {
         yoyo: true,
         delay: 1,
         duration: 0.6,
+        onComplete: () => {
+          setAnimationPlayed(true);
+        },
       });
   };
 
@@ -181,6 +184,9 @@ export default function Home() {
           yoyo: true,
           delay: 1,
           duration: 0.6,
+          onComplete: () => {
+            setAnimationPlayed(true);
+          },
         })
       : "";
   };
@@ -348,6 +354,7 @@ export default function Home() {
 
   const mainStyle = {
     display: mobileScreen !== undefined ? "flex" : "none",
+    PointerEvent: animationPlayed ? "auto" : "none",
   };
 
   /// USEEFFECT LOAD API / CACHE ////
@@ -832,6 +839,7 @@ export default function Home() {
       onClick={() => {
         isClicked && crossClick();
       }}
+      style={mainStyle}
       ref={scrollRef}
     >
       <div className={styles.presentationContainer}>

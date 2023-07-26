@@ -6,8 +6,9 @@ import { useDispatch } from "react-redux";
 import { clickMessage } from "@/reducers/message";
 import { useState, useEffect } from "react";
 import Panier from "@/components/Panier";
+import Head from "next/head";
 
-export default function contact({ content }) {
+export default function contact() {
   // Config Panier
 
   const [cartClicked, setCartClicked] = useState(false);
@@ -23,72 +24,85 @@ export default function contact({ content }) {
     dispatch(clickMessage(false));
   };
 
-  return (
-    <div className={styles.mainContainer}>
-      <Panier
-        style={displayCart}
-        isClicked={messageClicked}
-        onClick={() => {
-          setCartClicked(false);
-          setMessageClicked(false);
-          messageIsFalse();
-        }}
-      />
-      <div className={styles.textContainer}>
-        <Menu
-          clickCart={() => {
-            setCartClicked(true);
-          }}
-          display={"block"}
-          about={true}
-        />
-      </div>
-      {content && (
-        <>
-          <div className={styles.middleContainer}>
-            <div
-              className={styles.text}
-              onClick={() => {
-                console.log(localStorage);
-              }}
-            >
-              {content[0].ligne1}
-            </div>
-            <div className={styles.text} style={{ whiteSpace: "pre-line" }}>
-              {content[0].context.alt}
-            </div>
-          </div>
-        </>
-      )}
-    </div>
-  );
-}
+  ///
 
-export async function getStaticProps() {
-  try {
-    const response = await fetch(
-      "https://acampa-back.vercel.app/cloudinary/contact"
-    );
-    const data = await response.json();
+  const [content, setContent] = useState();
 
-    let content = null;
-    if (data.length > 0) {
-      content = data;
+  const loadContent = async () => {
+    try {
+      const response = await fetch(
+        // "http://localhost:3000/cloudinary/contact"
+        "https://acampa-back.vercel.app/cloudinary/contact"
+      );
+      const indexlist = await response.json();
+
+      if (indexlist.length > 0) {
+        setContent(indexlist);
+        // Cache the API data
+        localStorage.setItem("contactData", JSON.stringify(indexlist));
+        console.log("backend");
+      }
+    } catch (error) {
+      console.error(error);
     }
+  };
 
-    return {
-      props: {
-        content,
-      },
-      revalidate: 3600,
-    };
-  } catch (error) {
-    console.error(error);
+  useEffect(() => {
+    const contactData = localStorage.getItem("contactData");
 
-    return {
-      props: {
-        content: null,
-      },
-    };
-  }
+    if (contactData !== null) {
+      setContent(JSON.parse(contactData));
+      console.log("cache");
+    } else {
+      loadContent();
+    }
+  }, []);
+
+  return (
+    <>
+      <Head>
+        <title> {`Contacts`}</title>
+        <link rel="icon" href="/assets/Logo-icon.png" />
+        <meta name="Contacts" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
+      <div className={styles.mainContainer}>
+        <Panier
+          style={displayCart}
+          isClicked={messageClicked}
+          onClick={() => {
+            setCartClicked(false);
+            setMessageClicked(false);
+            messageIsFalse();
+          }}
+        />
+        <div className={styles.textContainer}>
+          <Menu
+            clickCart={() => {
+              setCartClicked(true);
+            }}
+            display={"block"}
+            about={true}
+          />
+        </div>
+        {content && (
+          <>
+            <div className={styles.middleContainer}>
+              <div
+                className={styles.text}
+                onClick={() => {
+                  console.log(localStorage);
+                }}
+              >
+                {content[0].ligne1}
+              </div>
+              <div className={styles.text} style={{ whiteSpace: "pre-line" }}>
+                {content[0].context.alt}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </>
+  );
 }

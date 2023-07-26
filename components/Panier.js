@@ -63,7 +63,7 @@ function Panier(props) {
     const stripe = await stripePromise;
 
     const response = await fetch(
-      "http://localhost:3000/stripe//create-checkout-session",
+      "https://acampa-back.vercel.app/stripe/create-checkout-session",
       {
         method: "POST",
         headers: {
@@ -430,6 +430,7 @@ function Panier(props) {
                       console.log(basketValue);
                       checkout();
                     }}
+                    style={{ cursor: "pointer" }}
                   >
                     Passer au paiement
                   </div>

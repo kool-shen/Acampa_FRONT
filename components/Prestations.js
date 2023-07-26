@@ -369,54 +369,56 @@ export default function Prestations() {
 
           <form className={styles.form} ref={form} onSubmit={handleSubmit}>
             <h3 className={styles.text}>Pour me faire part de vos envies !</h3>
-            <input
-              type="text"
-              className={styles.normalInput}
-              placeholder="PRÉNOM"
-              name="user_firstName"
-              value={prénom}
-              onChange={(e) => setPrénom(e.target.value)}
-              required
-            />
+            <div className={styles.inputContainer}>
+              <input
+                type="text"
+                className={styles.normalInput}
+                placeholder="PRÉNOM"
+                name="user_firstName"
+                value={prénom}
+                onChange={(e) => setPrénom(e.target.value)}
+                required
+              />
 
-            <input
-              type="text"
-              className={styles.normalInput}
-              placeholder="NOM"
-              value={nom}
-              name="user_lastName"
-              onChange={(e) => setNom(e.target.value)}
-              required
-            />
+              <input
+                type="text"
+                className={styles.normalInput}
+                placeholder="NOM"
+                value={nom}
+                name="user_lastName"
+                onChange={(e) => setNom(e.target.value)}
+                required
+              />
 
-            <input
-              type="text"
-              className={styles.normalInput}
-              placeholder="MAIL"
-              name="user_email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              className={styles.normalInput}
-              placeholder="TÉLÉPHONE"
-              name="user_phone"
-              value={telephone}
-              onChange={(e) => setTelephone(e.target.value)}
-              required
-            />
+              <input
+                type="text"
+                className={styles.normalInput}
+                placeholder="MAIL"
+                name="user_email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <input
+                type="text"
+                className={styles.normalInput}
+                placeholder="TÉLÉPHONE"
+                name="user_phone"
+                value={telephone}
+                onChange={(e) => setTelephone(e.target.value)}
+                required
+              />
 
-            <textarea
-              className={styles.messageInput}
-              placeholder="VOTRE MESSAGE"
-              name="message"
-              rows={10}
-              onChange={(e) => setMessage(e.target.value)}
-              value={message}
-              required
-            />
+              <textarea
+                className={styles.messageInput}
+                placeholder="VOTRE MESSAGE"
+                name="message"
+                rows={8}
+                onChange={(e) => setMessage(e.target.value)}
+                value={message}
+                required
+              />
+            </div>
             <div className={styles.sendContainer}>
               <input
                 type="submit"

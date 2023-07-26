@@ -5,7 +5,7 @@ function prestations() {
   return (
     <>
       <Head>
-        <title>Acampa - nos prestations</title>
+        <title>Prestations</title>
         <meta name="description" content="IE=edge" />
         <link rel="icon" href="/assets/Logo-icon.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

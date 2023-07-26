@@ -96,9 +96,9 @@ export default function index() {
   return (
     <>
       <Head>
-        <title> {`Acampa - ${collection}`}</title>
+        <title> {`${collection}`}</title>
         <link rel="icon" href="/assets/Logo-icon.png" />
-        <meta name="yo" content="IE=edge" />
+        <meta name={`Acampa - ${collection}`} content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <div className={styles.mainContainer}>

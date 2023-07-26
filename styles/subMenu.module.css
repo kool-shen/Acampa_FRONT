@@ -85,7 +85,7 @@
 
 .shopSubCategory {
   font-family: "Authentic60";
-  width: 100%;
+  width: auto;
   color: black;
   cursor: pointer;
   display: inline;

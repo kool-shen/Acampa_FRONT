@@ -1,4 +1,4 @@
-import React from "react";
+import React, { cache } from "react";
 import { useState, useEffect, useRef } from "react";
 import menuStyles from "@/styles/subMenu.module.css";
 import { useSelector } from "react-redux";
@@ -91,12 +91,16 @@ export default function Menu(props) {
   const loadShopSubCategories = async () => {
     try {
       const response = await fetch(
+        // "http://localhost:3000/cloudinary/shopSubCategories"
         "https://acampa-back.vercel.app/cloudinary/shopSubCategories"
       );
       const indexlist = await response.json();
 
       if (indexlist.length > 0) {
         setShopSubcategories(indexlist);
+        // Cache the API data
+        localStorage.setItem("menuData", JSON.stringify(indexlist));
+        console.log("backend");
       }
     } catch (error) {
       console.error(error);
@@ -135,7 +139,14 @@ export default function Menu(props) {
   ///
 
   useEffect(() => {
-    loadShopSubCategories();
+    const menuData = localStorage.getItem("menuData");
+
+    if (menuData !== null) {
+      setShopSubcategories(JSON.parse(menuData));
+      console.log("cache");
+    } else {
+      loadShopSubCategories();
+    }
 
     const handleResize = () => {
       if (window.innerWidth <= 425) {
@@ -162,8 +173,6 @@ export default function Menu(props) {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-
-    console.log(hideMenu, "yes");
   }, []);
   /// Virer le style du link ///
 

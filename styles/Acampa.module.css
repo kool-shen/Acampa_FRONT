@@ -2,13 +2,14 @@
   width: 100vw;
   display: flex;
   height: 100vh;
+  justify-content: space-between;
   position: relative;
   overflow: hidden;
 }
 
 .textContainer {
   height: 100vh;
-  min-width: 18vw;
+  width: 18vw;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -16,7 +17,7 @@
 
 .middleContainer {
   max-height: 80vh;
-  width: 27vw;
+  width: 33vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -27,7 +28,8 @@
 .rightContainer {
   display: flex;
   justify-content: flex-end;
-  min-width: 55vw;
+
+  width: 50vw;
 }
 
 .photoAreaContainer {
@@ -40,6 +42,8 @@
   font-size: 1.9vmin;
   font-family: "Authentic130";
   color: black;
+
+  width: 90%;
 }
 
 /* Mobile L*/

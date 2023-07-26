@@ -325,7 +325,7 @@ function productPage() {
   return (
     <>
       <Head>
-        <title> {`Acampa - ${product}`}</title>
+        <title> {`${product}`}</title>
         <link rel="icon" href="/assets/Logo-icon.png" />
         <meta name="yo" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

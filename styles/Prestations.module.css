@@ -23,12 +23,13 @@
 }
 
 .middleContainer {
-  max-height: 100vh;
+  height: 100vh;
+
   width: 25vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 1vh;
+  padding-top: 1vmin;
 }
 
 .photoAreaContainer {
@@ -40,9 +41,10 @@
 .descriptionContainer {
   display: flex;
   flex-direction: column;
-  justify-content: center;
 
-  gap: 4vmin;
+  height: 46%;
+
+  gap: 2vmin;
 }
 
 .inputContainer {
@@ -53,7 +55,7 @@
 }
 
 .text {
-  font-size: 1.7vmin;
+  font-size: 1.9vmin;
   font-family: "Authentic130";
   color: black;
   height: auto;
@@ -61,13 +63,13 @@
 
 .text2 {
   padding-left: 10%;
-  font-size: 1.7vmin;
+  font-size: 1.9vmin;
   font-family: "Authentic130";
   color: black;
 }
 
 .text {
-  font-size: 1.7vmin;
+  font-size: 1.9vmin;
   font-family: "Authentic130";
   color: black;
 }
@@ -119,7 +121,12 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 3vmin;
+}
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2vmin;
 }
 
 .normalInput {
@@ -175,7 +182,7 @@
   border: none;
 
   cursor: pointer;
-  font-size: 1.7vmin;
+  font-size: 1.9vmin;
   font-family: "Authentic130";
 
   text-decoration: none;
@@ -183,7 +190,7 @@
 
 .indexPhoto {
   padding: 1vmin;
-  font-size: 1.7vmin;
+  font-size: 1.9vmin;
   font-family: "Authentic130";
   color: black;
 }

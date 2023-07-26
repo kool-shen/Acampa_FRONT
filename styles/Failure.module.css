@@ -1,0 +1,49 @@
+.mainContainer {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.textContainer {
+  height: auto;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3vmin;
+}
+
+.logoContainer {
+  position: absolute;
+  height: 100vh;
+  z-index: -1;
+  transform: rotate(180deg);
+}
+
+.button {
+  background-color: black;
+}
+
+.button:hover {
+  border: 1px solid black;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.text {
+  font-size: 2.5vmin;
+  font-family: "Authentic130";
+  color: white;
+  width: auto;
+  /* border: 2px solid red; */
+  padding: 1vmin;
+  text-align: center;
+}
+
+.text:hover {
+  color: black;
+}
