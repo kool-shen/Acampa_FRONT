@@ -29,8 +29,17 @@ export default function acampa() {
     }
   };
 
+  //// Calcul dela taille de l'écran ///
+
+  const [mobileScreen, setMobileScreen] = useState();
+
+  const calculateScreen = () => {
+    window.innerWidth <= 425 ? setMobileScreen(true) : setMobileScreen(false);
+  };
+
   useEffect(() => {
     loadContent();
+    calculateScreen();
   }, []);
 
   /// Config Panier ///
@@ -80,7 +89,12 @@ export default function acampa() {
         {content && (
           <>
             <div className={styles.middleContainer}>
-              <div className={styles.text}>{content[0].ligne1}</div>
+              <div className={styles.titleContainer}>
+                <div className={styles.text}>{content[0].ligne1}</div>
+                {mobileScreen && (
+                  <div className={styles.productDescription}>-</div>
+                )}
+              </div>
               <div className={styles.text} style={{ whiteSpace: "pre-line" }}>
                 {content[0].context.alt}
               </div>

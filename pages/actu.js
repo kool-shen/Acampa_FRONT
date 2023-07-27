@@ -153,8 +153,12 @@ export default function actu() {
                   rel="noopener noreferrer"
                 >
                   <div className={styles.productInfoContainer}>
-                    <div className={styles.text}>{products[i].ligne1}</div>
-                    <div className={styles.text}>{products[i].ligne2}</div>
+                    <div className={styles.textProduct}>
+                      {products[i].ligne1}
+                    </div>
+                    <div className={styles.textProduct}>
+                      {products[i].ligne2}
+                    </div>
                   </div>
                   <div className={styles.picContainer}>
                     <Pic

@@ -364,20 +364,26 @@ function productPage() {
               </div>
               <div className={styles.focusContainer}>
                 <div className={styles.productFocusContainer}>
-                  <div className={styles.textProductContainer}>
-                    {data[0].metadata?.nom_du_produit && (
-                      <div className={styles.productDescription}>
+                  {data[0].metadata?.nom_du_produit && (
+                    <>
+                      <div className={styles.productTitle}>
                         {data[0].metadata?.nom_du_produit.toUpperCase()}
+                        {mobileScreen && (
+                          <div className={styles.productDescription}>_</div>
+                        )}
                       </div>
-                    )}
-
+                    </>
+                  )}
+                  <div className={styles.textProductContainer}>
                     <div
                       className={styles.productDescription}
                       style={{ whiteSpace: "pre-line" }}
                     >
                       {data[0].context?.alt}
                     </div>
-                    <div className={styles.productDescription}>_</div>
+                    {!mobileScreen && (
+                      <div className={styles.productDescription}>_</div>
+                    )}
                   </div>
                   <div className={styles.numbersProductContainer}>
                     {!data[0].metadata.tailles &&

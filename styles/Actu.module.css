@@ -44,10 +44,20 @@
   font-size: 1.9vmin;
   font-family: "Authentic130";
   color: black;
-  text-align: center;
 }
 .text2 {
   padding-left: 10%;
+  font-size: 1.9vmin;
+  font-family: "Authentic130";
+  color: black;
+}
+.textProduct {
+  font-size: 1.9vmin;
+  font-family: "Authentic130";
+  color: black;
+  text-align: center;
+}
+.descriptionText {
   font-size: 1.9vmin;
   font-family: "Authentic130";
   color: black;
@@ -97,6 +107,9 @@
     justify-content: flex-start;
   }
   .text {
+    font-size: 2.5vmin;
+  }
+  .textProduct {
     font-size: 2.5vmin;
   }
   .text2 {

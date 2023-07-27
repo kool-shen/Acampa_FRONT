@@ -85,13 +85,20 @@
   font-family: "Authentic130";
   color: black;
 }
-
 .productTitle {
+  font-size: 1.9vmin;
+  font-family: "Authentic130";
+  color: black;
+  display: flex;
+  align-items: center;
+}
+
+/* .productTitle {
   font-size: 1.7vmin;
   font-family: "Authentic130";
   color: black;
   padding-bottom: 3vh;
-}
+} */
 
 .textProductContainer {
   display: flex;
@@ -236,6 +243,7 @@
     height: auto;
   }
   .focusContainer {
+    padding-top: 2vmin;
     flex-direction: column;
     justify-content: space-between;
     gap: 2vmin;
@@ -261,6 +269,16 @@
   .productDescription {
     font-size: 4vmin;
     overflow: scroll;
+    /* order: 3; */
+  }
+  .productTitle {
+    font-size: 4vmin;
+    overflow: scroll;
+    display: block;
+    /* order: 3; */
+  }
+  .textProductContainer {
+    order: 4;
   }
   .logoContainer {
     height: 5.5vmin;
