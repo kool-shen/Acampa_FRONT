@@ -429,6 +429,18 @@ export default function Home() {
     // loadedImagesCount,
   ]);
 
+  const photoRefs = useRef([]);
+
+  const centerPhotoOnClick = (e) => {
+    const ref = photoRefs.current[e];
+    if (ref) {
+      ref.scrollIntoView({
+        behavior: "smooth", // Défilement fluide
+        block: "center", // Centre l'élément dans le viewport
+      });
+    }
+  };
+
   return !mobileScreen ? (
     <div
       className={styles.mainContainer}
@@ -644,6 +656,7 @@ export default function Home() {
                           alt={data.collection}
                           onClick={() => {
                             clickPhoto(data, dataIndex);
+                            console.log(photoRefs.current[dataIndex]);
                           }}
                           style={
                             data.src === hoveredInfos.src ||
@@ -900,6 +913,7 @@ export default function Home() {
                     <div
                       className={styles[`mobilePic${dataIndex + 1}`]}
                       key={dataIndex}
+                      ref={(e) => (photoRefs.current[data.src] = e)}
                     >
                       {fetchData.length > 0 && (
                         <Pic
@@ -909,7 +923,7 @@ export default function Home() {
                           alt={data.collection}
                           onClick={() => {
                             clickPhoto(data, dataIndex);
-                            console.log(texte);
+                            centerPhotoOnClick(data.src);
                           }}
                           style={
                             data.src === hoveredInfos.src ||
@@ -967,15 +981,22 @@ export default function Home() {
 
             <div className={styles.mobileScrollContainer2}>
               <>
-                {" "}
-                <div className={styles.mobilePic3}>
+                <div
+                  className={styles.mobilePic3}
+                  ref={(e) =>
+                    (photoRefs.current[fetchData[startIndex + 2].src] = e)
+                  }
+                >
                   {fetchData.length > 0 && (
                     <Pic
                       src={fetchData[startIndex + 2].src}
                       width={fetchData[startIndex + 2].width}
                       height={fetchData[startIndex + 2].height}
                       alt={fetchData[startIndex + 2].collection}
-                      onClick={() => clickPhoto(fetchData[startIndex + 2])}
+                      onClick={() => {
+                        clickPhoto(fetchData[startIndex + 2]);
+                        centerPhotoOnClick(fetchData[startIndex + 2].src);
+                      }}
                       style={
                         fetchData[startIndex + 2].src === hoveredInfos.src ||
                         hoveredInfos.src === ""
@@ -1033,6 +1054,7 @@ export default function Home() {
                     <div
                       className={styles[`mobilePic${dataIndex + 4}`]}
                       key={dataIndex}
+                      ref={(e) => (photoRefs.current[data.src] = e)}
                     >
                       {fetchData.length > 0 && (
                         <Pic
@@ -1042,7 +1064,7 @@ export default function Home() {
                           alt={data.collection}
                           onClick={() => {
                             clickPhoto(data, dataIndex);
-                            console.log(texte);
+                            centerPhotoOnClick(data.src);
                           }}
                           style={
                             data.src === hoveredInfos.src ||
@@ -1099,14 +1121,23 @@ export default function Home() {
             </div>
             <div className={styles.mobileScrollContainer4}>
               <>
-                <div className={styles.mobilePic6}>
+                <div
+                  className={styles.mobilePic6}
+                  ref={(e) =>
+                    (photoRefs.current[fetchData[startIndex + 5].src] = e)
+                  }
+                >
                   {fetchData.length > 0 && (
                     <Pic
                       src={fetchData[startIndex + 5].src}
                       width={fetchData[startIndex + 5].width}
                       height={fetchData[startIndex + 5].height}
                       alt={fetchData[startIndex + 5].collection}
-                      onClick={() => clickPhoto(fetchData[startIndex + 5])}
+                      onClick={() => {
+                        clickPhoto(fetchData[startIndex + 5]);
+                        fetchData[startIndex + 5];
+                        centerPhotoOnClick(fetchData[startIndex + 5].src);
+                      }}
                       style={
                         fetchData[startIndex + 5].src === hoveredInfos.src ||
                         hoveredInfos.src === ""
