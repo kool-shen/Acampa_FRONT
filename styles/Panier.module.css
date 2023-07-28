@@ -142,6 +142,10 @@ input:checked + .slider:before {
 .productContainer::-webkit-scrollbar {
   display: none;
 }
+.productContainer {
+  scrollbar-width: none;
+}
+
 .anotherContainer {
   height: 100vh;
 }
@@ -185,7 +189,7 @@ input:checked + .slider:before {
 
 .crossContainer {
   height: 4vmin;
-
+  width: 4vmin;
   padding: 1vmin;
 }
 
@@ -228,6 +232,7 @@ input:checked + .slider:before {
 
 .picContainer {
   height: 23vmin;
+  width: 23vmin;
   align-self: center;
 }
 
@@ -282,7 +287,7 @@ input:checked + .slider:before {
   }
   .crossContainer {
     height: 15vmin;
-
+    width: 15vmin;
     padding: 3vmin;
   }
   .totalPayContainer {

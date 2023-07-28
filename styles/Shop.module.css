@@ -103,7 +103,7 @@
   height: 35vmin;
   position: absolute;
   background-color: black;
-  z-index: 900;
+  z-index: 9;
 }
 
 .twinPicContainer:hover {
@@ -120,7 +120,6 @@
   .textContainer {
     width: 100vw;
     align-self: flex-start;
-
     height: auto;
   }
 

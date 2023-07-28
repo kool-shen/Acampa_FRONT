@@ -358,8 +358,8 @@ export default function Menu(props) {
           <div className={menuStyles.panierContainer}>
             <Pic2
               src={"/assets/panier.png"}
-              width={50}
-              height={50}
+              width={100}
+              height={100}
               alt={"votre panier"}
               style={{ cursor: "pointer" }}
             />

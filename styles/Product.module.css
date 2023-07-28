@@ -46,6 +46,7 @@
 
 .logoContainer {
   height: 2.5vmin;
+  width: 2.5vmin;
 }
 
 /*TEXTES / INFOS */
@@ -282,6 +283,7 @@
   }
   .logoContainer {
     height: 5.5vmin;
+    width: 5.5vmin;
   }
   .panierText {
     font-size: 4vmin;

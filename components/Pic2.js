@@ -21,7 +21,7 @@ const Pic2 = (props) => {
         src={props.src}
         width={props.width}
         height={100}
-        alt={"yo"}
+        alt={props.alt}
         className={`${styles.pic} ${!stillLoading && styles.picLoaded}`}
         onLoad={handleLoad}
         onClick={props.onClick}
