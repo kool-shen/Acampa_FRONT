@@ -15,7 +15,7 @@
 }
 
 body {
-  height: 100vh;
+  height: calc(100vh - env(safe-area-inset-bottom));
   margin: 0;
   padding: 0;
   -webkit-overflow-scrolling: touch;

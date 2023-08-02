@@ -194,7 +194,9 @@
   justify-content: space-between;
   position: relative;
   height: 100%;
-  width: 100%;
+  width: 100vw;
+  /* border: 1px solid red; */
+  /* padding: 2vmin; */
 }
 
 .mobileIconContainer {
@@ -208,18 +210,23 @@
   padding-right: 3vmin;
 }
 
-.mobilePanier {
+.mobilePanier,
+.mobileInsta {
+  height: 7vmin;
+  width: 7vmin;
   position: relative;
 }
 
 .mobileburgerContainer {
-  height: 30%;
+  height: 10vmin;
+  width: 10vmin;
   transform: translateY(40%);
   padding-left: 3vmin;
 }
 
 .mobileFlowerContainer {
   height: 70%;
+
   align-self: center;
 }
 

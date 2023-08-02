@@ -529,7 +529,7 @@ export default function Menu(props) {
       <div className={menuStyles.mobileburgerContainer}>
         <Pic2
           src={"/assets/burgerMenu.png"}
-          width={80}
+          width={100}
           height={100}
           alt={"menu"}
           onClick={() => {
@@ -538,7 +538,7 @@ export default function Menu(props) {
         />
       </div>
       <Link href="/" className={menuStyles.mobileFlowerContainer}>
-        <Pic2
+        <Pic
           src={"/assets/Logo-fleur.png"}
           width={50}
           height={100}
@@ -552,7 +552,7 @@ export default function Menu(props) {
           <div className={menuStyles.mobilePanier} onClick={props.clickCart}>
             <Pic2
               src={"/assets/panier.png"}
-              width={20}
+              width={100}
               height={100}
               alt={"votre panier"}
             />
@@ -572,7 +572,7 @@ export default function Menu(props) {
           >
             <Pic2
               src={"/assets/insta.png"}
-              width={20}
+              width={100}
               height={100}
               alt={"lien Acampa Instagram"}
             />

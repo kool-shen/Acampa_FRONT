@@ -1,5 +1,10 @@
 .globalContainer {
-  height: 100vh;
+  height: calc(
+    100vh - env(safe-area-inset-bottom)
+  ); /* Utilise env(safe-area-inset-bottom) */
+  min-height: calc(
+    100vh - env(safe-area-inset-bottom)
+  ); /* En cas de dépassement du contenu */
   position: absolute;
 
   width: 50vw;

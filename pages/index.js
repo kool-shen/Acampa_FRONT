@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Home from "@/components/Home";
+import Prestations from "@/components/Prestations";
 
 export default function Index() {
   return (

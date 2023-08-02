@@ -112,7 +112,6 @@ export default function Prestations() {
   useEffect(() => {
     loadContent();
     loadPresentation();
-
     calculateScreen();
     const interval = setInterval(() => {}, 9000);
 

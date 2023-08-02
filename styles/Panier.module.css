@@ -1,15 +1,16 @@
 .main {
-  height: 100vh;
+  height: 100%;
+
   position: fixed;
+
   width: 50vw;
   left: 100%;
   transform: translateX(-50vw);
-
   z-index: 99;
 }
 
 .globalContainer {
-  min-height: 100%;
+  height: 100%;
   width: 100%;
   position: relative;
 
@@ -21,6 +22,8 @@
   justify-content: space-between;
   background-color: #ffe93f;
   z-index: 99;
+
+  /* padding-bottom: env(safe-area-inset-bottom); */
 }
 
 .sumProductContainer {
@@ -239,10 +242,16 @@ input:checked + .slider:before {
 /* Mobile L*/
 @media screen and (max-width: 425px) {
   .main {
-    height: 100vh;
+    height: 100dvh;
     width: 100vw;
+    -webkit-overflow-scrolling: touch;
     transform: translateX(-100vw);
+    /* border: 3px solid red; */
   }
+
+  /* .globalContainer {
+    height: 100svh;
+  } */
 
   .productContainer {
     justify-self: flex-start;
