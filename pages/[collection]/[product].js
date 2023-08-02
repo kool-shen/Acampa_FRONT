@@ -7,7 +7,7 @@ import { clickMessage } from "@/reducers/message";
 import Pic2 from "@/components/Pic2";
 import Menu from "@/components/Menu";
 import { addToBasket } from "../../reducers/basket";
-import { GetStaticProps } from "next";
+import { gsap } from "gsap";
 import Panier from "@/components/Panier";
 
 function productPage() {
@@ -51,9 +51,9 @@ function productPage() {
     setDureeIndex(newIndex);
   }
 
-  const [jour, setJour] = useState();
-  const [mois, setMois] = useState();
-  const [année, setAnnée] = useState();
+  const [jour, setJour] = useState("");
+  const [mois, setMois] = useState("");
+  const [année, setAnnée] = useState("");
   /// Carte cadeau ///
 
   const [cadeauIndex, setCadeauIndex] = useState(0);
@@ -320,6 +320,25 @@ function productPage() {
       vin: data[0]?.metadata?.vin ? data[0]?.metadata?.vin[vinIndex] : "",
     };
     dispatch(addToBasket(newPanier));
+  };
+
+  ///// Modal si pas de date renseignée pour les abonnements /////
+
+  const okRef = useRef(null);
+  const missingRef = useRef(null);
+
+  const animation = () => {
+    const timeline = gsap.timeline({
+      defaults: { duration: 0.7, ease: "power3" },
+    });
+
+    timeline
+      .to(okRef.current, { opacity: 0 })
+      .to(missingRef.current, { opacity: 1, visibility: "visible" })
+
+      .to(missingRef.current, { opacity: 0 })
+      .to(okRef.current, { opacity: 1 })
+      .to(missingRef.current, { visibility: "hidden" });
   };
 
   return (
@@ -732,13 +751,29 @@ function productPage() {
                         onClick={addQuantity}
                       />
                     </div>
+                    <div className={styles.panierTextContainer}>
+                      <div
+                        className={styles.missingDateContainer}
+                        ref={missingRef}
+                      >
+                        <div className={styles.missingDate}>
+                          DATE MANQUANTE !
+                        </div>
+                      </div>
+                    </div>
                     <div
-                      className={styles.panierText}
+                      className={styles.addContainer}
+                      ref={okRef}
                       onClick={() => {
-                        addProduct();
+                        const missingValue =
+                          data[0].metadata?.duree &&
+                          (jour === "" || mois === "" || année === "");
+                        if (missingValue) {
+                          animation();
+                        } else addProduct();
                       }}
                     >
-                      AJOUTER AU PANIER <span></span>
+                      <div className={styles.panierText}>AJOUTER AU PANIER</div>
                       <img
                         width={12}
                         height={12}

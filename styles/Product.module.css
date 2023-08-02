@@ -148,9 +148,26 @@
   cursor: pointer;
 }
 
-.panierText {
+.panierTextContainer {
+  position: relative;
+}
+
+.addContainer {
+  display: flex;
+  gap: 1vmin;
+}
+
+.panierText,
+.missingDate {
   font-size: 1.9vmin;
   font-family: "Authentic130";
+}
+
+.missingDateContainer {
+  position: absolute;
+  top: 3vmin;
+  opacity: 0;
+  z-index: -1;
 }
 
 /*PHOTOS */
