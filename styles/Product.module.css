@@ -302,7 +302,8 @@
     height: 5.5vmin;
     width: 5.5vmin;
   }
-  .panierText {
+  .panierText,
+  .missingDate {
     font-size: 4vmin;
   }
   .dateInput {

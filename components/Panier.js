@@ -124,7 +124,7 @@ function Panier(props) {
 
   const displayDelivery = deliveryIsClicked
     ? {
-        transform: mobileScreen ? "translate(5vw, 30vh)" : "translateX(-50vw)",
+        transform: mobileScreen ? "translate(5vw, 15vh)" : "translateX(-50vw)",
         transition: "transform 1s",
         // zindex: "399",
       }

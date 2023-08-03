@@ -44,6 +44,12 @@ export default function actu() {
     }
   };
 
+  const clearCache = () => {
+    // Clear the cache every 30 minutes
+    localStorage.removeItem("actuTextData");
+    localStorage.removeItem("actuProductsData");
+  };
+
   useEffect(() => {
     const actuTextData = localStorage.getItem("actuTextData");
     const actuProductsData = localStorage.getItem("actuProductsData");
@@ -56,6 +62,7 @@ export default function actu() {
       loadDescription();
       loadproducts();
     }
+    clearCache();
   }, []);
 
   /// produits partie inférieure ///

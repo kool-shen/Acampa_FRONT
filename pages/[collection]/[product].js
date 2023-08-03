@@ -244,7 +244,6 @@ function productPage() {
             `productData/${collection}/${product}`,
             JSON.stringify(jsonData)
           );
-          console.log("backend");
         }
       }
     } catch (error) {
