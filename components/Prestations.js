@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import Pic from "./Pic";
 import Pic2 from "./Pic2";
 import styles from "../styles/Prestations.module.css";
 import Menu from "./Menu";
-import Cart from "./Cart";
 import { useDispatch } from "react-redux";
 import { clickMessage } from "@/reducers/message";
 import emailjs from "emailjs-com";

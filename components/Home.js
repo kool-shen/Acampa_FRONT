@@ -393,12 +393,15 @@ export default function Home() {
 
   /////////////////
 
+  const enoughImagesLoaded = loadedImagesCount > 10;
+
   useEffect(() => {
     handleAllImagesLoaded();
 
-    allImagesLoaded && (isWeb ? webScrollAnimation() : mobileScrollAnimation());
+    enoughImagesLoaded &&
+      (isWeb ? webScrollAnimation() : mobileScrollAnimation());
     return () => {};
-  }, [loadedImagesCount, allImagesLoaded]);
+  }, [enoughImagesLoaded]);
 
   useEffect(() => {
     calculateScreen();
