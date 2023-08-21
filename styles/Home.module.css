@@ -460,22 +460,22 @@
   width: 40vw;
   /* padding-left: 14%; */
   opacity: 1;
-  overflow: hidden;
+
   /* border: 2px solid green; */
   position: relative;
 }
 
 .mobileHoveredContainer1 {
-  position: fixed;
-  left: 40vw;
-  padding: 2vmin;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  padding: 5vmin;
   display: flex;
   flex-direction: column;
   gap: 2vmin;
   height: auto;
   width: 100%;
   z-index: 4;
-  /* border: 2px solid green; */
 }
 
 /*// 2 //*/
@@ -495,44 +495,43 @@
 
 .mobilePic2 {
   width: 40vw;
-
+  position: relative;
   opacity: 1;
   align-self: flex-end;
-  /* border: 2px solid yellow; */
 }
 
 .mobileHoveredContainer2 {
-  position: fixed;
-  top: 19vh;
-  left: 54vw;
-  padding: 2vmin;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  padding: 5vmin;
   display: flex;
   flex-direction: column;
   gap: 2vmin;
   height: auto;
-  width: 80%;
+  width: 100%;
   z-index: 4;
-  /* border: 2px solid blue; */
 }
 
 /*// 3 //*/
 
 .mobilePic3 {
-  position: absolute;
+  position: relative;
   width: 68vw;
   opacity: 1;
+  /* transform: translateX(10vmin); */
 }
 
 .mobileHoveredContainer3 {
-  position: fixed;
-  top: 64vh;
-
-  left: -20vw;
-  padding: 2vmin;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding: 5vmin;
   display: flex;
   flex-direction: column;
   gap: 2vmin;
   height: auto;
+  width: 100%;
   z-index: 4;
 }
 

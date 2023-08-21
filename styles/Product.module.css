@@ -157,6 +157,8 @@
   display: flex;
   gap: 1vmin;
   cursor: pointer;
+  outline: none;
+  user-select: none;
 }
 
 .addContainer:focus {
@@ -174,6 +176,7 @@
   top: 3vmin;
   opacity: 0;
   z-index: -1;
+  outline: none;
 }
 
 /*PHOTOS */
@@ -311,6 +314,7 @@
   .panierText,
   .missingDate {
     font-size: 4vmin;
+    outline: none;
   }
   .dateInput {
     font-size: 4vmin;
