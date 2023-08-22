@@ -383,6 +383,10 @@ export default function Home() {
       loadSubCategories();
     }
 
+    loadPresentation();
+    loadImage();
+    loadSubCategories();
+
     const interval = setInterval(clearCache, 1800000);
 
     return () => {
@@ -393,7 +397,7 @@ export default function Home() {
 
   /////////////////
 
-  const enoughImagesLoaded = loadedImagesCount > 10;
+  const enoughImagesLoaded = loadedImagesCount > 6;
 
   useEffect(() => {
     handleAllImagesLoaded();
