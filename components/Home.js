@@ -442,6 +442,16 @@ export default function Home() {
     }
   };
 
+  const bottomPhotoOnClick = (e) => {
+    const ref = photoRefs.current[e];
+    if (ref) {
+      ref.scrollIntoView({
+        behavior: "smooth",
+        block: "end", // Cela positionne l'élément en haut de la vue
+      });
+    }
+  };
+
   return !mobileScreen ? (
     <div
       className={styles.mainContainer}
@@ -917,7 +927,7 @@ export default function Home() {
                             alt={data.collection}
                             onClick={() => {
                               clickPhoto(data, dataIndex);
-                              centerPhotoOnClick(data.src);
+                              centerPhotoOnTop(data.src);
                             }}
                             style={
                               data.src === hoveredInfos.src ||
@@ -982,6 +992,7 @@ export default function Home() {
                     ref={(e) =>
                       (photoRefs.current[fetchData[startIndex + 2].src] = e)
                     }
+                    style={{ overflow: isClicked ? "visible" : "hidden" }}
                   >
                     {fetchData.length > 0 && (
                       <Pic
@@ -1053,6 +1064,7 @@ export default function Home() {
                         className={styles[`mobilePic${dataIndex + 4}`]}
                         key={dataIndex}
                         ref={(e) => (photoRefs.current[data.src] = e)}
+                        style={{ overflow: isClicked ? "visible" : "hidden" }}
                       >
                         {fetchData.length > 0 && (
                           <Pic
@@ -1062,7 +1074,7 @@ export default function Home() {
                             alt={data.collection}
                             onClick={() => {
                               clickPhoto(data, dataIndex);
-                              centerPhotoOnClick(data.src);
+                              bottomPhotoOnClick(data.src);
                             }}
                             style={
                               data.src === hoveredInfos.src ||
@@ -1075,46 +1087,46 @@ export default function Home() {
                             }}
                           />
                         )}
-                      </div>
-                      <div
-                        className={
-                          styles[`mobileHoveredContainer${dataIndex + 4}`]
-                        }
-                        style={
-                          isClicked && hoveredInfos.src === data.src
-                            ? fadeIn
-                            : fadeOut
-                        }
-                      >
-                        <img
-                          src={"/assets/x-mark.png"}
-                          width={30}
-                          height={30}
-                          onClick={() => {
-                            crossClick();
-                          }}
-                          className={styles.cross}
-                        />
-                        <div className={styles.hoveredName}>
-                          {hoveredInfos.nom
-                            ? hoveredInfos.nom.toUpperCase()
-                            : ""}
-                        </div>
-                        <div className={styles.hoveredDescription}>
-                          {hoveredInfos.description
-                            ? hoveredInfos.description
-                            : ""}
-                        </div>
-                        {hoveredInfos.refShop && (
-                          <div className={styles.linkShopContainer}>
-                            <Link
-                              className={styles.linkShop}
-                              href={`${hoveredInfos.refShop}`}
-                            >
-                              VOIR DANS LA BOUTIQUE
-                            </Link>
+                        <div
+                          className={
+                            styles[`mobileHoveredContainer${dataIndex + 4}`]
+                          }
+                          style={
+                            isClicked && hoveredInfos.src === data.src
+                              ? fadeIn
+                              : fadeOut
+                          }
+                        >
+                          <img
+                            src={"/assets/x-mark.png"}
+                            width={30}
+                            height={30}
+                            onClick={() => {
+                              crossClick();
+                            }}
+                            className={styles.cross}
+                          />
+                          <div className={styles.hoveredName}>
+                            {hoveredInfos.nom
+                              ? hoveredInfos.nom.toUpperCase()
+                              : ""}
                           </div>
-                        )}
+                          <div className={styles.hoveredDescription}>
+                            {hoveredInfos.description
+                              ? hoveredInfos.description
+                              : ""}
+                          </div>
+                          {hoveredInfos.refShop && (
+                            <div className={styles.linkShopContainer}>
+                              <Link
+                                className={styles.linkShop}
+                                href={`${hoveredInfos.refShop}`}
+                              >
+                                VOIR DANS LA BOUTIQUE
+                              </Link>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </>
                   ))}
@@ -1126,6 +1138,7 @@ export default function Home() {
                     ref={(e) =>
                       (photoRefs.current[fetchData[startIndex + 5].src] = e)
                     }
+                    style={{ overflow: isClicked ? "visible" : "hidden" }}
                   >
                     {fetchData.length > 0 && (
                       <Pic
@@ -1136,7 +1149,7 @@ export default function Home() {
                         onClick={() => {
                           clickPhoto(fetchData[startIndex + 5]);
                           fetchData[startIndex + 5];
-                          centerPhotoOnClick(fetchData[startIndex + 5].src);
+                          bottomPhotoOnClick(fetchData[startIndex + 5].src);
                         }}
                         style={
                           fetchData[startIndex + 5].src === hoveredInfos.src ||
@@ -1149,42 +1162,43 @@ export default function Home() {
                         }}
                       />
                     )}
-                  </div>
-
-                  <div
-                    className={styles.mobileHoveredContainer6}
-                    style={
-                      isClicked &&
-                      hoveredInfos.src === fetchData[startIndex + 5].src
-                        ? fadeIn
-                        : fadeOut
-                    }
-                  >
-                    <img
-                      src={"/assets/x-mark.png"}
-                      width={30}
-                      height={30}
-                      onClick={() => {
-                        crossClick();
-                      }}
-                      className={styles.cross}
-                    />
-                    <div className={styles.hoveredName}>
-                      {hoveredInfos.nom ? hoveredInfos.nom.toUpperCase() : ""}
-                    </div>
-                    <div className={styles.hoveredDescription}>
-                      {hoveredInfos.description ? hoveredInfos.description : ""}
-                    </div>
-                    {hoveredInfos.refShop && (
-                      <div className={styles.linkShopContainer}>
-                        <Link
-                          className={styles.linkShop}
-                          href={`${hoveredInfos.refShop}`}
-                        >
-                          VOIR DANS LA BOUTIQUE
-                        </Link>
+                    <div
+                      className={styles.mobileHoveredContainer6}
+                      style={
+                        isClicked &&
+                        hoveredInfos.src === fetchData[startIndex + 5].src
+                          ? fadeIn
+                          : fadeOut
+                      }
+                    >
+                      <img
+                        src={"/assets/x-mark.png"}
+                        width={30}
+                        height={30}
+                        onClick={() => {
+                          crossClick();
+                        }}
+                        className={styles.cross}
+                      />
+                      <div className={styles.hoveredName}>
+                        {hoveredInfos.nom ? hoveredInfos.nom.toUpperCase() : ""}
                       </div>
-                    )}
+                      <div className={styles.hoveredDescription}>
+                        {hoveredInfos.description
+                          ? hoveredInfos.description
+                          : ""}
+                      </div>
+                      {hoveredInfos.refShop && (
+                        <div className={styles.linkShopContainer}>
+                          <Link
+                            className={styles.linkShop}
+                            href={`${hoveredInfos.refShop}`}
+                          >
+                            VOIR DANS LA BOUTIQUE
+                          </Link>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </>
               </div>
