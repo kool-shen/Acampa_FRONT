@@ -233,7 +233,7 @@ export default function Home() {
     try {
       const response = await fetch(
         "https://acampa-back.vercel.app/cloudinary/homepage"
-        // "http://localhost:3000/cloudinary/homepage"
+        //  "http://localhost:3000/cloudinary/homepage"
       );
       const resource = await response.json();
 
@@ -653,7 +653,6 @@ export default function Home() {
                     <div
                       className={styles[`pic${dataIndex + 1}Container`]}
                       key={dataIndex}
-                      style={{ overflow: isClicked ? "visible" : "hidden" }}
                     >
                       {fetchData.length > 0 && (
                         <Pic
@@ -916,12 +915,11 @@ export default function Home() {
                 {fetchData
                   .slice(startIndex, startIndex + 2)
                   .map((data, dataIndex) => (
-                    <>
+                    <div className={styles.picContainer}>
                       <div
                         className={styles[`mobilePic${dataIndex + 1}`]}
                         key={dataIndex}
                         ref={(e) => (photoRefs.current[data.src] = e)}
-                        style={{ overflow: isClicked ? "visible" : "hidden" }}
                       >
                         {fetchData.length > 0 && (
                           <Pic
@@ -944,59 +942,58 @@ export default function Home() {
                             }}
                           />
                         )}
-                        <div
-                          className={
-                            styles[`mobileHoveredContainer${dataIndex + 1}`]
-                          }
-                          style={
-                            isClicked && hoveredInfos.src === data.src
-                              ? fadeIn
-                              : fadeOut
-                          }
-                        >
-                          <img
-                            src={"/assets/x-mark.png"}
-                            width={30}
-                            height={30}
-                            onClick={() => {
-                              crossClick();
-                            }}
-                            className={styles.cross}
-                          />
-                          <div className={styles.hoveredName}>
-                            {hoveredInfos.nom
-                              ? hoveredInfos.nom.toUpperCase()
-                              : ""}
-                          </div>
-                          <div className={styles.hoveredDescription}>
-                            {hoveredInfos.description
-                              ? hoveredInfos.description
-                              : ""}
-                          </div>
-                          {hoveredInfos.refShop && (
-                            <div className={styles.linkShopContainer}>
-                              <Link
-                                className={styles.linkShop}
-                                href={`${hoveredInfos.refShop}`}
-                              >
-                                VOIR DANS LA BOUTIQUE
-                              </Link>
-                            </div>
-                          )}
-                        </div>
                       </div>
-                    </>
+                      <div
+                        className={
+                          styles[`mobileHoveredContainer${dataIndex + 1}`]
+                        }
+                        style={
+                          isClicked && hoveredInfos.src === data.src
+                            ? fadeIn
+                            : fadeOut
+                        }
+                      >
+                        <img
+                          src={"/assets/x-mark.png"}
+                          width={30}
+                          height={30}
+                          onClick={() => {
+                            crossClick();
+                          }}
+                          className={styles.cross}
+                        />
+                        <div className={styles.hoveredName}>
+                          {hoveredInfos.nom
+                            ? hoveredInfos.nom.toUpperCase()
+                            : ""}
+                        </div>
+                        <div className={styles.hoveredDescription}>
+                          {hoveredInfos.description
+                            ? hoveredInfos.description
+                            : ""}
+                        </div>
+                        {hoveredInfos.refShop && (
+                          <div className={styles.linkShopContainer}>
+                            <Link
+                              className={styles.linkShop}
+                              href={`${hoveredInfos.refShop}`}
+                            >
+                              VOIR DANS LA BOUTIQUE
+                            </Link>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   ))}
               </div>
 
               <div className={styles.mobileScrollContainer2}>
-                <>
+                <div className={styles.picContainer}>
                   <div
                     className={styles.mobilePic3}
                     ref={(e) =>
                       (photoRefs.current[fetchData[startIndex + 2].src] = e)
                     }
-                    style={{ overflow: isClicked ? "visible" : "hidden" }}
                   >
                     {fetchData.length > 0 && (
                       <Pic
@@ -1019,56 +1016,53 @@ export default function Home() {
                         }}
                       />
                     )}
-                    <div
-                      className={styles.mobileHoveredContainer3}
-                      style={
-                        isClicked &&
-                        hoveredInfos.src === fetchData[startIndex + 2].src
-                          ? fadeIn
-                          : fadeOut
-                      }
-                    >
-                      <img
-                        src={"/assets/x-mark.png"}
-                        width={30}
-                        height={30}
-                        onClick={() => {
-                          crossClick();
-                        }}
-                        className={styles.cross}
-                      />
-                      <div className={styles.hoveredName}>
-                        {hoveredInfos.nom ? hoveredInfos.nom.toUpperCase() : ""}
-                      </div>
-                      <div className={styles.hoveredDescription}>
-                        {hoveredInfos.description
-                          ? hoveredInfos.description
-                          : ""}
-                      </div>
-                      {hoveredInfos.refShop && (
-                        <div className={styles.linkShopContainer}>
-                          <Link
-                            className={styles.linkShop}
-                            href={`${hoveredInfos.refShop}`}
-                          >
-                            VOIR DANS LA BOUTIQUE
-                          </Link>
-                        </div>
-                      )}
-                    </div>
                   </div>
-                </>
+                  <div
+                    className={styles.mobileHoveredContainer3}
+                    style={
+                      isClicked &&
+                      hoveredInfos.src === fetchData[startIndex + 2].src
+                        ? fadeIn
+                        : fadeOut
+                    }
+                  >
+                    <img
+                      src={"/assets/x-mark.png"}
+                      width={30}
+                      height={30}
+                      onClick={() => {
+                        crossClick();
+                      }}
+                      className={styles.cross}
+                    />
+                    <div className={styles.hoveredName}>
+                      {hoveredInfos.nom ? hoveredInfos.nom.toUpperCase() : ""}
+                    </div>
+                    <div className={styles.hoveredDescription}>
+                      {hoveredInfos.description ? hoveredInfos.description : ""}
+                    </div>
+                    {hoveredInfos.refShop && (
+                      <div className={styles.linkShopContainer}>
+                        <Link
+                          className={styles.linkShop}
+                          href={`${hoveredInfos.refShop}`}
+                        >
+                          VOIR DANS LA BOUTIQUE
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
               <div className={styles.mobileScrollContainer3}>
                 {fetchData
                   .slice(startIndex + 3, startIndex + 5)
                   .map((data, dataIndex) => (
-                    <>
+                    <div className={styles.picContainer}>
                       <div
                         className={styles[`mobilePic${dataIndex + 4}`]}
                         key={dataIndex}
                         ref={(e) => (photoRefs.current[data.src] = e)}
-                        style={{ overflow: isClicked ? "visible" : "hidden" }}
                       >
                         {fetchData.length > 0 && (
                           <Pic
@@ -1091,58 +1085,57 @@ export default function Home() {
                             }}
                           />
                         )}
-                        <div
-                          className={
-                            styles[`mobileHoveredContainer${dataIndex + 4}`]
-                          }
-                          style={
-                            isClicked && hoveredInfos.src === data.src
-                              ? fadeIn
-                              : fadeOut
-                          }
-                        >
-                          <img
-                            src={"/assets/x-mark.png"}
-                            width={30}
-                            height={30}
-                            onClick={() => {
-                              crossClick();
-                            }}
-                            className={styles.cross}
-                          />
-                          <div className={styles.hoveredName}>
-                            {hoveredInfos.nom
-                              ? hoveredInfos.nom.toUpperCase()
-                              : ""}
-                          </div>
-                          <div className={styles.hoveredDescription}>
-                            {hoveredInfos.description
-                              ? hoveredInfos.description
-                              : ""}
-                          </div>
-                          {hoveredInfos.refShop && (
-                            <div className={styles.linkShopContainer}>
-                              <Link
-                                className={styles.linkShop}
-                                href={`${hoveredInfos.refShop}`}
-                              >
-                                VOIR DANS LA BOUTIQUE
-                              </Link>
-                            </div>
-                          )}
-                        </div>
                       </div>
-                    </>
+                      <div
+                        className={
+                          styles[`mobileHoveredContainer${dataIndex + 4}`]
+                        }
+                        style={
+                          isClicked && hoveredInfos.src === data.src
+                            ? fadeIn
+                            : fadeOut
+                        }
+                      >
+                        <img
+                          src={"/assets/x-mark.png"}
+                          width={30}
+                          height={30}
+                          onClick={() => {
+                            crossClick();
+                          }}
+                          className={styles.cross}
+                        />
+                        <div className={styles.hoveredName}>
+                          {hoveredInfos.nom
+                            ? hoveredInfos.nom.toUpperCase()
+                            : ""}
+                        </div>
+                        <div className={styles.hoveredDescription}>
+                          {hoveredInfos.description
+                            ? hoveredInfos.description
+                            : ""}
+                        </div>
+                        {hoveredInfos.refShop && (
+                          <div className={styles.linkShopContainer}>
+                            <Link
+                              className={styles.linkShop}
+                              href={`${hoveredInfos.refShop}`}
+                            >
+                              VOIR DANS LA BOUTIQUE
+                            </Link>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   ))}
               </div>
               <div className={styles.mobileScrollContainer4}>
-                <>
+                <div className={styles.picContainer}>
                   <div
                     className={styles.mobilePic6}
                     ref={(e) =>
                       (photoRefs.current[fetchData[startIndex + 5].src] = e)
                     }
-                    style={{ overflow: isClicked ? "visible" : "hidden" }}
                   >
                     {fetchData.length > 0 && (
                       <Pic
@@ -1166,45 +1159,43 @@ export default function Home() {
                         }}
                       />
                     )}
-                    <div
-                      className={styles.mobileHoveredContainer6}
-                      style={
-                        isClicked &&
-                        hoveredInfos.src === fetchData[startIndex + 5].src
-                          ? fadeIn
-                          : fadeOut
-                      }
-                    >
-                      <img
-                        src={"/assets/x-mark.png"}
-                        width={30}
-                        height={30}
-                        onClick={() => {
-                          crossClick();
-                        }}
-                        className={styles.cross}
-                      />
-                      <div className={styles.hoveredName}>
-                        {hoveredInfos.nom ? hoveredInfos.nom.toUpperCase() : ""}
-                      </div>
-                      <div className={styles.hoveredDescription}>
-                        {hoveredInfos.description
-                          ? hoveredInfos.description
-                          : ""}
-                      </div>
-                      {hoveredInfos.refShop && (
-                        <div className={styles.linkShopContainer}>
-                          <Link
-                            className={styles.linkShop}
-                            href={`${hoveredInfos.refShop}`}
-                          >
-                            VOIR DANS LA BOUTIQUE
-                          </Link>
-                        </div>
-                      )}
-                    </div>
                   </div>
-                </>
+                  <div
+                    className={styles.mobileHoveredContainer6}
+                    style={
+                      isClicked &&
+                      hoveredInfos.src === fetchData[startIndex + 5].src
+                        ? fadeIn
+                        : fadeOut
+                    }
+                  >
+                    <img
+                      src={"/assets/x-mark.png"}
+                      width={30}
+                      height={30}
+                      onClick={() => {
+                        crossClick();
+                      }}
+                      className={styles.cross}
+                    />
+                    <div className={styles.hoveredName}>
+                      {hoveredInfos.nom ? hoveredInfos.nom.toUpperCase() : ""}
+                    </div>
+                    <div className={styles.hoveredDescription}>
+                      {hoveredInfos.description ? hoveredInfos.description : ""}
+                    </div>
+                    {hoveredInfos.refShop && (
+                      <div className={styles.linkShopContainer}>
+                        <Link
+                          className={styles.linkShop}
+                          href={`${hoveredInfos.refShop}`}
+                        >
+                          VOIR DANS LA BOUTIQUE
+                        </Link>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           )
