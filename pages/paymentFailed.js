@@ -2,12 +2,9 @@ import React from "react";
 import Head from "next/head";
 import styles from "../styles/Failure.module.css";
 import Pic2 from "@/components/Pic2";
+import Link from "next/link";
 
 export default function paymentFailed() {
-  const backHome = () => {
-    window.location.href = "http://localhost:3001/";
-  };
-
   return (
     <>
       <Head>
@@ -30,13 +27,10 @@ export default function paymentFailed() {
             Désolé, votre paiement n'a pas pu aboutir... Vous n'avez pas été
             débité.
           </div>
-          <div
-            className={styles.button}
-            onClick={() => {
-              backHome();
-            }}
-          >
-            <div className={styles.text}>Revenir sur le site d'Acampa</div>
+          <div className={styles.button}>
+            <Link href="/" className={styles.text}>
+              Revenir sur le site d'Acampa
+            </Link>
           </div>
         </div>
       </div>

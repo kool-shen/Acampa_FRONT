@@ -6,6 +6,7 @@ import { clickMessage } from "@/reducers/message";
 import Cart from "@/components/Cart";
 import Menu from "@/components/Menu";
 import Pic2 from "@/components/Pic2";
+import Pic from "@/components/Pic";
 import styles from "@/styles/Shop.module.css";
 import Head from "next/head";
 import Panier from "@/components/Panier";
@@ -138,36 +139,6 @@ export default function index() {
                 }}
               >
                 <div
-                  className={styles.twinPicContainer}
-                  style={
-                    !item.price
-                      ? {
-                          cursor: "auto",
-                        }
-                      : {
-                          cursor: "pointer",
-                        }
-                  }
-                >
-                  <Pic2
-                    onClick={() => {
-                      GenerateProductPage(item.name);
-                    }}
-                    src={item.twin ? item.twin : item.src}
-                    width={item.width}
-                    height={item.height}
-                    alt={item.name}
-                    className={styles.twinPhoto}
-                    style={
-                      !item.price
-                        ? {
-                            display: "none",
-                          }
-                        : ""
-                    }
-                  />
-                </div>
-                <div
                   className={styles.picContainer}
                   style={
                     !item.price
@@ -196,6 +167,25 @@ export default function index() {
                     }
                     className={styles.mainPhoto}
                   />
+                  <div className={styles.twinPicContainer}>
+                    <Pic2
+                      onClick={() => {
+                        GenerateProductPage(item.name);
+                      }}
+                      src={item.twin ? item.twin : item.src}
+                      width={item.width}
+                      height={item.height}
+                      alt={item.name}
+                      className={styles.twinPhoto}
+                      style={
+                        !item.price
+                          ? {
+                              display: "none",
+                            }
+                          : ""
+                      }
+                    />
+                  </div>
                 </div>
 
                 <div className={styles.productInfoContainer}>
