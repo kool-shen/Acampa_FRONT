@@ -202,10 +202,6 @@
   padding-right: 3vmin;
 }
 
-.picContainer {
-  position: relative;
-}
-
 .hoveredDescriptionContainer1 {
   position: absolute;
   left: 0vw;
@@ -358,6 +354,7 @@
 @media screen and (max-width: 425px) {
   .mainContainer {
     height: 900vh;
+
     flex-direction: column;
   }
   .pic1Container {
@@ -437,6 +434,13 @@
   overflow: hidden;
 }
 
+.picContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid red; */
+}
+
 /*// 1 //*/
 
 .mobileScrollContainer1 {
@@ -445,32 +449,31 @@
   flex-direction: column;
 
   gap: 2vmin;
-  /* border: 1px solid red; */
-  width: 100%;
+
+  width: 50vw;
   z-index: 88;
-  transform: translateX(5%);
+
   padding-top: 3vmin;
   padding-bottom: 3vmin;
 }
 
 .mobilePic1 {
   width: 40vw;
-  /* padding-left: 14%; */
+  transform: translatex(2vmin);
   opacity: 1;
-  /* border: 2px solid green; */
+
   position: relative;
 }
 
 .mobileHoveredContainer1 {
   position: absolute;
-  top: 100%;
-
-  padding: 5vmin;
+  top: 105%;
+  padding: 3vmin;
   display: flex;
   flex-direction: column;
   gap: 2vmin;
   height: auto;
-  width: 200%;
+  width: 100vw;
   z-index: 4;
 }
 
@@ -482,11 +485,12 @@
   justify-content: flex-end;
   /* border: 1px solid salmon; */
   padding-right: 10%;
-  width: 154%;
+  width: 50vw;
   position: relative;
-  transform: translateX(-33%);
+
   padding-top: 5vmin;
   padding-bottom: 5vmin;
+  /* border: 1px solid blue; */
 }
 
 .mobilePic2 {
@@ -499,13 +503,12 @@
 .mobileHoveredContainer2 {
   position: absolute;
   top: 100%;
-
-  padding: 5vmin;
+  padding: 3vmin;
   display: flex;
   flex-direction: column;
   gap: 2vmin;
   height: auto;
-  width: 200%;
+  width: 100vw;
   z-index: 4;
 }
 
@@ -515,33 +518,33 @@
   position: relative;
   width: 68vw;
   opacity: 1;
-  transform: translateX(10vmin);
+  transform: translateX(-33%);
   overflow: hidden;
 }
 
 .mobileHoveredContainer3 {
   position: absolute;
   top: 100%;
-  left: 0;
+  left: -50vw;
   padding: 3vmin;
   display: flex;
   flex-direction: column;
   gap: 2vmin;
   height: auto;
-  width: 60%;
+  width: 100vw;
+
   z-index: 4;
 }
 
 .mobileScrollContainer3 {
-  /* position: absolute; */
   display: flex;
   flex-direction: column;
 
   justify-content: space-between;
-  /* border: 1px solid red; */
-  width: 100%;
+
+  width: 50vw;
   z-index: 88;
-  transform: translateX(5%);
+
   padding-top: 3vmin;
   padding-bottom: 3vmin;
 }
@@ -553,11 +556,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* border: 1px solid red; */
-  width: 100%;
+
+  width: 51vw;
   z-index: 88;
-  /* padding-top: 5vmin;
-  padding-bottom: 5vmin; */
 }
 
 .mobilePic4 {
@@ -571,12 +572,12 @@
   position: absolute;
   bottom: 100%;
   left: 0;
-  padding: 5vmin;
+  padding: 3vmin;
   display: flex;
   flex-direction: column;
   gap: 2vmin;
   height: auto;
-  width: 190%;
+  width: 100vw;
   z-index: 4;
 }
 
@@ -585,18 +586,19 @@
   position: relative;
   opacity: 1;
   overflow: hidden;
+  transform: translateX(7%);
 }
 
 .mobileHoveredContainer5 {
   position: absolute;
   bottom: 100%;
   left: 0;
-  padding: 5vmin;
+  padding: 3vmin;
   display: flex;
   flex-direction: column;
   gap: 2vmin;
   height: auto;
-  width: 190%;
+  width: 100vw;
   z-index: 4;
 }
 
@@ -610,13 +612,13 @@
 .mobileHoveredContainer6 {
   position: absolute;
   bottom: 100%;
-  right: 50%;
+  left: -54vw;
 
-  padding: 5vmin;
+  padding: 3vmin;
   display: flex;
   flex-direction: column;
   gap: 2vmin;
   height: auto;
-  width: 200%;
+  width: 100vw;
   z-index: 4;
 }
