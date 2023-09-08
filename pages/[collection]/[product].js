@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clickMessage } from "@/reducers/message";
 import Pic2 from "@/components/Pic2";
 import Menu from "@/components/Menu";
+import Option from "@/components/Option";
 import { addToBasket } from "../../reducers/basket";
 import { gsap } from "gsap";
 import Panier from "@/components/Panier";
@@ -156,16 +157,14 @@ function productPage() {
     ///calcul du prix si carte cadeau ///
     const selectedMontant =
       montantIndex !== undefined
-        ? data[0].metadata?.montant_carte_cadeau.map((str) => parseInt(str))[
-            montantIndex
-          ]
+        ? data[0]?.montant.map((str) => parseInt(str))[montantIndex]
         : undefined;
 
     if (selectedMontant !== undefined) {
       return selectedMontant * quantity + sizePrice;
     } else {
       const livraison = 40 * (dureeIndex + 1);
-      return data[0]?.metadata?.duree
+      return data[0]?.duree
         ? ////calcul du prix si abonnement ////
           (initialPrice + sizePrice) * 6 * quantity * (dureeIndex + 1) +
             livraison
@@ -232,8 +231,8 @@ function productPage() {
     try {
       if (collection && product) {
         const response = await fetch(
-          // `http://localhost:3000/cloudinary/product?product=${product}`
-          `https://acampa-back.vercel.app/cloudinary/product?product=${product}`
+          `http://localhost:3000/cloudinary/product?product=${product}`
+          // //  `https://acampa-back.vercel.app/cloudinary/product?product=${product}`
         );
         const jsonData = await response.json();
 
@@ -255,12 +254,12 @@ function productPage() {
     setSizeLength(e[0].metadata?.tailles?.length ?? 0);
     setCouleurLength(e[0].metadata?.couleur?.length ?? 0);
     setVarietesLength(e[0].metadata?.Varietes?.length ?? 0);
-    setCadeauLength(e[0].metadata?.montant_carte_cadeau?.length ?? 0);
-    setDureeLength(e[0].metadata?.duree?.length ?? 0);
+    setCadeauLength(e[0]?.montant?.length ?? 0);
+    setDureeLength(e[0]?.duree?.length ?? 0);
     setVinLength(e[0].metadata?.vin?.length ?? 0);
     setInitialPrice(e[0].metadata?.prix);
 
-    if (e[0].metadata?.montant_carte_cadeau) {
+    if (e[0]?.montant) {
       const newPrice = calculatePrice(sizeIndex ? sizeIndex : 0, cadeauIndex);
       setPrice(newPrice);
     } else {
@@ -270,16 +269,6 @@ function productPage() {
   };
 
   useEffect(() => {
-    // const eachProductData = localStorage.getItem(
-    //   `productData/${collection}/${product}`
-    // );
-    // if (eachProductData) {
-    //   console.log(JSON.parse(eachProductData));
-    //   setData(JSON.parse(eachProductData));
-    //   setIndexes(JSON.parse(eachProductData));
-    // } else {
-    //   fetchData();
-    // }
     fetchData();
     loadSubCategories();
     calculateScreen();
@@ -306,16 +295,12 @@ function productPage() {
       variété: data[0]?.metadata?.Varietes?.[varietesIndex],
       couleur: data[0]?.metadata?.couleur?.[couleurIndex],
       quantité: quantity,
-      montant_cadeau: data[0]?.metadata?.montant_carte_cadeau
-        ? data[0]?.metadata?.montant_carte_cadeau[cadeauIndex]
-        : "",
+      montant_cadeau: data[0]?.montant ? data[0]?.montant[cadeauIndex] : "",
 
       prix: price,
       mot: " ",
-      durée: data[0]?.metadata?.duree
-        ? data[0]?.metadata?.duree[dureeIndex]
-        : "",
-      dateDébut: data[0]?.metadata?.duree ? `${jour}/${mois}/${année}` : "",
+      durée: data[0]?.duree ? data[0]?.duree[dureeIndex] : "",
+      dateDébut: data[0]?.duree ? `${jour}/${mois}/${année}` : "",
       vin: data[0]?.metadata?.vin ? data[0]?.metadata?.vin[vinIndex] : "",
     };
     dispatch(addToBasket(newPanier));
@@ -379,38 +364,35 @@ function productPage() {
                   width={data[0].width}
                   height={data[0].height}
                   alt={data[0].context?.alt}
-                  onClick={() => {
-                    console.log(initialPrice, quantity, dureeIndex);
-                  }}
                 />
               </div>
               <div className={styles.focusContainer}>
                 <div className={styles.productFocusContainer}>
                   {data[0].metadata?.nom_du_produit && (
                     <>
-                      <div className={styles.productTitle}>
+                      <h1 className={styles.productTitle}>
                         {data[0].metadata?.nom_du_produit.toUpperCase()}
                         {mobileScreen && (
                           <div className={styles.productDescription}>_</div>
                         )}
-                      </div>
+                      </h1>
                     </>
                   )}
                   <div className={styles.textProductContainer}>
-                    <div
+                    <p
                       className={styles.productDescription}
                       style={{ whiteSpace: "pre-line" }}
                     >
                       {data[0].context?.alt}
-                    </div>
+                    </p>
                     {!mobileScreen && (
-                      <div className={styles.productDescription}>_</div>
+                      <p className={styles.productDescription}>_</p>
                     )}
                   </div>
                   <div className={styles.numbersProductContainer}>
                     {!data[0].metadata.tailles &&
                       !data[0].metadata.Varietes &&
-                      !data[0].metadata.montant_carte_cadeau &&
+                      !data[0]?.montant &&
                       !data[0].metadata.couleur && (
                         <div className={styles.choiceContainer}>
                           <div className={styles.productDescription}>
@@ -425,234 +407,53 @@ function productPage() {
                       >{`${price},00€`}</div>
                     </div>
 
-                    {data[0].metadata?.tailles ? (
-                      <div className={styles.propriétésContainer}>
-                        <div className={styles.choiceContainer}>
-                          <div className={styles.productDescription}>
-                            TAILLE
-                          </div>
-                        </div>
-                        <div className={styles.choiceContainer}>
-                          {/* <div
-                          className={styles.productDescription}
-                          onClick={previousSize}
-                        >
-                          &lt;
-                        </div> */}
-                          <div className={styles.logoContainer}>
-                            <Pic2
-                              src={"/assets/left.png"}
-                              width={100}
-                              height={100}
-                              alt={"choix précédent"}
-                              onClick={previousSize}
-                            />
-                          </div>
-                          <div className={styles.valueContainer}>
-                            <div className={styles.productDescription}>
-                              {data[0].metadata?.tailles[
-                                sizeIndex
-                              ].toUpperCase()}
-                            </div>
-                          </div>
-                          <div className={styles.logoContainer}>
-                            <Pic2
-                              src={"/assets/right.png"}
-                              width={100}
-                              height={100}
-                              alt={"choix suivant"}
-                              onClick={nextSize}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                    {data[0].metadata?.couleur ? (
-                      <div className={styles.propriétésContainer}>
-                        <div className={styles.choiceContainer}>
-                          <div className={styles.productDescription}>
-                            COULEUR
-                          </div>
-                        </div>
-                        <div className={styles.choiceContainer}>
-                          <div className={styles.logoContainer}>
-                            <Pic2
-                              src={"/assets/left.png"}
-                              width={100}
-                              height={100}
-                              alt={"choix précédent"}
-                              onClick={previousCouleur}
-                            />
-                          </div>
-                          <div className={styles.valueContainer}>
-                            <div className={styles.productDescription}>
-                              {data[0].metadata?.couleur[couleurIndex]
-                                .replace(/_/g, " ")
-                                .toUpperCase()}
-                            </div>
-                          </div>
-                          <div className={styles.logoContainer}>
-                            <Pic2
-                              src={"/assets/right.png"}
-                              width={100}
-                              height={100}
-                              alt={"choix suivant"}
-                              onClick={nextCouleur}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                    {data[0].metadata?.Varietes ? (
-                      <div className={styles.propriétésContainer}>
-                        <div className={styles.choiceContainer}>
-                          <div className={styles.productDescription}>
-                            VARIÉTÉ
-                          </div>
-                        </div>
-                        <div className={styles.choiceContainer}>
-                          <div className={styles.logoContainer}>
-                            <Pic2
-                              src={"/assets/left.png"}
-                              width={100}
-                              height={100}
-                              alt={"choix précédent"}
-                              onClick={previousVarietes}
-                            />
-                          </div>
-                          <div className={styles.valueContainer}>
-                            <div className={styles.productDescription}>
-                              {data[0].metadata?.Varietes[varietesIndex]
-                                .replace(/_/g, " ")
-                                .toUpperCase()}
-                            </div>
-                          </div>
-                          <div className={styles.logoContainer}>
-                            <Pic2
-                              src={"/assets/right.png"}
-                              width={100}
-                              height={100}
-                              alt={"choix suivant"}
-                              onClick={nextVarietes}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                    {data[0].metadata?.vin ? (
-                      <div className={styles.propriétésContainer}>
-                        <div className={styles.choiceContainer}>
-                          <div className={styles.productDescription}>VIN</div>
-                        </div>
-                        <div className={styles.choiceContainer}>
-                          <div className={styles.logoContainer}>
-                            <Pic2
-                              src={"/assets/left.png"}
-                              width={100}
-                              height={100}
-                              alt={"choix précédent"}
-                              onClick={previousVin}
-                            />
-                          </div>
-                          <div className={styles.valueContainer}>
-                            <div className={styles.productDescription}>
-                              {data[0].metadata?.vin[vinIndex]
-                                .replace(/_/g, " ")
-                                .toUpperCase()}
-                            </div>
-                          </div>
-                          <div className={styles.logoContainer}>
-                            <Pic2
-                              src={"/assets/right.png"}
-                              width={100}
-                              height={100}
-                              alt={"choix suivant"}
-                              onClick={() => {
-                                nextVin();
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                    {data[0].metadata?.montant_carte_cadeau ? (
-                      <div className={styles.propriétésContainer}>
-                        <div className={styles.choiceContainer}>
-                          <div className={styles.productDescription}>
-                            MONTANT
-                          </div>
-                        </div>
-                        <div className={styles.choiceContainer}>
-                          <div className={styles.logoContainer}>
-                            <Pic2
-                              src={"/assets/left.png"}
-                              width={100}
-                              height={100}
-                              alt={"choix précédent"}
-                              onClick={previousCadeau}
-                            />
-                          </div>
-                          <div className={styles.valueContainer}>
-                            <div className={styles.productDescription}>
-                              {`${data[0].metadata?.montant_carte_cadeau[cadeauIndex]},00€`}
-                            </div>
-                          </div>
-                          <div className={styles.logoContainer}>
-                            <Pic2
-                              src={"/assets/right.png"}
-                              width={100}
-                              height={100}
-                              alt={"choix suivant"}
-                              onClick={nextCadeau}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                    {data[0].metadata?.duree ? (
+                    <Option
+                      category={data[0].metadata?.tailles}
+                      index={sizeIndex}
+                      name="TAILLE"
+                      previous={previousSize}
+                      next={nextSize}
+                    />
+                    <Option
+                      category={data[0].metadata?.couleur}
+                      index={couleurIndex}
+                      name="COULEUR"
+                      previous={previousCouleur}
+                      next={nextCouleur}
+                    />
+                    <Option
+                      category={data[0].metadata?.Varietes}
+                      index={varietesIndex}
+                      name="VARIÉTÉ"
+                      previous={previousVarietes}
+                      next={nextVarietes}
+                    />
+                    <Option
+                      category={data[0].metadata?.vin}
+                      index={vinIndex}
+                      name="VIN"
+                      previous={previousVin}
+                      next={nextVin}
+                    />
+                    <Option
+                      category={data[0]?.montant}
+                      index={cadeauIndex}
+                      name="MONTANT"
+                      previous={previousCadeau}
+                      next={nextCadeau}
+                      description={",00€"}
+                    />
+                    <Option
+                      category={data[0]?.duree}
+                      index={dureeIndex}
+                      name="DURÉE"
+                      previous={previousDuree}
+                      next={nextDuree}
+                      description={" MOIS"}
+                    />
+
+                    {data[0]?.duree ? (
                       <>
-                        <div className={styles.propriétésContainer}>
-                          <div className={styles.choiceContainer}>
-                            <div className={styles.productDescription}>
-                              DURÉE
-                            </div>
-                          </div>
-                          <div className={styles.choiceContainer}>
-                            <div className={styles.logoContainer}>
-                              <Pic2
-                                src={"/assets/left.png"}
-                                width={100}
-                                height={100}
-                                alt={"choix précédent"}
-                                onClick={previousDuree}
-                              />
-                            </div>
-                            <div className={styles.valueContainer}>
-                              <div className={styles.productDescription}>
-                                {`${data[0].metadata?.duree[dureeIndex]} mois`}
-                              </div>
-                            </div>
-                            <div className={styles.logoContainer}>
-                              <Pic2
-                                src={"/assets/right.png"}
-                                width={100}
-                                height={100}
-                                alt={"choix suivant"}
-                                onClick={nextDuree}
-                              />
-                            </div>
-                          </div>
-                        </div>
                         <div className={styles.propriétésContainer}>
                           <div className={styles.choiceContainer}>
                             <div className={styles.productDescription}>
@@ -765,7 +566,7 @@ function productPage() {
                       ref={okRef}
                       onClick={() => {
                         const missingValue =
-                          data[0].metadata?.duree &&
+                          data[0]?.duree &&
                           (jour === "" || mois === "" || année === "");
                         if (missingValue) {
                           animation();

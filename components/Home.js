@@ -9,6 +9,7 @@ import { gsap } from "gsap";
 import { clickMessage } from "@/reducers/message";
 import { useRouter } from "next/router";
 import Panier from "./Panier";
+import Loader from "./Loader";
 
 export default function Home() {
   /// ANIMATIONS ////
@@ -20,6 +21,7 @@ export default function Home() {
   const aboutCategoryRef = useRef(null);
   const scrollRef = useRef(null);
   const photoRefs = useRef([]);
+  const loaderRef = useRef(null);
 
   const menuTimeline = gsap.timeline({
     defaults: { duration: 0.05, ease: "power2" },
@@ -123,8 +125,6 @@ export default function Home() {
     }
   }
 
-  /// Version Web ///
-
   /// Mobile ///
 
   const [mobileScreen, setMobileScreen] = useState();
@@ -153,6 +153,17 @@ export default function Home() {
     }
   };
 
+  /// Loader ///
+
+  const [loading, setLoading] = useState(true);
+
+  const zIndexloader = () => {
+    !loading &&
+      setTimeout(() => {
+        loaderRef.current.style.zIndex = "-1";
+      }, 500);
+  };
+
   ////// Animation scroll au mount ///
 
   const [animationPlayed, setAnimationPlayed] = useState(false);
@@ -163,11 +174,12 @@ export default function Home() {
   const webScrollAnimation = () => {
     scrollContainerRef.current &&
       isWeb &&
+      firstVisit &&
       gsap.to(scrollContainerRef.current, {
         x: "-=200",
         repeat: 1,
         yoyo: true,
-        delay: 1,
+        delay: 2,
         duration: 0.6,
         onComplete: () => {
           setAnimationPlayed(true);
@@ -353,10 +365,25 @@ export default function Home() {
     visibility: "visible",
   };
 
+  const loaderFadout = {
+    opacity: "0",
+    transition: "opacity 0.4s, transform 0.4s",
+    zIndex: -1,
+  };
+
+  const loaderFadeIn = {
+    opacity: "1",
+    transition: "opacity 0.4s, transform 0.4s",
+  };
+
   const mainStyle = {
     display: mobileScreen !== undefined ? "flex" : "none",
-    PointerEvent: animationPlayed ? "auto" : "none",
+    pointerEvents: animationPlayed ? "auto" : "none",
   };
+
+  /// first visit ///
+
+  const [firstVisit, setFirstVisit] = useState();
 
   /// USEEFFECT LOAD API / CACHE ////
 
@@ -372,12 +399,14 @@ export default function Home() {
       subcategoriesData !== null
     ) {
       // Use the cached data
+      setFirstVisit(false);
       setTexte(JSON.parse(presentationData)[0].context.alt);
       setFetchData(JSON.parse(homepageData));
       setSubcategories(JSON.parse(subcategoriesData));
       console.log("cache");
     } else {
       // Fetch the API data
+      setFirstVisit(true);
       loadPresentation();
       loadImage();
       loadSubCategories();
@@ -386,6 +415,8 @@ export default function Home() {
     loadPresentation();
     loadImage();
     loadSubCategories();
+
+    console.log(animationPlayed);
 
     const interval = setInterval(clearCache, 1800000);
 
@@ -402,8 +433,12 @@ export default function Home() {
   useEffect(() => {
     handleAllImagesLoaded();
 
+    zIndexloader();
+
     enoughImagesLoaded &&
-      (isWeb ? webScrollAnimation() : mobileScrollAnimation());
+      (isWeb
+        ? (webScrollAnimation(), setLoading(false))
+        : mobileScrollAnimation());
     return () => {};
   }, [enoughImagesLoaded]);
 
@@ -415,6 +450,7 @@ export default function Home() {
     /// scroll horizontal ///
 
     //// animation GSAP ////
+
     toggle
       ? gsap.to(descriptionRef.current, {
           opacity: 0,
@@ -424,7 +460,7 @@ export default function Home() {
           opacity: 1,
           duration: 0.8,
         });
-  }, [toggle, menuState, subCat, aboutState, isClicked]);
+  }, [toggle, menuState, subCat, aboutState, isClicked, loading]);
 
   const centerPhotoOnClick = (e) => {
     const ref = photoRefs.current[e];
@@ -466,7 +502,10 @@ export default function Home() {
       }}
       style={mainStyle}
     >
-      {/* <Loader style={{ display: allImagesLoaded ? "none" : "flex" }} /> */}
+      {firstVisit && (
+        <Loader ref={loaderRef} style={loading ? loaderFadeIn : loaderFadout} />
+      )}
+
       <div className={styles.presentationContainer}>
         <div
           className={styles.acampaContainer}
@@ -891,7 +930,7 @@ export default function Home() {
             floral
           </div>
           <div className={styles.acampaRegular}>basé à Marseille.</div>
-          {texte && <div className={styles.acampaDescription}>{texte}</div>}
+          {texte && <p className={styles.acampaDescription}>{texte}</p>}
         </div>
         <div
           className={styles.logoContainer}

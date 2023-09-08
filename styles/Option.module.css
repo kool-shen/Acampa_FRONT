@@ -1,0 +1,49 @@
+.propriétésContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.logoContainer {
+  height: 2.5vmin;
+  width: 2.5vmin;
+}
+
+.choiceContainer {
+  display: flex;
+  width: auto;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.productDescription {
+  font-size: 1.9vmin;
+  font-family: "Authentic130";
+  color: black;
+}
+
+.choiceContainer {
+  display: flex;
+  width: auto;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.valueContainer {
+  display: flex;
+  justify-content: center;
+  padding-right: 10px;
+  padding-left: 10px;
+  outline: none;
+}
+
+.quantityContainer {
+  display: flex;
+  align-self: flex-end;
+  align-items: center;
+}
+
+.productDescription {
+  font-size: 1.9vmin;
+  font-family: "Authentic130";
+  color: black;
+}

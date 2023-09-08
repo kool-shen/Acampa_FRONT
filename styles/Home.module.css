@@ -3,7 +3,6 @@
   display: flex;
   overflow: hidden;
   position: relative;
-  pointer-events: auto;
 }
 
 .firstContainer {
