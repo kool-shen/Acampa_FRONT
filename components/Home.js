@@ -194,7 +194,7 @@ export default function Home() {
   /// Version mobile ///
 
   const mobileScrollAnimation = () => {
-    scrollRef.current && isMobile
+    scrollRef.current && isMobile && firstVisit
       ? gsap.to(scrollRef.current, {
           y: "-=200",
           repeat: 1,
@@ -891,6 +891,7 @@ export default function Home() {
       })}
     </div>
   ) : (
+    /// VERSION MOBILE ///
     <div
       className={styles.mobileMainContainer}
       onClick={() => {
