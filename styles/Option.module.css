@@ -47,3 +47,17 @@
   font-family: "Authentic130";
   color: black;
 }
+
+/* Mobile L*/
+@media screen and (max-width: 425px) {
+  .productDescription {
+    font-size: 4vmin;
+    overflow: scroll;
+    /* order: 3; */
+  }
+
+  .logoContainer {
+    height: 5.5vmin;
+    width: 5.5vmin;
+  }
+}
