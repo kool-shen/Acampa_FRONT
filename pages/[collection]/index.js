@@ -55,9 +55,20 @@ export default function index() {
     console.log("cache cleared");
   };
 
+  ////// MOBILE /////
+
+  const [mobileScreen, setMobileScreen] = useState();
+
+  const calculateScreen = () => {
+    window.innerWidth <= 425
+      ? (setMobileScreen(true), console.log("mobile"))
+      : (setMobileScreen(false), console.log("not mobile"));
+  };
+
   /// USEEFFECT LOAD API / CACHE ////
 
   useEffect(() => {
+    calculateScreen();
     const productData = localStorage.getItem(`productData${collection}`);
 
     if (productData) {
@@ -167,25 +178,27 @@ export default function index() {
                     }
                     className={styles.mainPhoto}
                   />
-                  <div className={styles.twinPicContainer}>
-                    <Pic2
-                      onClick={() => {
-                        GenerateProductPage(item.name);
-                      }}
-                      src={item.twin ? item.twin : item.src}
-                      width={item.width}
-                      height={item.height}
-                      alt={item.name}
-                      className={styles.twinPhoto}
-                      style={
-                        !item.price
-                          ? {
-                              display: "none",
-                            }
-                          : ""
-                      }
-                    />
-                  </div>
+                  {!mobileScreen && (
+                    <div className={styles.twinPicContainer}>
+                      <Pic2
+                        onClick={() => {
+                          GenerateProductPage(item.name);
+                        }}
+                        src={item.twin ? item.twin : item.src}
+                        width={item.width}
+                        height={item.height}
+                        alt={item.name}
+                        className={styles.twinPhoto}
+                        style={
+                          !item.price
+                            ? {
+                                display: "none",
+                              }
+                            : ""
+                        }
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div className={styles.productInfoContainer}>
