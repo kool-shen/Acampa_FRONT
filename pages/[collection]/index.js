@@ -28,8 +28,8 @@ export default function index() {
     try {
       if (collection) {
         const response = await fetch(
-          `http://localhost:3000/cloudinary/collection?collection=${collection}`
-          //`https://acampa-back.vercel.app/cloudinary/collection?collection=${collection}`
+          //`http://localhost:3000/cloudinary/collection?collection=${collection}`
+          `https://acampa-back.vercel.app/cloudinary/collection?collection=${collection}`
         );
         const jsonData = await response.json();
 
