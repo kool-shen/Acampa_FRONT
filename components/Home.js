@@ -27,6 +27,10 @@ export default function Home() {
     defaults: { duration: 0.05, ease: "power2" },
   });
 
+  /// first visit ///
+
+  const [firstVisit, setFirstVisit] = useState();
+
   // Anim sous catégories///
 
   const [menuState, setMenuState] = useState(false);
@@ -378,12 +382,8 @@ export default function Home() {
 
   const mainStyle = {
     display: mobileScreen !== undefined ? "flex" : "none",
-    pointerEvents: animationPlayed ? "auto" : "none",
+    pointerEvents: animationPlayed || !firstVisit ? "auto" : "none",
   };
-
-  /// first visit ///
-
-  const [firstVisit, setFirstVisit] = useState();
 
   /// USEEFFECT LOAD API / CACHE ////
 
