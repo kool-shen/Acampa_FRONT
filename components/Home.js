@@ -775,7 +775,7 @@ export default function Home() {
                             alt={data.collection}
                             onClick={() => {
                               clickPhoto(data);
-                              console.log(dataIndex + 3, hoveredInfos.index);
+                              console.log(hoveredInfos.src);
                             }}
                             style={
                               data.src === hoveredInfos.src ||
