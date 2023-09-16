@@ -44,5 +44,13 @@
   border: 1px solid red;
   position: relative;
   height: 50vh;
-  width: 30vw;
+  width: 100%;
+  object-fit: cover;
+}
+
+.simple {
+  position: relative;
+  border: 1px solid green;
+  width: auto;
+  height: 20vh;
 }

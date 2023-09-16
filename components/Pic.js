@@ -35,8 +35,8 @@ function Pic(props) {
           style={props.style}
           onMouseEnter={props.onMouseEnter}
           onMouseLeave={props.onMouseLeave}
-          loading="lazy"
-          sizes="(max-width: 1000px) 100vw, 1000px"
+          loading="eager"
+          sizes="(min-width: 768px) 10vw, 5vw"
         />
       </div>
     );

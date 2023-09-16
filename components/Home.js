@@ -439,7 +439,7 @@ export default function Home() {
 
     enoughImagesLoaded &&
       (isWeb
-        ? (webScrollAnimation(), setLoading(false))
+        ? (webScrollAnimation(), setLoading(false), console.log("loaded"))
         : mobileScrollAnimation());
     return () => {};
   }, [enoughImagesLoaded]);
