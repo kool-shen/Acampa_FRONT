@@ -250,8 +250,8 @@ export default function Home() {
   const loadImage = async () => {
     try {
       const response = await fetch(
-        // "https://acampa-back.vercel.app/cloudinary/homepage"
-        "http://localhost:3000/cloudinary/homepage"
+        "https://acampa-back.vercel.app/cloudinary/homepage"
+        //"http://localhost:3000/cloudinary/homepage"
       );
       const resource = await response.json();
 
