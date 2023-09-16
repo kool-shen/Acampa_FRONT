@@ -3,6 +3,8 @@ import styles from "../styles/Home.module.css";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import Pic from "./Pic";
+import Picture from "./Picture";
+import Image from "next/image";
 import Menu from "./Menu";
 import Link from "next/link";
 import { gsap } from "gsap";
@@ -248,8 +250,8 @@ export default function Home() {
   const loadImage = async () => {
     try {
       const response = await fetch(
-        "https://acampa-back.vercel.app/cloudinary/homepage"
-        //  "http://localhost:3000/cloudinary/homepage"
+        // "https://acampa-back.vercel.app/cloudinary/homepage"
+        "http://localhost:3000/cloudinary/homepage"
       );
       const resource = await response.json();
 

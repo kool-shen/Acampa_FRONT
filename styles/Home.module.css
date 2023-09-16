@@ -222,7 +222,7 @@
   max-width: 100%;
   padding-left: 2vmin;
   padding-top: 2vmin;
-  /* border: 1px solid red; */
+  border: 1px solid red;
 }
 
 .leftPicContainer2 {
@@ -248,22 +248,31 @@
 
 .pic3Container {
   height: 70%;
+  width: auto;
   opacity: 1;
   position: relative;
   overflow: hidden;
 }
+
+.pictureContainer {
+  border: 1px solid green;
+  position: relative;
+}
+
 .pic4Container {
   height: 70%;
   opacity: 1;
-  object-fit: cover;
+  /* object-fit: cover; */
   position: relative;
 }
 
 .pic5Container {
   height: 100%;
+  /* width: 100%; */
   object-fit: cover;
   position: relative;
   transform: translateY(15%);
+  border: 1px solid green;
 }
 
 .loaderContainer {
