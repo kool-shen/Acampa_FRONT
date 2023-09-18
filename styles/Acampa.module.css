@@ -58,7 +58,7 @@
     /* justify-content: space-around; */
   }
   .textContainer {
-    height: auto;
+    height: 15vh;
     width: auto;
     display: flex;
     flex-direction: column;

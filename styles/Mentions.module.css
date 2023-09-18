@@ -47,7 +47,7 @@
     flex-direction: column;
   }
   .textContainer {
-    height: auto !important;
+    height: 15vh !important;
     width: auto;
   }
   .middleContainer {

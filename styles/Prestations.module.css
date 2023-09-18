@@ -227,7 +227,7 @@
   }
   .menuContainer {
     width: 100vw;
-    height: auto;
+    height: 15vh;
   }
   .text {
     font-size: 4vmin;
