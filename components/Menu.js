@@ -203,8 +203,10 @@ export default function Menu(props) {
             src={"/assets/Logo-fleur.png"}
             width={50}
             height={100}
-            alt={"logo fleur"}
+            alt={"logo Acampa"}
             className={menuStyles.flower}
+            firstSize="10vw"
+            secondSize="15vw"
           />
         </Link>
         <div
@@ -218,7 +220,7 @@ export default function Menu(props) {
             src={"/assets/cross.png"}
             width={50}
             height={100}
-            alt={"logo fleur"}
+            alt={"fermer le menu"}
             className={menuStyles.flower}
           />
         </div>
@@ -362,6 +364,8 @@ export default function Menu(props) {
               height={100}
               alt={"votre panier"}
               style={{ cursor: "pointer" }}
+              firstSize="3vw"
+              secondSize="7vw"
             />
           </div>
           {basketValue.length > 0 && [
@@ -389,7 +393,7 @@ export default function Menu(props) {
             src={"/assets/cross.png"}
             width={100}
             height={100}
-            alt={"logo fleur"}
+            alt={"fermer le menu"}
             className={menuStyles.flower}
           />
         </div>
@@ -535,6 +539,8 @@ export default function Menu(props) {
           onClick={() => {
             setHideMenu(!hideMenu);
           }}
+          firstSize="10vw"
+          secondSize="15vw"
         />
       </div>
       <Link href="/" className={menuStyles.mobileFlowerContainer}>
@@ -542,9 +548,11 @@ export default function Menu(props) {
           src={"/assets/Logo-fleur.png"}
           width={50}
           height={100}
-          alt={"logo fleur"}
+          alt={"logo Acampa"}
           className={menuStyles.flower}
           style={{ visibility: props.flowerStyle }}
+          firstSize="15vw"
+          secondSize="20vw"
         />
       </Link>
       <div>
@@ -555,6 +563,8 @@ export default function Menu(props) {
               width={100}
               height={100}
               alt={"votre panier"}
+              firstSize="10vw"
+              secondSize="15vw"
             />
             {basketValue.length > 0 && [
               <div className={menuStyles.basketCircleContainer}>
@@ -574,7 +584,9 @@ export default function Menu(props) {
               src={"/assets/insta.png"}
               width={100}
               height={100}
-              alt={"lien Acampa Instagram"}
+              alt={"Acampa Instagram"}
+              firstSize="10vw"
+              secondSize="15vw"
             />
           </Link>
         </div>

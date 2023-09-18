@@ -313,8 +313,8 @@ export default function Prestations() {
                 alt={textContent[photoIndex].collection}
                 style={fadeIn}
                 className={styles.test}
-                firstSize="30vw"
-                secondSize="40vw"
+                firstSize="100vw"
+                secondSize="100vw"
               />
             </div>
           </div>
