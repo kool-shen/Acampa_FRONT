@@ -313,6 +313,8 @@ export default function Prestations() {
                 alt={textContent[photoIndex].collection}
                 style={fadeIn}
                 className={styles.test}
+                firstSize="30vw"
+                secondSize="40vw"
               />
             </div>
           </div>
@@ -485,6 +487,8 @@ export default function Prestations() {
               alt={textContent[photoIndex].collection}
               style={fadeIn}
               className={styles.test}
+              firstSize="30vw"
+              secondSize="40vw"
             />
           </div>
         </div>

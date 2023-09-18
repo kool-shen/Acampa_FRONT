@@ -364,6 +364,8 @@ function productPage() {
                   width={data[0].width}
                   height={data[0].height}
                   alt={data[0].context?.alt}
+                  firstSize="40vw"
+                  secondSize="50vw"
                 />
               </div>
               <div className={styles.focusContainer}>

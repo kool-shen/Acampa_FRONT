@@ -28,6 +28,7 @@ const Pic2 = (props) => {
         style={props.style}
         onMouseEnter={props.onMouseEnter}
         onMouseLeave={props.onMouseLeave}
+        sizes={`(min-width: 768px) ${props.firstSize}, ${props.secondSize} `}
       />
     );
   }
