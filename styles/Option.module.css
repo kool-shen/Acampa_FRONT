@@ -42,12 +42,6 @@
   align-items: center;
 }
 
-.productDescription {
-  font-size: 1.9vmin;
-  font-family: "Authentic130";
-  color: black;
-}
-
 /* Mobile L*/
 @media screen and (max-width: 425px) {
   .productDescription {

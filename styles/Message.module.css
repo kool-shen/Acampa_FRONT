@@ -15,9 +15,14 @@
   display: flex;
 }
 
+.signatureInput,
+.text,
 .messageInput {
   font-size: 2.5vmin;
   font-family: "Authentic130";
+}
+
+.messageInput {
   background-color: white;
   border: 2px solid black;
   margin: 1vmin;
@@ -27,14 +32,8 @@
 }
 
 .messageInput:nth-child(2) {
-  font-size: 2.5vmin;
-  font-family: "Authentic130";
-  background-color: white;
-  border: 2px solid black;
-  margin: 1vmin;
   width: 70%;
   height: 75%;
-  overflow: scroll;
 }
 
 .messageInput::-webkit-scrollbar {
@@ -47,8 +46,6 @@
 }
 
 .signatureInput {
-  font-size: 2.5vmin;
-  font-family: "Authentic130";
   background-color: white;
   border: 2px solid black;
   margin: 1vmin;
@@ -74,8 +71,6 @@
 }
 
 .text {
-  font-size: 2.5vmin;
-  font-family: "Authentic130";
   padding: 1vmin;
 }
 

@@ -28,7 +28,8 @@
   display: none;
 }
 
-.text {
+.text,
+.text2 {
   font-size: 1.9vmin;
   font-family: "Authentic130";
   color: black;
@@ -36,9 +37,6 @@
 
 .text2 {
   padding-left: 10%;
-  font-size: 1.9vmin;
-  font-family: "Authentic130";
-  color: black;
 }
 
 /* Mobile L*/

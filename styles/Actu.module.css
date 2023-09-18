@@ -40,27 +40,29 @@
   /* border: 1px solid red; */
 }
 
-.text {
-  font-size: 1.9vmin;
+.text,
+.text2,
+.textProduct,
+.descriptionText {
   font-family: "Authentic130";
   color: black;
+}
+
+.text {
+  font-size: 1.9vmin;
 }
 .text2 {
   padding-left: 10%;
   font-size: 1.9vmin;
-  font-family: "Authentic130";
-  color: black;
 }
 .textProduct {
   font-size: 1.9vmin;
-  font-family: "Authentic130";
-  color: black;
+
   text-align: center;
 }
 .descriptionText {
   font-size: 1.9vmin;
-  font-family: "Authentic130";
-  color: black;
+
   text-align: center;
 }
 

@@ -16,15 +16,20 @@
   height: 100%;
 }
 
-.text {
+.text,
+.descriptionText,
+.validateText,
+.signatureInput,
+.addressInput {
   font-size: 1.9vmin;
   font-family: "Authentic130";
+}
+
+.text {
   color: grey;
 }
 
 .descriptionText {
-  font-size: 1.9vmin;
-  font-family: "Authentic130";
   color: black;
 }
 
@@ -47,9 +52,6 @@
 }
 
 .validateText {
-  font-size: 1.9vmin;
-  font-family: "Authentic130";
-
   color: black;
   cursor: pointer;
 }
@@ -111,9 +113,6 @@ input:checked + .slider:before {
 }
 
 .signatureInput {
-  font-size: 1.9vmin;
-  font-family: "Authentic130";
-
   background-color: white;
   border: 2px solid black;
 
@@ -131,8 +130,6 @@ input:checked + .slider:before {
 }
 
 .addressInput {
-  font-size: 1.9vmin;
-  font-family: "Authentic130";
   background-color: white;
   border: 2px solid black;
 

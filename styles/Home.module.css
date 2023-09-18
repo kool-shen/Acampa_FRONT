@@ -1,3 +1,22 @@
+/* POLICE*/
+
+.acampaBold,
+.acampaDescription,
+.hoveredName,
+.hoveredDescription,
+.title,
+.linkShop,
+.shopSubCategory:hover::after,
+.shopSubCategory:after {
+  font-family: "Authentic130";
+}
+
+.acampaRegular,
+.shopSubCategory {
+  font-family: "Authentic60";
+}
+
+/* CONTAINERS */
 .mainContainer {
   height: 100vh;
   display: flex;
@@ -58,12 +77,11 @@
 
 .hoveredName {
   font-size: 1.7vmin;
-  font-family: "Authentic130";
 }
 
 .hoveredDescription {
   font-size: 1.7vmin;
-  font-family: "Authentic130";
+
   width: 20vw;
   height: auto;
 }
@@ -74,7 +92,7 @@
 
 .linkShop {
   font-size: 1.7vmin;
-  font-family: "Authentic130";
+
   color: black;
   text-decoration: none;
   border-bottom: 2px solid black;
@@ -148,7 +166,7 @@
 
 .title {
   font-size: 1.9vmin;
-  font-family: "Authentic130";
+
   display: inline-block;
   position: relative;
   color: black;
@@ -290,18 +308,16 @@
 
 .acampaBold {
   font-size: 2.3vh;
-  font-family: "Authentic130";
 }
 
 .acampaRegular {
   font-size: 2.3vh;
-  font-family: "Authentic60";
+
   padding-bottom: 22px;
 }
 
 .acampaDescription {
   font-size: 1.9vmin;
-  font-family: "Authentic130";
 }
 
 .shopSubCategoryContainer {
@@ -318,7 +334,7 @@
 
 .shopSubCategory {
   font-size: 1.9vmin;
-  font-family: "Authentic60";
+
   width: 100%;
   color: black;
   cursor: pointer;
@@ -334,16 +350,12 @@
   height: 0.1vmin;
   border-radius: 4px;
   left: 50%;
-  font-family: "Authentic130";
+
   position: absolute;
   background: black;
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 0;
   cursor: pointer;
-}
-
-.shopSubCategory:hover::after {
-  font-family: "Authentic130";
 }
 
 .shopSubCategory:hover::after {
@@ -409,7 +421,7 @@
   }
   .linkShop {
     font-size: 3vmin;
-    font-family: "Authentic130";
+
     color: black;
     text-decoration: none;
     border-bottom: 2px solid black;

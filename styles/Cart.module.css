@@ -188,22 +188,27 @@ input:checked + .slider:before {
   object-fit: cover;
 }
 
+.text,
+.paymentText,
+.confirmText {
+  font-family: "Authentic130";
+}
+
 .text {
   font-size: 2.5vmin;
-  font-family: "Authentic130";
 
   padding: 1vmin;
 }
 
 .paymentText {
   font-size: 2.5vmin;
-  font-family: "Authentic130";
+
   padding: 2vmin;
 }
 
 .confirmText {
   font-size: 1.7vmin;
-  font-family: "Authentic130";
+
   color: grey;
 }
 

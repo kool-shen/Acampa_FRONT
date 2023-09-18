@@ -285,7 +285,6 @@ input:checked + .slider:before {
 
   .tinyText {
     font-size: 3.5vmin;
-
     font-family: "Authentic90";
     padding-left: 0.1vmin;
     padding-bottom: 0.1vmin;
