@@ -267,7 +267,7 @@
   }
   .textContainer {
     width: 100vw;
-    height: auto;
+    height: 15vh;
   }
   .focusContainer {
     padding-top: 2vmin;

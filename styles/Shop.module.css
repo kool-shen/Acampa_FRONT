@@ -129,7 +129,7 @@
   .textContainer {
     width: 100vw;
     align-self: flex-start;
-    height: auto;
+    height: 15vh;
   }
 
   .photoContainer {
