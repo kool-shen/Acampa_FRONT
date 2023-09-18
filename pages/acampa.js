@@ -106,6 +106,8 @@ export default function acampa() {
                   width={300}
                   height={500}
                   alt={content[0].collection}
+                  firstSize="40vw"
+                  secondSize="50vw"
                 />
               </div>
             </div>
