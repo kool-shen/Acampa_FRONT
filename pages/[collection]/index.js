@@ -177,8 +177,8 @@ export default function index() {
                         : ""
                     }
                     className={styles.mainPhoto}
-                    firstSize="10vw"
-                    secondSize="15vw"
+                    firstSize="35vw"
+                    secondSize="50vw"
                   />
                   {!mobileScreen && (
                     <div className={styles.twinPicContainer}>
@@ -198,8 +198,8 @@ export default function index() {
                               }
                             : ""
                         }
-                        firstSize="10vw"
-                        secondSize="15vw"
+                        firstSize="40vw"
+                        secondSize="50vw"
                       />
                     </div>
                   )}
