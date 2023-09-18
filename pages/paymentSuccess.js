@@ -12,7 +12,7 @@ export default function paymentSuccess() {
   const clientAddress = useSelector((state) => state.clientData.value);
 
   const backHome = () => {
-    window.location.href = "http://localhost:3001/";
+    window.location.href = "https://acampa-front.vercel.app/";
   };
 
   return (
