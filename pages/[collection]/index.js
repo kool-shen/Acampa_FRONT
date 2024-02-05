@@ -6,7 +6,6 @@ import { clickMessage } from "@/reducers/message";
 import Cart from "@/components/Cart";
 import Menu from "@/components/Menu";
 import Pic2 from "@/components/Pic2";
-import Pic from "@/components/Pic";
 import styles from "@/styles/Shop.module.css";
 import Head from "next/head";
 import Panier from "@/components/Panier";
@@ -177,7 +176,7 @@ export default function index() {
                         : ""
                     }
                     className={styles.mainPhoto}
-                    firstSize="35vw"
+                    firstSize="40vw"
                     secondSize="50vw"
                   />
                   {!mobileScreen && (

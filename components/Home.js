@@ -724,15 +724,6 @@ export default function Home() {
                             : fadeOut
                         }
                       >
-                        <img
-                          src={"/assets/x-mark.png"}
-                          width={30}
-                          height={30}
-                          onClick={() => {
-                            crossClick();
-                          }}
-                          className={styles.cross}
-                        />
                         <div className={styles.hoveredName}>
                           {hoveredInfos.nom
                             ? hoveredInfos.nom.toUpperCase()
@@ -799,15 +790,6 @@ export default function Home() {
                             : fadeOut
                         }
                       >
-                        <img
-                          src={"/assets/x-mark.png"}
-                          width={30}
-                          height={30}
-                          onClick={() => {
-                            crossClick();
-                          }}
-                          className={styles.cross}
-                        />
                         <div className={styles.hoveredName}>
                           {hoveredInfos.nom
                             ? hoveredInfos.nom.toUpperCase()
@@ -860,15 +842,6 @@ export default function Home() {
                       : fadeOut
                   }
                 >
-                  <img
-                    src={"/assets/x-mark.png"}
-                    width={30}
-                    height={30}
-                    onClick={() => {
-                      crossClick();
-                    }}
-                    className={styles.cross}
-                  />
                   <div className={styles.hoveredName}>
                     {hoveredInfos.nom ? hoveredInfos.nom.toUpperCase() : ""}
                   </div>
@@ -995,15 +968,6 @@ export default function Home() {
                             : fadeOut
                         }
                       >
-                        <img
-                          src={"/assets/x-mark.png"}
-                          width={30}
-                          height={30}
-                          onClick={() => {
-                            crossClick();
-                          }}
-                          className={styles.cross}
-                        />
                         <div className={styles.hoveredName}>
                           {hoveredInfos.nom
                             ? hoveredInfos.nom.toUpperCase()
@@ -1068,15 +1032,6 @@ export default function Home() {
                         : fadeOut
                     }
                   >
-                    <img
-                      src={"/assets/x-mark.png"}
-                      width={30}
-                      height={30}
-                      onClick={() => {
-                        crossClick();
-                      }}
-                      className={styles.cross}
-                    />
                     <div className={styles.hoveredName}>
                       {hoveredInfos.nom ? hoveredInfos.nom.toUpperCase() : ""}
                     </div>
@@ -1138,15 +1093,6 @@ export default function Home() {
                             : fadeOut
                         }
                       >
-                        <img
-                          src={"/assets/x-mark.png"}
-                          width={30}
-                          height={30}
-                          onClick={() => {
-                            crossClick();
-                          }}
-                          className={styles.cross}
-                        />
                         <div className={styles.hoveredName}>
                           {hoveredInfos.nom
                             ? hoveredInfos.nom.toUpperCase()
@@ -1211,15 +1157,6 @@ export default function Home() {
                         : fadeOut
                     }
                   >
-                    <img
-                      src={"/assets/x-mark.png"}
-                      width={30}
-                      height={30}
-                      onClick={() => {
-                        crossClick();
-                      }}
-                      className={styles.cross}
-                    />
                     <div className={styles.hoveredName}>
                       {hoveredInfos.nom ? hoveredInfos.nom.toUpperCase() : ""}
                     </div>

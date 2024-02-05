@@ -106,7 +106,8 @@
 .acampaContainer {
   display: flex;
   flex-direction: column;
-  padding: 22px;
+  padding: 4vmin;
+  box-sizing: border-box;
 }
 
 .logoContainer {
@@ -145,8 +146,8 @@
   flex-direction: column;
 
   position: relative;
-  padding-top: 11%;
-  padding-left: 12%;
+  padding: 4vmin;
+  box-sizing: border-box;
 }
 
 .flowerContainer {
@@ -470,7 +471,7 @@
   gap: 2vmin;
 
   width: 50vw;
-  z-index: 88;
+  /* z-index: 88; */
 
   padding-top: 3vmin;
   padding-bottom: 3vmin;
@@ -562,7 +563,7 @@
   justify-content: space-between;
 
   width: 50vw;
-  z-index: 88;
+  /* z-index: 88; */
 
   padding-top: 3vmin;
   padding-bottom: 3vmin;
@@ -577,7 +578,7 @@
   align-items: center;
 
   width: 51vw;
-  z-index: 88;
+  /* z-index: 88; */
 }
 
 .mobilePic4 {
