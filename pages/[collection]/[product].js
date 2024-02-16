@@ -576,13 +576,6 @@ function productPage() {
                       }}
                     >
                       <div className={styles.panierText}>AJOUTER AU PANIER</div>
-                      <img
-                        width={12}
-                        height={12}
-                        src={"/assets/PLUS.png"}
-                        alt={"PLUS"}
-                        onClick={addQuantity}
-                      />
                     </div>
                   </div>
                 </div>

@@ -149,20 +149,29 @@
   cursor: pointer;
 }
 
-.panierTextContainer {
+/* .panierTextContainer {
   position: relative;
-}
+} */
 
 .addContainer {
-  display: flex;
-  gap: 1vmin;
   cursor: pointer;
   outline: none;
-  user-select: none;
+  padding: 0.5vmin;
+  background-color: black;
+  box-sizing: border-box;
+  border: 1px solid black;
 }
 
-.addContainer:focus {
-  border: 1px solid black;
+.addContainer:hover {
+  background-color: white;
+}
+
+.addContainer div {
+  color: white;
+}
+
+.addContainer div:hover {
+  color: black;
 }
 
 .panierText,
